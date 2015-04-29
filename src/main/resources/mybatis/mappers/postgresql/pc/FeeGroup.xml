@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.FeeGroupDao">
+	<resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.FeeGroup">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="CHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="BIT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, name, description, flag
+	</sql>
+
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.personal.TradeDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.personal.Trade">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="trade_no" property="tradeNo" jdbcType="VARCHAR"/>
+        <result column="house_id" property="houseId" jdbcType="VARCHAR"/>
+        <result column="channel_code" property="channelCode" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="weixin_id" property="weixinId" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        <result column="lease_term" property="leaseTerm" jdbcType="INTEGER"/>
+        <result column="total_fee" property="totalFee" jdbcType="INTEGER"/>
+        <result column="pay_fee" property="payFee" jdbcType="INTEGER"/>
+        <result column="use_coupon" property="useCoupon" jdbcType="VARCHAR"/>
+        <result column="coupon_fee" property="couponFee" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <!-- 生成订单 -->
+    <insert id="insertTrade" parameterType="com.micro.rent.dbaccess.entity.personal.Trade">
+        INSERT INTO t_trade
+        (trade_no,
+        house_id,
+        channel_code,
+        status,
+        name,
+        gender,
+        telephone,
+        weixin_id,
+        nick_name,
+        lease_term,
+        total_fee,
+        pay_fee,
+        use_coupon,
+        coupon_fee,
+        create_time,
+        update_time)
+        VALUES
+        (#{tradeNo},
+        #{houseId},
+        #{channelCode},
+        '0',
+        #{name},
+        #{gender},
+        #{telephone},
+        #{weixinId},
+        #{nickName},
+        #{leaseTerm},
+        #{totalFee},
+        #{payFee},
+        #{useCoupon},
+        #{couponFee},
+        #{createTime},
+        #{updateTime})
+    </insert>
+
+    <!-- 更新订单状态 -->
+    <update id="updateTradeStatus" parameterType="com.micro.rent.dbaccess.entity.personal.Trade">
+        UPDATE
+        t_trade
+        SET
+        status=#{status},
+        update_time = #{updateTime}
+        WHERE
+        trade_no = #{tradeNo}
+    </update>
+
+    <!-- 根据订单号取得订单信息 -->
+    <select id="selectTradeInfoByTradeNo" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        id,
+        trade_no,
+        house_id,
+        channel_code,
+        status,
+        name,
+        gender,
+        telephone,
+        weixin_id,
+        nick_name,
+        lease_term,
+        total_fee,
+        pay_fee,
+        use_coupon,
+        coupon_fee,
+        create_time,
+        update_time
+        FROM
+        t_trade
+        WHERE
+        trade_no = #{tradeNo}
+    </select>
+
+    <!-- 取得订单信息 -->
+    <select id="selectTradeInfo" parameterType="com.micro.rent.dbaccess.entity.personal.Trade"
+            resultMap="BaseResultMap">
+        SELECT
+        t1.id,
+        t1.trade_no,
+        t1.house_id,
+        t1.channel_code,
+        t1.status,
+        t1.name,
+        t1.gender,
+        t1.telephone,
+        t1.weixin_id,
+        t1.nick_name,
+        t1.lease_term,
+        t1.total_fee,
+        t1.pay_fee,
+        t1.use_coupon,
+        t1.coupon_fee,
+        t1.create_time,
+        t1.update_time
+        FROM
+        t_trade t1,
+        t_channel t2
+        WHERE
+        t1.channel_code = t2.channel_code
+        AND t2.status = '1'
+        AND t1.weixin_id = #{weixinId}
+        AND t1.channel_code = #{channelCode}
+        ORDER BY
+        t1.id DESC
+        LIMIT
+        1
+    </select>
+</mapper>

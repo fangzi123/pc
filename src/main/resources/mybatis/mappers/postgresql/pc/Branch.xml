@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.BranchDao">
+	<resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.Branch">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="CHAR" />
+		<result column="brand_id" property="brandId" jdbcType="BIGINT" />
+		<result column="address_id" property="addressId" jdbcType="BIGINT" />
+		<result column="property_type" property="propertyType" jdbcType="OTHER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="BIT" />
+		<result column="rank_group_id" property="rankGroupId" jdbcType="BIGINT" />
+		<result column="tagline" property="tagline" jdbcType="VARCHAR" />
+		<result column="amenity_group_id" property="amenityGroupId" jdbcType="BIGINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, brand_id, address_id, property_type, description, flag, rank_group_id,
+		tagline, amenity_group_id
+	</sql>
+
+	<sql id="Base_Column_List_Alias">
+		b.id, b.name, b.brand_id, b.address_id, b.property_type, b.description, b.flag, b.rank_group_id,
+		b.tagline, b.amenity_group_id
+	</sql>
+
+	<select id="findBranchById" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		branch
+		where
+		id = #{id}
+	</select>
+
+	<select id="findNearBranchsByBranchId" parameterType="java.util.Map" resultMap="BaseResultMap">
+
+	</select>
+
+	<resultMap type="com.micro.rent.pc.entity.vo.BranchVo" id="findByBrandIdWithPicResultMap" extends="BaseResultMap">
+		<result column="branch_id" property="branchId" jdbcType="BIGINT" />
+		<result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="OTHER" />
+		<result column="priority" property="priority" jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="findByBrandIdWithPic" parameterType="java.util.Map" resultMap="findByBrandIdWithPicResultMap">
+		select
+		<include refid="Base_Column_List_Alias" />
+		,
+		<include refid="com.micro.rent.pc.dao.Branch2picDao.Base_Column_List_Alias" />
+		from branch b, branch2pic bp
+		where bp.branch_id = b.id and b.brand_id = #{brandId}
+	</select>
+
+	<select id="findByBrandId" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List_Alias" />
+		from branch b
+		where b.brand_id = #{brandId}
+	</select>
+
+	<resultMap type="com.micro.rent.pc.entity.vo.BranchVo" id="DetailResultMap">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="CHAR" />
+		<result column="brand_id" property="brandId" jdbcType="BIGINT" />
+		<result column="address_id" property="addressId" jdbcType="BIGINT" />
+		<result column="property_type" property="propertyType" jdbcType="OTHER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="BIT" />
+		<result column="rank_group_id" property="rankGroupId" jdbcType="BIGINT" />
+		<result column="tagline" property="tagline" jdbcType="VARCHAR" />
+		<result column="amenity_group_id" property="amenityGroupId" jdbcType="BIGINT" />
+		<result column="pic_path" property="picPath" jdbcType="VARCHAR"/>
+		<result column="monthly_price" property="monthlyPrice" jdbcType="DECIMAL"/>
+
+        <association property="address" column="address_id" javaType="com.micro.rent.pc.entity.Address">
+			<id column="addr_id" jdbcType="BIGINT" property="id" />
+	        <result column="addr_country_id" jdbcType="VARCHAR" property="countryId" />
+	        <result column="addr_province_id" jdbcType="VARCHAR" property="provinceId" />
+	        <result column="addr_city_id" jdbcType="VARCHAR" property="cityId" />
+	        <result column="addr_district_id" jdbcType="VARCHAR" property="districtId" />
+	        <result column="addr_street" jdbcType="CHAR" property="street" />
+	        <result column="addr_building_no" jdbcType="CHAR" property="buildingNo" />
+	        <result column="addr_door_plate" jdbcType="CHAR" property="doorPlate" />
+	        <result column="addr_address" jdbcType="VARCHAR" property="address" />
+	        <result column="addr_point" jdbcType="OTHER" property="point" />
+	        <result column="addr_zoom_level" jdbcType="OTHER" property="zoomLevel" />
+	        <result column="addr_flag" jdbcType="BIT" property="flag" />
+	        <result column="addr_plot" jdbcType="VARCHAR" property="plot" />
+        </association>
+        
+        <association property="contact" column="c_branch_id" javaType="com.micro.rent.pc.entity.Contact">
+			<id column="c_id" property="id" jdbcType="BIGINT" />
+	        <result column="c_name" property="name" jdbcType="CHAR" />
+	        <result column="c_phone" property="phone" jdbcType="CHAR" />
+	        <result column="c_house_id" property="houseId" jdbcType="BIGINT" />
+	        <result column="c_branch_id" property="branchId" jdbcType="BIGINT" />
+	        <result column="c_project_id" property="projectId" jdbcType="BIGINT" />
+	        <result column="c_brand_id" property="brandId" jdbcType="BIGINT" />
+		</association>
+	</resultMap>
+
+	<select id="findDetailBrandId" parameterType="java.util.Map" resultMap="DetailResultMap">
+		SELECT
+		<include refid="Base_Column_List_Alias"/>,
+		addr.id addr_id, addr.country_id addr_country_id, addr.province_id addr_province_id, addr.city_id addr_city_id, 
+		addr.district_id addr_district_id, addr.street addr_street, addr.building_no addr_building_no,
+        addr.door_plate addr_door_plate, addr.address addr_address, addr.point addr_point, addr.zoom_level addr_zoom_level, 
+        addr.flag addr_flag, addr.plot addr_plot,
+		c.id c_id, c.name c_name, c.phone c_phone, c.house_id c_house_id, c.branch_id c_branch_id, c.project_id c_project_id,c.brand_id c_brand_id,
+		(
+		SELECT
+		bp.pic_path
+		FROM
+		branch2pic bp
+		WHERE
+		bp.branch_id = b.id
+		ORDER BY
+		bp.priority limit 1
+		) pic_path,
+		(
+		SELECT
+		pg.monthly_price::numeric
+		FROM
+		available_house_info ahi ,
+		price_group pg
+		WHERE
+		ahi.price_group_id = pg.id
+		AND ahi.branch_id = b.id
+		ORDER BY
+		monthly_price limit 1
+		) monthly_price
+		FROM branch b 
+		  left join address addr on b.address_id = addr.id
+		  left join contact c on c.branch_id = b.id
+		where b.brand_id = #{brandId}
+	</select>
+	
+	<resultMap type="com.micro.rent.pc.entity.vo.BranchVo" id="findNearbyBranchByAddressResultMap" extends="BaseResultMap">
+	</resultMap>
+	
+	<select id="findNearbyBranchByAddress" parameterType="java.util.Map" resultMap="findNearbyBranchByAddressResultMap">
+		select distinct <include refid="Base_Column_List_Alias"/>
+		from address a, branch b 
+		where a.id = b.address_id
+		and b.brand_id = #{brandId}
+		and a.point @circle'((${x},${y}),${distinct})'
+		limit 4
+	</select>
+</mapper>

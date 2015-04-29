@@ -1,0 +1,94 @@
+<project basedir="." name="rent">
+    <target name="init" description="init">
+        <property name="name" value="rental"/>
+        <property name="src" value="${basedir}/src/main/java"/>
+        <property name="resource" value="${basedir}/src/main/resources"/>
+        <property name="lib" value="${basedir}/src/main/webapp/WEB-INF/lib"/>
+        <property name="webapp" value="${basedir}/src/main/webapp"/>
+        <property name="build.src" value="${basedir}/AntBuild/rent/src"/>
+        <property name="build.dest" value="${basedir}/AntBuild/rent/WEB-INF/classes"/>
+        <property name="buildwar.dest" value="${basedir}/AntBuild/rent/"/>
+        <property name="build.javadocs" value="${basedir}/AntBuild/doc"/>
+        <property name="war.dest" value="${basedir}/AntBuild/war"/>
+
+        <path id="classpath">
+            <fileset dir="${lib}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </path>
+    </target>
+
+    <target name="prepare" depends="init" description="">
+        <mkdir dir="${build.src}"/>
+        <mkdir dir="${build.dest}"/>
+        <mkdir dir="${buildwar.dest}"/>
+
+        <mkdir dir="${war.dest}"/>
+        <copy todir="${build.src}">
+            <fileset dir="${src}"/>
+            <fileset dir="${resource}"/>
+        </copy>
+        <copy todir="${buildwar.dest}">
+            <fileset dir="${webapp}">
+                <exclude name="WEB-INF/classes/*-test.xml"/>
+                <exclude name="WEB-INF/lib/jsp-api.jar"/>
+                <exclude name="WEB-INF/lib/servlet-api.jar"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="build" depends="prepare" description="">
+        <!--
+        <javac srcdir="${build.src}" destdir="${build.dest}">
+            <compilerarg line="-encoding UTF-8"/>
+            <classpath refid="classpath"/>
+        </javac>
+        <copy todir="${build.dest}" overwrite="true">
+            <fileset dir="${build.src}">
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+                <exclude name="logback-test*"/>
+            </fileset>
+        </copy>
+        -->
+    </target>
+
+    <target name="antwar" depends="build" description="">
+        <delete dir="${build.src}"/>
+        <war warfile="${war.dest}/${name}.war" webxml="${buildwar.dest}/WEB-INF/web.xml" update="true">
+            <!--
+            <lib dir="${buildwar.dest}/WEB-INF/lib"/>
+            <classes dir="${build.dest}"/>
+            -->
+            <fileset dir="${webapp}">
+                <exclude name="WEB-INF/classes/*-test.xml"/>
+                <exclude name="WEB-INF/lib/jsp-api.jar"/>
+                <exclude name="WEB-INF/lib/servlet-api.jar"/>
+            </fileset>
+        </war>
+    </target>
+
+    <!-- <target name="publish" depends="antwar,clean" description="">
+        <copy todir="${tomcat.home}/webapps">
+            <fileset dir="${war.dest}">
+                <include name="**/*.war"/>
+            </fileset>
+        </copy>
+    </target>  -->
+
+    <target name="javadoc" depends="build" description="">
+        <mkdir dir="${build.javadocs}"/>
+        <javadoc packagenames="${packages}" sourcepath="${build.src}" destdir="${build.javadocs}" author="true"
+                 version="true" use="true" splitindex="true" windowtitle="${name} API" doctitle="${name}">
+            <classpath refid="classpath"/>
+        </javadoc>
+    </target>
+
+    <target name="clean" depends="init" description="">
+        <delete dir="${build.src}"/>
+        <delete>
+            <fileset dir="${build.dest}" includes="**/*.classes"/>
+        </delete>
+        <delete dir="${buildwar.dest}"/>
+    </target>
+</project>

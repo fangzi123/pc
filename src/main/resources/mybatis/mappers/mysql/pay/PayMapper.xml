@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.pay.WeixinPayDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.pay.Payment">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="trade_no" property="tradeNo" jdbcType="VARCHAR"/>
+        <result column="total_fee" property="totalFee" jdbcType="INTEGER"/>
+        <result column="pay_fee" property="payFee" jdbcType="INTEGER"/>
+        <result column="coupon_fee" property="couponFee" jdbcType="INTEGER"/>
+        <result column="bank_type" property="bankType" jdbcType="VARCHAR"/>
+        <result column="weixin_id" property="weixinId" jdbcType="VARCHAR"/>
+        <result column="is_subscribe" property="isSubscribe" jdbcType="VARCHAR"/>
+        <result column="transaction_id" property="transactionId" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <!-- 生成支付信息 -->
+    <insert id="insertPayment" parameterType="com.micro.rent.dbaccess.entity.pay.Payment">
+        INSERT INTO t_payment
+        (trade_no,
+        total_fee,
+        pay_fee,
+        coupon_fee,
+        bank_type,
+        weixin_id,
+        is_subscribe,
+        transaction_id,
+        create_time)
+        VALUES
+        (#{tradeNo},
+        #{totalFee},
+        #{payFee},
+        #{couponFee},
+        #{bankType},
+        #{weixinId},
+        #{isSubscribe},
+        #{transactionId},
+        #{createTime})
+    </insert>
+
+    <!-- 取得支付信息 -->
+    <select id="selectPaymentInfo" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        id,
+        trade_no,
+        total_fee,
+        pay_fee,
+        coupon_fee,
+        bank_type,
+        weixin_id,
+        is_subscribe,
+        transaction_id,
+        create_time
+        FROM
+        t_payment
+        WHERE
+        trade_no = #{tradeNo}
+    </select>
+</mapper>

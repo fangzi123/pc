@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <description>SpringMVC权限迁移部分</description>
+
+    <!-- url映射配置 -->
+    <bean id="publicUrlMapping"
+          class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <!-- 验证码 -->
+                <prop key="/captcha.img">captchaController</prop>
+                <!-- 身份验证 -->
+                <prop key="/secure/authentication.html">authenticationController</prop>
+                <prop key="/secure/unauthorized.html">unauthorizedController</prop>
+                <!-- 登录 -->
+                <prop key="/login.html">loginController</prop>
+                <!-- 默认登录后转向页面 -->
+                <prop key="/default.html">defaultController</prop>
+                <!-- 后台管理 -->
+                <prop key="/mt/menu/menu_read.html">setFuncMenuController</prop>
+                <prop key="/mt/resource/resource_read.html">setResourceController</prop>
+                <prop key="/mt/role/role_menu_read.html">roleMenuController</prop>
+                <prop key="/mt/role/role_resource_read.html">rroleResourceController</prop>
+                <prop key="/mt/user/user_read.html">userGroupController</prop>
+                <prop key="/mt/rgroup/rgroup_read.html">roleGroupController</prop>
+                <prop key="/mt/rgroup/rgroup_read.html">roleGroupController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 首页 -->
+    <!--请求参数配置，默认为action -->
+    <bean id="parameterMethodNameResolver"
+          class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+        <property name="paramName" value="opt"/>
+        <!-- 映射方法名称 -->
+        <property name="logicalMappings">
+            <props>
+                <prop key="s1000">defaultDisplay</prop>
+
+                <prop key="s2000">resourceDisplay</prop>
+                <prop key="s2001">resourceCreateDisplay</prop>
+                <prop key="s2002">resourceCreate</prop>
+                <prop key="s2003">resourcePersistenceDisplay</prop>
+                <prop key="s2004">resourceUpdate</prop>
+                <prop key="s2005">resourceDelete</prop>
+
+                <prop key="s3000">menuDisplay</prop>
+                <prop key="s3001">menuPersistenceDisplay</prop>
+                <prop key="s3002">menuCreate</prop>
+                <prop key="s3004">menuUpdate</prop>
+                <prop key="s3005">menuDelete</prop>
+
+                <prop key="s4000">roleMenuDisplay</prop>
+                <prop key="s4001">roleMenuPersistenceDisplay</prop>
+                <prop key="s4002">roleMenuCreate</prop>
+                <prop key="s4003">roleMenuUpdate</prop>
+                <prop key="s4004">roleMenuDelete</prop>
+
+                <prop key="s6000">roleResourceDisplay</prop>
+                <prop key="s6001">roleResourcePersistenceDisplay</prop>
+                <prop key="s6002">roleResourceCreate</prop>
+                <prop key="s6003">roleResourceUpdate</prop>
+                <prop key="s6004">roleResourceDelete</prop>
+
+                <prop key="s7000">userGroupDisplay</prop>
+                <prop key="s7001">userPersistenceDisplay</prop>
+                <prop key="s7002">userGroupCreate</prop>
+                <prop key="s7003">userGroupUpdate</prop>
+                <prop key="s7004">userGroupDelete</prop>
+
+                <prop key="s5000">roleGroupDisplay</prop>
+                <prop key="s5001">groupPersistenceDisplay</prop>
+                <prop key="s5002">groupCreate</prop>
+                <prop key="s5003">groupUpdate</prop>
+                <prop key="s5004">groupDelete</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <!-- Controller抽象基类 -->
+    <bean id="baseController" class="com.micro.rent.common.web.controller._BaseController" abstract="true">
+        <!-- 方法名称解析器 -->
+        <property name="methodNameResolver" ref="parameterMethodNameResolver"/>
+        <!-- 候选日期模式 -->
+        <property name="candidateDatePatterns">
+            <list>
+                <value>yyyy-MM-dd</value>
+                <value>yyyy-MM-dd HH:mm:ss</value>
+                <value>yyyyMMdd</value>
+                <value>yyyy/MM/dd</value>
+                <value>yyyy.MM.dd</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 登录页面 -->
+    <bean id="loginController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+        <property name="viewName" value="login"/>
+    </bean>
+
+    <bean id="userGroupController"
+          class="com.micro.rent.biz.shiro.web.UserGroupController"
+          parent="baseController">
+        <property name="userGroupService" ref="userGroupService"/>
+    </bean>
+
+    <!-- 身份验证 -->
+    <bean id="authenticationController"
+          class="com.micro.rent.biz.shiro.web.AuthenticationController"
+          parent="baseController">
+        <property name="usernameParamName" value="username"/>
+        <property name="passwordnameParamName" value="password"/>
+        <property name="captchaParamName" value="captcha"/>
+        <property name="captchaService" ref="captchaService"/>
+    </bean>
+
+    <!-- 未授权 -->
+    <bean id="unauthorizedController"
+          class="com.micro.rent.biz.shiro.web.UnauthorizedController"
+          parent="baseController"/>
+
+    <!-- 验证码 -->
+    <bean id="captchaController"
+          class="com.micro.rent.biz.shiro.web.CaptchaController"
+          parent="baseController">
+        <property name="captchaService" ref="captchaService"/>
+    </bean>
+
+    <bean id="setResourceController"
+          class="com.micro.rent.biz.shiro.web.SetResourceController"
+          parent="baseController">
+        <property name="setResourceService" ref="setResourceService"/>
+        <property name="shiroService" ref="shiroService"/>
+    </bean>
+    <bean id="setFuncMenuController"
+          class="com.micro.rent.biz.shiro.web.SetFuncMenuController"
+          parent="baseController">
+        <property name="setFuncMenuService" ref="setFuncMenuService"/>
+    </bean>
+    <bean id="rroleResourceController"
+          class="com.micro.rent.biz.shiro.web.RroleResourceController"
+          parent="baseController">
+        <property name="rroleResourceService" ref="rroleResourceService"/>
+        <property name="setResourceService" ref="setResourceService"/>
+    </bean>
+    <bean id="roleMenuController"
+          class="com.micro.rent.biz.shiro.web.RoleMenuController"
+          parent="baseController">
+        <property name="roleMenuService" ref="roleMenuService"/>
+        <property name="setFuncMenuService" ref="setFuncMenuService"/>
+    </bean>
+    <bean id="roleGroupController"
+          class="com.micro.rent.biz.shiro.web.RoleGroupController"
+          parent="baseController">
+        <property name="roleGroupSerivce" ref="roleGroupSerivce"/>
+    </bean>
+    <bean id="defaultController" class="com.micro.rent.biz.defaults.web.DefaultController"/>
+</beans>

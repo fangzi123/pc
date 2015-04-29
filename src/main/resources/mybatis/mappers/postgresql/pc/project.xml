@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.entity.vo.Project" >
+  <resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.Project" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="brand_id" property="brandId" jdbcType="BIGINT" />
+    <result column="branch_id" property="branchId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="CHAR" />
+    <result column="address_id" property="addressId" jdbcType="BIGINT" />
+    <result column="property_type" property="propertyType" jdbcType="OTHER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="BIT" />
+    <result column="rank_group_id" property="rankGroupId" jdbcType="BIGINT" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="tagline" property="tagline" jdbcType="VARCHAR" />
+    <result column="amenity_group_id" property="amenityGroupId" jdbcType="BIGINT" />
+    <result column="total_house_number" property="totalHouseNumber" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, brand_id, branch_id, name, address_id, property_type, description, flag, rank_group_id, 
+    logo, tagline, amenity_group_id, total_house_number
+  </sql>
+
+</mapper>

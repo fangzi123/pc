@@ -1,0 +1,55 @@
+.spn-txt {
+    position: relative;
+    left: -45%;
+    color: #FFFFFF;
+    font-size: 1.3em;
+}
+
+#spn-img {
+    position: absolute;
+    z-index: 99;
+    margin-top: -50%;
+    margin-left: 30%;
+}
+
+#sec-02 {
+    margin-top: 1em;
+}
+
+.p-txt {
+    font-size: 1em;
+    color: #221714;
+}
+
+#sec-03 {
+    margin-top: 1em;
+}
+
+#sec-04 {
+    margin-top: 1em;
+}
+
+.spn-br {
+    display: block;
+}
+
+#p-top {
+    margin-top: 1em;
+}
+
+.spn-footer {
+    position: relative;
+    top: -9.2em;
+    margin-left: 25%;
+}
+
+.spn-right {
+    margin-left: 15%;
+    color: #3E3A39;
+    font-size: 0.9em;
+}
+
+#spn_r {
+    margin-left: 25%;
+    font-size: 0.7em;
+}

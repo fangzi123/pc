@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.CommunityDao">
+	<resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.Community">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="CHAR" />
+		<!-- result column="parent_id" property="parentId" jdbcType="BIGINT" /-->
+		<result column="address_id" property="addressId" jdbcType="BIGINT" />
+		<result column="total_number" property="totalNumber" jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="BIT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, name, address_id, total_number, description, flag
+	</sql>
+
+    <sql id="Base_Column_List_Alias">
+        c.id, c.name, c.address_id, c.total_number, c.description, c.flag
+    </sql>
+
+    <select id="findByHouseId" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select 
+            <include refid="Base_Column_List_Alias"/>
+        from house2community hc, community c, house h
+        where hc.community_id = c.id
+        and hc.branch_id = h.branch_id
+        and h.id = #{houseId}
+    </select>
+    
+    <select id="findById" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select 
+            <include refid="Base_Column_List"/>
+        from community
+        where id=#{id}        
+    </select>
+</mapper>

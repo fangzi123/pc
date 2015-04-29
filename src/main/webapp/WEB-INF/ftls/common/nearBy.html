@@ -1,0 +1,116 @@
+<div class="fujin">
+	<div class="fangyuan">
+		<h1>附近房源</h1>
+		<!--h1-->
+		<!--             <img src="img/tiao.jpg" alt=""/> -->
+	</div>
+	<!--fangyuan-->
+	<#if nearBrandVoList ? exists>
+	<div class="recomd-brands">
+		<#if (nearBrandVoList ? size > 3)>
+		<!-- 每个品牌各一个 -->
+		<#list nearBrandVoList as t>
+		<#if t.branchList ? exists><#list t.branchList as branchVo><#if branchVo.availableHouseInfoList ? exists><#list branchVo.availableHouseInfoList as availableHouseInfoVo>
+		<div class="brand">
+			<div class="brand-pic opacity-bg-ie opacity-bg-ie-dyn">
+				<img src="${rc.contextPath}/images/house/${availableHouseInfoVo.picPath}" />
+				<div class="cover">
+					<p>
+						${branchVo.name}</br><span><b>${availableHouseInfoVo.layout}</b>|<b>${availableHouseInfoVo.area}㎡</b></span></br><strong>${availableHouseInfoVo.priceGroup.monthlyPrice}元/月</strong></br>
+					</p>
+					<a class="xiangqing" houseId="${availableHouseInfoVo.houseId}" branchId="${branchVo.id}" availableHouseInfoId="${availableHouseInfoVo.id}">详情</a>
+				</div>
+			</div>
+		</div>
+		<#break></#list></#if><#break></#list></#if>
+		</#list>
+		
+		<#elseif nearBrandVoList?size == 3>
+		
+		<!-- 第一个品牌两个其他两个品牌各一个 -->
+		<#list nearBrandVoList as t>
+		<#if t_index == 0>
+		<#if t.branchList ? exists><#list t.branchList as branchVo><#if branchVo.availableHouseInfoList ? exists><#list branchVo.availableHouseInfoList as availableHouseInfoVo>
+		<div class="brand">
+			<div class="brand-pic">
+				<img src="${rc.contextPath}/images/house/${availableHouseInfoVo.picPath}" />
+				<div class="cover">
+					<p>
+						${branchVo.name}</br><span><b>${availableHouseInfoVo.layout}</b>|<b>${availableHouseInfoVo.area}㎡</b></span></br><strong>${availableHouseInfoVo.priceGroup.monthlyPrice}元/月</strong></br>
+					</p>
+					<a class="xiangqing" houseId="${availableHouseInfoVo.houseId}" branchId="${branchVo.id}" availableHouseInfoId="${availableHouseInfoVo.id}">详情</a>
+				</div>
+			</div>
+		</div>
+		<#break></#list></#if><#if branchVo_index == 1><#break></#if></#list></#if>
+		<#else>
+		<#if t.branchList ? exists><#list t.branchList as branchVo><#if branchVo.availableHouseInfoList ? exists><#list branchVo.availableHouseInfoList as availableHouseInfoVo>
+		<div class="brand">
+			<div class="brand-pic">
+				<img src="${rc.contextPath}/images/house/${availableHouseInfoVo.picPath}" />
+				<div class="cover">
+					<p>
+						${branchVo.name}</br><span><b>${availableHouseInfoVo.layout}</b>|<b>${availableHouseInfoVo.area}㎡</b></span></br><strong>${availableHouseInfoVo.priceGroup.monthlyPrice}元/月</strong></br>
+					</p>
+					<a class="xiangqing" houseId="${availableHouseInfoVo.houseId}" branchId="${branchVo.id}" availableHouseInfoId="${availableHouseInfoVo.id}">详情</a>
+				</div>
+			</div>
+		</div>
+		<#break></#list></#if><#break></#list></#if>
+		</#if>
+		</#list>
+		
+		<#elseif nearBrandVoList?size == 2>
+		
+		<!-- 每个品牌各两个 -->
+		<#list nearBrandVoList as t>
+		<#if t.branchList ? exists><#list t.branchList as branchVo><#if branchVo.availableHouseInfoList ? exists><#list branchVo.availableHouseInfoList as availableHouseInfoVo>
+		<div class="brand">
+			<div class="brand-pic">
+				<img src="${rc.contextPath}/images/house/${availableHouseInfoVo.picPath}" />
+				<div class="cover">
+					<p>
+						${branchVo.name}</br><span><b>${availableHouseInfoVo.layout}</b>|<b>${availableHouseInfoVo.area}㎡</b></span></br><strong>${availableHouseInfoVo.priceGroup.monthlyPrice}元/月</strong></br>
+					</p>
+					<a class="xiangqing" houseId="${availableHouseInfoVo.houseId}" branchId="${branchVo.id}" availableHouseInfoId="${availableHouseInfoVo.id}">详情</a>
+				</div>
+			</div>
+		</div>
+		<#break></#list></#if><#if branchVo_index == 1><#break></#if></#list></#if>
+		</#list>
+		
+		<#elseif nearBrandVoList?size == 1>
+		
+		<#list nearBrandVoList as t>
+		<#if t.branchList ? exists><#list t.branchList as branchVo><#if branchVo.availableHouseInfoList ? exists><#list branchVo.availableHouseInfoList as availableHouseInfoVo>
+		<div class="brand">
+			<div class="brand-pic">
+				<img src="${rc.contextPath}/images/house/${availableHouseInfoVo.picPath}" />
+				<div class="cover">
+					<p>
+						${branchVo.name}</br><span><b>${availableHouseInfoVo.layout}</b>|<b>${availableHouseInfoVo.area}㎡</b></span></br><strong>${availableHouseInfoVo.priceGroup.monthlyPrice}元/月</strong></br>
+					</p>
+					<a class="xiangqing" houseId="${availableHouseInfoVo.houseId}" branchId="${branchVo.id}" availableHouseInfoId="${availableHouseInfoVo.id}">详情</a>
+				</div>
+			</div>
+		</div>
+		<#break></#list></#if><#if branchVo_index == 3><#break></#if></#list></#if>
+		</#list>
+		
+		</#if>
+	</div>
+	</#if>
+</div>
+
+<script type='text/javascript'>
+var contextPath = "${rc.contextPath}";
+$(function(){
+	
+	
+	
+    $(".xiangqing").on("click", function(){
+    	location.href = contextPath + "/house/findHouseDetail?houseId=" + this.getAttribute("houseId");
+    });
+    
+});
+</script>

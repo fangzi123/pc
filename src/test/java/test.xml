@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<DirectionBusTransResponse>
+    <status>0</status>
+    <message>ok</message>
+    <type>2</type>
+    <info>
+        <copyright>
+            <text>@2014 Baidu - Data</text>
+            <imageUrl>http://api.map.baidu.com/images/copyright_logo.png
+            </imageUrl>
+        </copyright>
+    </info>
+
+    <result>
+        <scheme>
+            <distance>7822</distance>
+            <duration>2678</duration>
+            <steps>
+
+                <info>
+                    <distance>58</distance>
+                    <duration>58</duration>
+                    <path>121.49745332412,31.179191047369</path>
+                    <type>5</type>
+                    <stepOriginLocation>
+                        <lng>121.49748206989</lng>
+                        <lat>31.179075962518</lat>
+                    </stepOriginLocation>
+                    <stepDestinationLocation>
+                        <lng>121.49688802046</lng>
+                        <lat>31.179013862982</lat>
+                    </stepDestinationLocation>
+                    <stepInstruction>步行58米,到达&lt;font
+                        color=&quot;0x000000&quot;&gt;昌里路长清路站&lt;/font&gt;
+                    </stepInstruction>
+                </info>
+
+
+                <info>
+                    <distance>7360</distance>
+                    <duration>1616</duration>
+                    <path>121.49687221028,31.179078897569</path>
+                    <type>3</type>
+                    <vehicle>
+                        <end_name>东方路峨山路站</end_name>
+                        <end_time>22:00</end_time>
+                        <end_uid>40654724569cfe9301294fc0</end_uid>
+                        <name>871路</name>
+                        <start_name>昌里路长清路站</start_name>
+                        <start_time>05:30</start_time>
+                        <start_uid>cb147d54c81c7e1ded74f812</start_uid>
+                        <stop_num>13</stop_num>
+                        <total_price>0</total_price>
+                        <type>0</type>
+                        <uid>abfb7ac0bdf8bae8b6f42faf</uid>
+                        <zone_price>0</zone_price>
+                    </vehicle>
+                    <stepOriginLocation>
+                        <lng>121.49688802046</lng>
+                        <lat>31.179013862982</lat>
+                    </stepOriginLocation>
+                    <stepDestinationLocation>
+                        <lng>121.53605396103</lng>
+                        <lat>31.222334893624</lat>
+                    </stepDestinationLocation>
+                    <stepInstruction>乘坐&lt;b&gt;&lt;font
+                        color=&quot;0x000000&quot;&gt;871路&lt;/font&gt;&lt;/b&gt;,经过13站,到达&lt;font
+                        color=&quot;0x000000&quot;&gt;东方路峨山路站&lt;/font&gt;
+                    </stepInstruction>
+                </info>
+
+
+                <info>
+                    <distance>404</distance>
+                    <duration>404</duration>
+                    <path>121.53605351188,31.222334816422</path>
+                    <type>5</type>
+                    <stepOriginLocation>
+                        <lng>121.53605396103</lng>
+                        <lat>31.222334893624</lat>
+                    </stepOriginLocation>
+                    <stepDestinationLocation>
+                        <lng>121.53817530949</lng>
+                        <lat>31.222798030529</lat>
+                    </stepDestinationLocation>
+                    <stepInstruction>步行404米,到达&lt;font
+                        color=&quot;0x000000&quot;&gt;终点站&lt;/font&gt;</stepInstruction>
+                </info>
+
+            </steps>
+        </scheme>
+        <scheme>
+            <distance>8215</distance>
+            <duration>2310</duration>
+            <steps>
+
+                <info>
+                    <distance>502</distance>
+                    <duration>502</duration>
+                    <path>121.49526774681,31.178796359808</path>
+                    <type>5</type>
+                    <stepOriginLocation>
+                        <lng>121.49530817056</lng>
+                        <lat>31.178627979873</lat>
+                    </stepOriginLocation>
+                    <stepDestinationLocation>
+                        <lng>121.4926452337</lng>
+                        <lat>31.18033045701</lat>
+                    </stepDestinationLocation>
+                    <stepInstruction>步行502米,到达&lt;font
+                        color=&quot;0x000000&quot;&gt;长清路站&lt;/font&gt;</stepInstruction>
+                </info>
+
+
+                <info>
+                    <distance>2647</distance>
+                    <duration>340</duration>
+                    <path>121.4926452337,31.18033045701</path>
+                    <type>3</type>
+                    <vehicle>
+                        <end_name>高科西路站</end_name>
+                        <end_time>22:00</end_time>
+                        <end_uid>7700131cfc56794e0582c247</end_uid>
+                        <name>地铁7号线</name>
+                        <start_name>长清路站</start_name>
+                        <start_time>06:00</start_time>
+                        <start_uid>9364b8acefe223dd0a1cc747</start_uid>
+                        <stop_num>3</stop_num>
+                        <total_price>0</total_price>
+                        <type>1</type>
+                        <uid>beb059d6f7fadd4ea4da3940</uid>
+                        <zone_price>0</zone_price>
+                    </vehicle>
+                    <stepOriginLocation>
+                        <lng>121.4926452337</lng>
+                        <lat>31.18033045701</lat>
+                    </stepOriginLocation>
+                    <stepDestinationLocation>
+                        <lng>121.5163958924</lng>
+                        <lat>31.191286140878</lat>
+                    </stepDestinationLocation>
+                    <stepInstruction>乘坐&lt;b&gt;&lt;font
+                        color=&quot;0x000000&quot;&gt;地铁7号线(花木路方向)&lt;/font&gt;&lt;/b&gt;,经过3站,到达&lt;font
+                        color=&quot;0x000000&quot;&gt;高科西路站&lt;/font&gt;</stepInstruction>
+                </info>
+
+
+                <info>
+                    <distance>0</distance>
+                    <duration>0</duration>
+                    <path>121.51638780765,31.191278804204</path>
+                    <type>5</type>
+                    <stepOriginLocation>
+                        <lng>121.5163958924</lng>
+                        <lat>31.191286140878</lat>
+                    </stepOriginLocation>
+                    <stepDestinationLocation>
+                        <lng>121.5163958924</lng>
+                        <lat>31.191286140878</lat>
+                    </stepDestinationLocation>
+                    <stepInstruction>站内换乘 地铁6号线(港城路方向)</stepInstruction>
+                </info>
+
+
+                <info>
+                    <distance>4426</distance>
+                    <duration>528</duration>
+                    <path>121.51639571274,31.191286140878</path>
+                    <type>3</type>
+                    <vehicle>
+                        <end_name>浦电路站</end_name>
+                        <end_time>22:30</end_time>
+                        <end_uid>a89f93f1819df2b3606858d9</end_uid>
+                        <name>地铁6号线</name>
+                        <start_name>高科西路站</start_name>
+                        <start_time>05:30</start_time>
+                        <start_uid>a26de02d9f0580f47bb55cd9</start_uid>
+                        <stop_num>4</stop_num>
+                        <total_price>0</total_price>
+                        <type>1</type>
+                        <uid>0e27a9a86ef8036b32f71db7</uid>
+                        <zone_price>0</zone_price>
+                    </vehicle>
+                    <stepOriginLocation>
+                        <lng>121.5163958924</lng>
+                        <lat>31.191286140878</lat>
+                    </stepOriginLocation>
+                    <stepDestinationLocation>
+                        <lng>121.53545676753</lng>
+                        <lat>31.226049651829</lat>
+                    </stepDestinationLocation>
+                    <stepInstruction>乘坐&lt;b&gt;&lt;font
+                        color=&quot;0x000000&quot;&gt;地铁6号线(港城路方向)&lt;/font&gt;&lt;/b&gt;,经过4站,到达&lt;font
+                        color=&quot;0x000000&quot;&gt;浦电路站&lt;/font&gt;( 3号口出)
+                    </stepInstruction>
+                </info>
+
+
+                <info>
+                    <distance>640</distance>
+                    <duration>640</duration>
+                    <path>121.53545164719,31.22604355307</path>
+                    <type>5</type>
+                    <stepOriginLocation>
+                        <lng>121.53545676753</lng>
+                        <lat>31.226049651829</lat>
+                    </stepOriginLocation>
+                    <stepDestinationLocation>
+                        <lng>121.53817530949</lng>
+                        <lat>31.222798030529</lat>
+                    </stepDestinationLocation>
+                    <stepInstruction>步行640米,到达&lt;font
+                        color=&quot;0x000000&quot;&gt;终点站&lt;/font&gt;</stepInstruction>
+                </info>
+
+            </steps>
+        </scheme>
+
+        <origin>
+            <originPt>
+                <lng>121.49528122139</lng>
+                <lat>31.177569805471</lat>
+            </originPt>
+        </origin>
+        <destination>
+            <destinationPt>
+                <lng>121.53817530949</lng>
+                <lat>31.222798030529</lat>
+            </destinationPt>
+        </destination>
+        <taxi>
+            <detail>
+                <desc>白天（05:00-23:00）</desc>
+                <km_price>2.4</km_price>
+                <start_price>14.0</start_price>
+                <total_price>26</total_price>
+                <desc>夜间（23:00-05:00）</desc>
+                <km_price>3.1</km_price>
+                <start_price>18.0</start_price>
+                <total_price>33</total_price>
+
+            </detail>
+            <distance>7222</distance>
+            <duration>1187</duration>
+            <remark>全程7.2公里;3.0公里起步；燃油附加费1.0元；里程超过10.0公里，超过部分每公里收3.6元。</remark>
+        </taxi>
+    </result>
+</DirectionBusTransResponse>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.TenantDao">
+
+    <select id="queryByKey" parameterType="Tenant" resultType="Tenant">
+        select
+        id,
+        flag
+        from tenant
+        where get_bit(flag, 0)='1'
+        <choose>
+            <when test="mobile!=null">and mobile=#{mobile}</when>
+            <when test="nickname!=null">and nickname=#{nickname}</when>
+            <when test="id!=null">and id=#{id}</when>
+            <otherwise>and 1=0</otherwise> 
+        </choose>
+    </select>
+
+    <insert id="saveTenant" parameterType="Tenant" keyProperty="id"
+        useGeneratedKeys="true">
+        insert into tenant(
+        name,
+        <if test="nickname!=null">nickname,</if>
+        <if test="email!=null">email,</if>
+        <if test="mobile!=null">mobile,</if>
+        <if test="gender!=null">gender,</if>
+        password,
+        created_time,
+        flag
+        ) values(
+        #{name},
+        <if test="nickname!=null">#{nickname},</if>
+        <if test="email!=null">#{email},</if>
+        <if test="mobile!=null">#{mobile},</if>
+        <if test="gender!=null">#{gender},</if>
+        #{password},
+        now(),
+        #{flag}::bit(64)
+        )
+    </insert>
+
+    <insert id="saveTenantOrder" parameterType="TenantOrder"
+        keyProperty="id" useGeneratedKeys="true">
+        insert into tenant_order(
+        type,
+        tenant_id,
+        house_id,
+        name,
+        mobile,
+        visiting_time,
+        status,
+        created_time
+        ) 
+        (select 
+        #{type}::tenant_order_type_enum,
+        0,
+        #{houseId},
+        #{name},
+        #{mobile},
+        #{visitingTime},
+        #{status}::tenant_order_status_enum,
+        now()
+        where not EXISTS(
+        SELECT
+            id
+        FROM
+            tenant_order
+        WHERE
+        get_bit(flag, 0)='1'
+        and house_id=#{houseId}
+        and mobile=#{mobile}
+        and type='预约'
+        and status='正常' 
+        limit 1)
+        )
+    </insert>
+
+    <select id="queryByTenantIdAndHouseId" parameterType="TenantOrder" resultType="TenantOrder">
+        select
+        id,
+        status,
+        flag
+        from tenant_order
+        where
+        get_bit(flag, 0)='1'
+        and house_id=#{houseId}
+        and mobile=#{mobile}
+        ORDER BY created_time desc limit 1
+    </select>
+
+    <update id="updatePasswordByMobile" parameterType="TenantOrder">
+        update tenant
+        set
+        password=#{password}
+        where mobile=#{mobile}
+    </update>
+    
+    <update id="updateTenantInfoByMobile" parameterType="Tenant">
+        UPDATE tenant 
+		SET 
+		  nickname = #{nickname}
+		, name = #{name}
+		, gender = #{gender}::gender_enum
+		, birthday = to_date(#{birthday}, 'YYYY/MM/DD')
+		, email = #{email}
+		, password = #{password}
+		where mobile=#{mobile}
+    </update>
+    
+    <update id="deleteTenant" parameterType="java.lang.String">
+        UPDATE tenant 
+		SET 
+		  flag = cast(0 as bit(64))
+		where mobile=#{1}
+    </update>
+    
+     <select id="searchTenantInfo" parameterType="Tenant" resultType="Tenant">
+        select 
+            id
+           ,weixin_id as weixinId
+           ,nickname
+           ,name
+           ,email
+           ,mobile
+           ,gender
+           ,password
+           ,flag
+           ,head_img as headImg
+           ,address_id as addressId
+           ,birthday
+        from tenant
+        <where>
+            get_bit(flag, 0)='1'
+            <if test="id !=null and id != ''">
+                AND id = #{id}
+            </if>
+            <if test="weixinId !=null and weixinId != ''">
+                AND weixin_Id = #{weixinId}
+            </if>
+            <if test="name !=null and name != ''">
+                AND name = #{name}
+            </if>
+            <if test="nickname !=null and nickname != ''">
+                AND nickname = #{nickname}
+            </if>
+            <if test="mobile !=null and mobile != ''">
+                AND mobile = #{mobile}
+            </if>
+        </where>
+    </select>
+</mapper>

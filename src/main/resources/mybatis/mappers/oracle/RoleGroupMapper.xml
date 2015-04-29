@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.RoleGroupDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.RoleGroup">
+        <result column="GROUP_ID" property="groupId" jdbcType="DECIMAL"/>
+        <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR"/>
+        <result column="ROLE_TYPE" property="roleType" jdbcType="VARCHAR"/>
+        <result column="ROLE_ID" property="roleId" jdbcType="DECIMAL"/>
+        <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ROLE_ID, RGROUP_ID, ROLE_NAME, RGROUP_NAME
+    </sql>
+
+    <!-- 查询分页记录 -->
+    <select id="queryPaged" parameterType="com.micro.rent.common.comm.nmybatis.Page" resultMap="BaseResultMap">
+
+        SELECT * FROM(
+        SELECT
+        SRG.RGROUP_ID AS GROUP_ID,
+        SRG.RGROUP_NAME AS GROUP_NAME,
+        'FUNC' AS ROLE_TYPE,
+        SFR.FUNC_ROLE_ID AS ROLE_ID,
+        SFR.FUNC_ROLE_NAME AS ROLE_NAME
+        FROM
+        SET_ROLE_GROUP SRG
+        INNER JOIN
+        SET_RGROUP_FROLE SRF
+        ON
+        SRG.RGROUP_ID = SRF.RGROUP_ID
+        INNER JOIN
+        SET_FUNC_ROLE SFR
+        ON
+        SFR.FUNC_ROLE_ID = SRF.FUNC_ROLE_ID
+        UNION ALL
+        SELECT
+        SRG.RGROUP_ID AS GROUP_ID,
+        SRG.RGROUP_NAME AS GROUP_NAME,
+        'RESOURCE' AS ROLE_TYPE,
+        SRR2.RESOURCE_ROLE_ID AS ROLE_ID,
+        SRR2.RESOURCE_ROLE_NAME AS ROLE_NAME
+        FROM
+        SET_ROLE_GROUP SRG
+        INNER JOIN
+        SET_RGROUP_RROLE SRR
+        ON
+        SRG.RGROUP_ID = SRR.RGROUP_ID
+        INNER JOIN
+        SET_RESOURCE_ROLE SRR2
+        ON
+        SRR2.RESOURCE_ROLE_ID = SRR.RESOURCE_ROLE_ID
+        )
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="params.groupName != null and !''.equals(params.groupName)">
+                AND GROUP_NAME LIKE '%'||#{params.groupName}||'%'
+            </if>
+        </trim>
+    </select>
+
+    <!-- 查询记录总数 -->
+    <select id="queryTotalCount" resultType="int" parameterType="map">
+        <![CDATA[
+				SELECT COUNT(1) FROM(
+				SELECT
+				    SRG.RGROUP_ID      AS GROUP_ID,
+				    SRG.RGROUP_NAME    AS GROUP_NAME,
+				    'FUNC'             AS ROLE_TYPE,
+				    SFR.FUNC_ROLE_ID   AS ROLE_ID,
+				    SFR.FUNC_ROLE_NAME AS ROLE_NAME
+				FROM
+				    SET_ROLE_GROUP SRG
+				INNER JOIN
+				    SET_RGROUP_FROLE SRF
+				ON
+				    SRG.RGROUP_ID = SRF.RGROUP_ID
+				INNER JOIN
+				    SET_FUNC_ROLE SFR
+				ON
+				    SFR.FUNC_ROLE_ID = SRF.FUNC_ROLE_ID
+				UNION ALL
+				SELECT
+				    SRG.RGROUP_ID           AS GROUP_ID,
+				    SRG.RGROUP_NAME         AS GROUP_NAME,
+				    'RESOURCE'              AS ROLE_TYPE,
+				    SRR2.RESOURCE_ROLE_ID   AS ROLE_ID,
+				    SRR2.RESOURCE_ROLE_NAME AS ROLE_NAME
+				FROM
+				    SET_ROLE_GROUP SRG
+				INNER JOIN
+				    SET_RGROUP_RROLE SRR
+				ON
+				    SRG.RGROUP_ID = SRR.RGROUP_ID
+				INNER JOIN
+				    SET_RESOURCE_ROLE SRR2
+				ON
+				    SRR2.RESOURCE_ROLE_ID = SRR.RESOURCE_ROLE_ID
+				)
+		]]>
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="groupName != null and !''.equals(groupName)">
+                AND GROUP_NAME LIKE '%'||#{groupName}||'%'
+            </if>
+        </trim>
+    </select>
+
+</mapper>

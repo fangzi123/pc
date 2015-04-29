@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.personal.FavoritesDao">
+
+    <resultMap id="BaseResultMap"
+               type="com.micro.rent.dbaccess.entity.personal.Favorites">
+        <id column="T_Collect_ID" property="tCollectionId" jdbcType="VARCHAR"/>
+        <result column="Project_ID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="HOUSE_ID" property="houseId" jdbcType="VARCHAR"/>
+        <result column="Weixin_ID" property="weixinId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="houseMap" type="com.micro.rent.biz.personal.vo.HouseVo">
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+
+        <result column="community_Name" property="communityName"
+                jdbcType="VARCHAR"/>
+
+        <result column="Building_NO" property="buildingNo" jdbcType="VARCHAR"/>
+        <result column="Room_Number" property="roomNumber" jdbcType="VARCHAR"/>
+        <result column="layout" property="layout" jdbcType="VARCHAR"/>
+        <result column="renovation" property="renovation" jdbcType="VARCHAR"/>
+        <result column="LONG_PRICE" property="longPrice" jdbcType="DECIMAL"/>
+        <result column="USE_AREA" property="useArea" jdbcType="DECIMAL"/>
+        <result column="latitude" property="latitude" jdbcType="DECIMAL"/>
+        <result column="longitude" property="longitude" jdbcType="DECIMAL"/>
+        <result column="weixin_id" property="weixinId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryFavoritesByHouseIdAndWeixinId"
+            parameterType="string" resultMap="BaseResultMap">
+        select
+        T_Collect_ID,Project_ID,HOUSE_ID,Weixin_ID
+        from T_Collect
+        where
+        HOUSE_ID
+        = #{houseId} and Weixin_ID = #{weixinId}
+    </select>
+
+    <insert id="addCollect" parameterType="com.micro.rent.dbaccess.entity.personal.Favorites">
+        INSERT INTO T_Collect
+        (T_Collect_ID,Project_ID,HOUSE_ID,Weixin_ID)
+        VALUES(#{tCollectionId},#{projectId},#{houseId},#{weixinId})
+    </insert>
+
+    <delete id="deleteCollect">
+        delete from T_Collect where HOUSE_ID = #{houseId} and
+        Weixin_ID = #{weixinId}
+    </delete>
+
+    <!-- 查询 收藏列表 -->
+    <resultMap id="favoritiesMap"
+               type="com.micro.rent.dbaccess.entity.myrent.HouseInfo">
+        <result column="Weixin_ID" property="weixinId" jdbcType="VARCHAR"/>
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+        <result column="Project_ID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="T_House_ID" property="tHouseId" jdbcType="VARCHAR"/>
+        <result column="Community_Name" property="communityName"
+                jdbcType="VARCHAR"/>
+        <result column="Doorplate" property="doorplate" jdbcType="VARCHAR"/>
+        <result column="Building_NO" property="buildingNo" jdbcType="VARCHAR"/>
+        <result column="Room_Number" property="roomNumber" jdbcType="VARCHAR"/>
+        <result column="layout" property="layout" jdbcType="VARCHAR"/>
+        <result column="Hall_Quantity" property="hallQuantity"
+                jdbcType="INTEGER"/>
+        <result column="Toilet_Quantity" property="toiletQuantity"
+                jdbcType="INTEGER"/>
+        <result column="Floor" property="floor" jdbcType="DECIMAL"/>
+        <result column="Total_Floor" property="totalFloor" jdbcType="DECIMAL"/>
+        <result column="Long_Price" property="longPrice" jdbcType="DECIMAL"/>
+        <result column="Short_Price" property="shortPrice" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="queryFavoritesList" parameterType="string"
+            resultMap="favoritiesMap">
+        select
+        Weixin_ID,T_House_ID,H.House_ID,H.Project_ID,H.Community_Name,Doorplate,Building_NO,Room_Number,
+        layout,Hall_Quantity,Toilet_Quantity,Floor,Total_Floor,Total_Floor,Long_Price,Short_Price
+        from T_Collect A, T_House H
+        WHERE A.House_ID = H.House_ID
+        AND
+        A.Project_ID = H.Project_ID
+        AND Weixin_ID = #{weixinId}
+    </select>
+
+    <select id="queryCollectList" parameterType="string" resultMap="houseMap">
+        select C.house_id ,weixin_id,
+        H.Community_Name,Building_NO,Room_Number,layout,renovation,Long_Price,use_area,latitude,longitude
+        from t_collect C
+        left join t_house H on C.house_id=H.house_id
+        left join
+        t_project P on P.project_id=H.project_id
+        where Weixin_ID =#{weixinId}
+    </select>
+</mapper>

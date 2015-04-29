@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.ContactDao">
+	<resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.Contact">
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="CHAR" />
+		<result column="phone" property="phone" jdbcType="CHAR" />
+		<result column="house_id" property="houseId" jdbcType="BIGINT" />
+		<result column="branch_id" property="branchId" jdbcType="BIGINT" />
+		<result column="project_id" property="projectId" jdbcType="BIGINT" />
+		<result column="brand_id" property="brandId" jdbcType="BIGINT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, name, phone, house_id, branch_id, project_id, brand_id
+	</sql>
+	
+	<sql id="Base_Column_List_Alias">
+        c.id, c.name, c.phone, c.house_id, c.branch_id, c.project_id, c.brand_id
+    </sql>
+
+    <select id="findByBranchId" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select 
+            <include refid="Base_Column_List"/>
+        from contact
+        where branch_id = #{branchId} limit 1
+    </select>
+    
+    <select id="findHouseDetailContact" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from contact t
+        <where>
+            <if test="houseId != null"> t.house_id = #{houseId} </if>
+            <if test="branchId != null"> t.branch_id = #{branchId} </if>
+            <if test="projectId != null"> t.project_id = #{projectId} </if>
+            <if test="brandId != null"> t.brand_id = #{brandId} </if>
+        </where>
+    </select>
+    
+</mapper>

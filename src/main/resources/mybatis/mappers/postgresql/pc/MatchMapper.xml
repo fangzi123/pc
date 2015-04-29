@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.MatchDao">
+
+    <select id="findHousesByAddressPaged" parameterType="com.micro.rent.common.comm.nmybatis.Page"
+        resultType="MatchResultVo">
+        select 
+            h.id hid,h.branch_id branchId,c.name communityName,
+            array_to_string(ARRAY(select hp.pic_path from  house2pic hp WHERE hp.house_id=h.id ORDER BY hp.priority),';') picPath,
+            bh.name branchName,bd.name brandName,a.address,a.point::text,
+            h.layout,h.available_area availableArea,prg.monthly_price::decimal monthlyPrice,ct.phone,h.available_time availableTime,
+            h.orientation,ptg.payment_type paymentType,h.floor,h.total_floor totalFloor,msg.days/30 months
+        from
+            house h
+            join house2community hc on h.branch_id=hc.branch_id
+            join community c on c.id=hc.community_id
+            join branch bh on bh.id=h.branch_id
+            join brand  bd on bd.id=bh.brand_id
+            join address a on a.id=h.address_id
+            join price_group prg on prg.id=h.price_group_id 
+       left join contact ct on ct.house_id=h.id
+            join payment_type_group ptg on ptg.id=h.payment_type_group_id
+       left join min_stay_group msg on msg.id=h.min_stay_group_id
+        WHERE get_bit(h.flag,0)='1' and a.city_id=#{params.cityId} and h.status='可出租'
+        <if test="params.address != null and  params.address!=''">
+            and (c.name like '%${params.address}%' or a.address like '%${params.address}%' or bd.name like '%${params.address}%')
+        </if>
+        <if test="params.maxPrice != null and  params.maxPrice!=''">
+            and  <![CDATA[prg.monthly_price::decimal <= ${params.maxPrice}]]> 
+        </if>
+        <if test="params.minPrice != null and  params.minPrice!=''">
+            and  <![CDATA[prg.monthly_price::decimal >= ${params.minPrice}]]> 
+        </if>
+        <if test="params.layout != null and  params.layout!=''">
+            <if test="params.layout!='四室'">
+             and h.layout::text=#{params.layout}
+            </if>
+            <if test="params.layout=='四室'">
+            and h.layout::text in ('四室','五室')
+            </if>
+        </if>
+        <if test="params.orientation != null and  params.orientation!=''">
+            and h.orientation::text=#{params.orientation}
+        </if>
+        <if test="params.balcony != null and  params.balcony!='' and params.balcony!='false'">
+            and #{params.balcony} in (select am.type::text from amenity am where h.amenity_group_id=am.amenity_group_id)
+        </if>
+        <if test="params.bathroom != null and  params.bathroom!='' and params.bathroom!='false'">
+            and #{params.bathroom} in (select am.type::text from amenity am where h.amenity_group_id=am.amenity_group_id)
+        </if>
+        <if test="params.bayWindow != null and  params.bayWindow!='' and params.bayWindow!='false'">
+            and #{params.bayWindow} in (select am.type::text from amenity am where h.amenity_group_id=am.amenity_group_id)
+        </if>
+        <choose>
+            <when test="params.sortType==1">
+            order by h.release_time desc
+            </when>
+            <when test="params.sortType==2">
+            order by prg.monthly_price <if test="params.ascOrDesc==0">asc</if><if test="params.ascOrDesc==1">desc</if>
+            </when>
+            <when test="params.sortType==3">
+            order by h.available_area <if test="params.ascOrDesc==0">asc</if><if test="params.ascOrDesc==1">desc</if>
+            </when>
+            <otherwise>order by h.id desc</otherwise>
+        </choose> 
+        
+    </select>
+    <select id="findHousePriceRangeById" parameterType="java.lang.Integer" resultType="HousePriceRange">
+        select min_price::decimal minPrice,max_price::decimal maxPrice from house_price_range where id = #{id}
+    </select>
+</mapper>

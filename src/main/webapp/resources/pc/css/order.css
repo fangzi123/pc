@@ -1,0 +1,169 @@
+/* 弹框 */
+.tankuang{
+    width: 342px;
+    height: 421px;
+    /*background: #ff0;*/
+    position: absolute;
+    top: 30%;
+   left: 40%;
+    display: none;
+    z-index: 99999;
+    border-radius: 8px;
+    background-color: #ffffff;
+    /*position: relative;*/
+}
+.mack{
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.6;
+    position: fixed;
+    z-index: 99998;
+    display: none;
+}
+/* 预约页面 */
+.neirong{
+    width: 281px;
+    height: 322px;
+    background-color: #ffffff;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+.xingming{
+    width: 280px;
+    height: 40px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+.riqi{
+    width: 280px;
+    height: 40px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border: 1px solid #dcdcdc ;
+}
+.yanzheng{
+    width: 170px;
+    height: 40px;
+    float: left;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    border: 1px solid #dcdcdc;
+
+}
+.ma{
+    width: 100px;
+    height: 40px;
+    float: right;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    background-color: #fff3e1;
+    color:#f39800 ;
+}
+.ma:hover{
+    background-color: #f39800;
+    color: #ffffff;
+}
+.queren{
+    display: block;
+    width: 280px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #F59800;
+    border:  1px #F59800 solid;
+    border-radius: 4px;
+    margin-top: 15px;
+    font-size: 15px;
+}
+.queren:hover{
+    background-color:#F59800;
+    color: #ffffff;
+}
+.neirong p{
+    color: #959595;
+    line-height: 14px;
+}
+
+
+/*弹框*/
+
+.tankuangyys{
+    width: 342px;
+    height: 582px;
+    position: absolute;
+    top: 20%;
+    left: 45%;
+    display: none;
+    z-index: 99999;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.chenggong{
+    width: 280px;
+    height: 531px;
+    /*background-color: #01ff00;*/
+    margin: 0 auto;
+    margin-top: 28px;
+}
+.gongxi{
+     font-size: 21px;
+     color: #f39800;
+    padding-bottom: 15px;
+}
+.lianxi{
+    line-height: 24px;
+}
+.guanzhu{
+   font-size: 18px;
+    color: #f39800;
+    padding-top: 20px;
+}
+.erwei{
+    padding-top: 20px;
+}
+.yongyou{
+    line-height: 33px;
+}
+.quantian{
+    line-height: 30px;
+}
+.saomiao{
+    width: 280px;
+    height: 40px;
+    display: block;
+    border: 1px solid #80B133;
+    color: #80B133;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 4px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+.denglushaoma{
+    width: 100%;
+    height: 70px;
+    /*background-color: #01ff00;*/
+    margin-top: 20px;
+    border-top: 1px solid #EAEAEA;
+}
+.deng{
+    float: left;
+    line-height: 70px;
+    color: #F2A83F;
+    cursor: pointer;
+    font-size: 14px;
+
+}
+.fang{
+    float: right;
+    line-height: 70px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.biaoqing{
+    font-size: 24px;
+   color: #F2A83F;
+     line-height: 36px;}

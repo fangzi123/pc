@@ -1,0 +1,249 @@
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-style: ridge;
+    border-top-width: 1px;
+    color: #F39600;
+}
+
+#div_detail .row > div:first-child {
+    padding-right: 0px;
+}
+
+.phone_number {
+    font-size: 1.5em;
+    position: relative;
+    top: -0.2em;
+}
+
+.move_time {
+    margin-top: -0.1em;
+}
+
+/* 按钮保持在浏览器底端  */
+#div_footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    background-color: #FFFFFF;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #D2D2D2;
+}
+
+#div_footer button:first-child {
+    height: 44px;
+    width: 49%;
+    margin-right: 2%;
+}
+
+#div_footer button:last-child {
+    width: 49%;
+    margin-left: -5px;
+    height: 44px;
+    background-color: #eb6100;
+    color: #FFFFFF;
+}
+
+.woniu_site {
+    height: 1.3em;
+    width: 0.8em;
+}
+
+/* 价格图标 */
+.div_picture_price {
+    position: relative;
+    top: -80px;
+    right: 20px;
+}
+
+.div_picture_price > div {
+    position: relative;
+    right: -59px;
+    top: 10px;
+}
+
+.div_picture_price > div > span:last-child {
+    position: relative;
+    top: -5px;
+    right: -5px;
+"
+}
+
+.picture_price {
+    height: 5em;
+    width: 5em;
+}
+
+.div_picture {
+    height: 200px;
+    width: 100%;
+}
+
+/* 底部按钮区域  */
+.blank {
+    background-color: #F6F6F6;
+    height: 10px;
+}
+
+.blank1 {
+    height: 60px;
+}
+
+/* 附近房源 */
+.house-picture > div {
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.house-picture img {
+    width: 140px;
+    height: 105px;
+}
+
+div.div-price {
+    width: 140px;
+    display: -webkit-box;
+    -webkit-box-pack: end;
+    position: absolute;
+    top: 75px;
+}
+
+div.div-price > div {
+    background-color: #F39600;
+    color: #FFFFFF;
+
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+div.div-house-info {
+    width: 140px;
+}
+
+/* 全局容器  */
+.container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #000000;
+}
+
+#div_detail {
+    padding-top: 8px;
+    padding-bottom: 12px;
+    border-bottom-color: #D2D2D2;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+[class *= "house_msg_"] {
+
+}
+
+.house_msg_1 {
+    border-top-color: #D2D2D2;
+    border-top-style: solid;
+    border-top-width: 1px;
+}
+
+.house_msg_3 {
+    padding-bottom: 25px;
+    border-bottom-color: #D2D2D2;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.fujinfangyuan {
+    padding-top: 10px;
+    background-color: #F6F6F6;
+}
+
+p {
+    margin-bottom: 0px !important;
+}
+
+hr {
+    border-color: #F39600 !important;
+}
+
+[class *= 'col-xs-'] {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+/* 轮播图  */
+.banner, .banner img {
+    height: 200px;
+    width: 320px;
+}
+
+.banner .main_image {
+    border-width: 0px;
+}
+
+img.price-picture {
+    height: 5em;
+    width: 5em;
+    position: absolute;
+    top: 120px;
+    left: 240px;
+}
+
+div.div-house-picture {
+    position: relative;
+    background-color: #F1F1F1;
+}
+
+div.banner img, div.main_image {
+    border-width: 0px;
+}
+
+div.div-house-picture > div {
+    position: relative;
+}
+
+div.div-house-price {
+    /* display: -webkit-box;
+    -webkit-box-pack: end; */
+    height: 5em;
+    width: 5em;
+    padding-top: 2em;
+    padding-right: 0.5em;
+    position: absolute;
+    z-index: 99999;
+    top: 120px;
+    left: 240px;
+    color: white;
+    line-height: 0.6;
+}
+
+.div-house-price span:first-child {
+    font-size: 1.4em;
+    display: -webkit-box;
+    -webkit-box-pack: end;
+}
+
+.div-house-price span:last-child {
+    font-size: 0.8em;
+    display: -webkit-box;
+    -webkit-box-pack: end;
+}
+
+/* 房源详情  */
+#div_detail .row {
+    padding-top: 5px;
+}
+
+/* 小标题 */
+h6 {
+    padding-top: 16px;
+    font-size: 15px !important;
+    font-weight: bold;
+}

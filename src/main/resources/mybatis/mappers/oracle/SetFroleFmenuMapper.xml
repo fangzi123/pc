@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.SetFroleFmenuDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.SetFroleFmenu">
+        <id column="FUNC_ROLE_ID" property="funcRoleId" jdbcType="DECIMAL"/>
+        <id column="FUNC_MENU_ID" property="funcMenuId" jdbcType="DECIMAL"/>
+        <result column="LAST_UPDATOR" property="lastUpdator" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        FUNC_ROLE_ID, FUNC_MENU_ID, LAST_UPDATOR, LAST_UPDATE_TIME
+    </sql>
+
+    <delete id="deleteByRoleId" parameterType="java.math.BigDecimal">
+        delete from SET_FROLE_FMENU
+        where FUNC_ROLE_ID = #{funcRoleId,jdbcType=DECIMAL}
+    </delete>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="com.micro.rent.dbaccess.entity.SetFroleFmenuKey">
+        select
+        <include refid="Base_Column_List"/>
+        from SET_FROLE_FMENU
+        where FUNC_ROLE_ID = #{funcRoleId,jdbcType=DECIMAL}
+        and FUNC_MENU_ID = #{funcMenuId,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.micro.rent.dbaccess.entity.SetFroleFmenuKey">
+        delete from SET_FROLE_FMENU
+        where FUNC_ROLE_ID = #{funcRoleId,jdbcType=DECIMAL}
+        and FUNC_MENU_ID = #{funcMenuId,jdbcType=DECIMAL}
+    </delete>
+    <insert id="insert" parameterType="com.micro.rent.dbaccess.entity.SetFroleFmenu">
+        insert into SET_FROLE_FMENU (FUNC_ROLE_ID, FUNC_MENU_ID, LAST_UPDATOR,
+        LAST_UPDATE_TIME)
+        values (#{funcRoleId,jdbcType=DECIMAL}, #{funcMenuId,jdbcType=DECIMAL}, #{lastUpdator,jdbcType=VARCHAR},
+        #{lastUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.micro.rent.dbaccess.entity.SetFroleFmenu">
+        update SET_FROLE_FMENU
+        <set>
+            <if test="lastUpdator != null">
+                LAST_UPDATOR = #{lastUpdator,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where FUNC_ROLE_ID = #{funcRoleId,jdbcType=DECIMAL}
+        and FUNC_MENU_ID = #{funcMenuId,jdbcType=DECIMAL}
+    </update>
+</mapper>

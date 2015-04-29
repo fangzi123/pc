@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>窝牛租房</title>
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/pagination/simplePagination.css"/>
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/userInfo/userInfoCenter.css">
+    <script>
+        var ctxPath = "${rc.contextPath}";
+        var is_login=false;
+        <@shiro.authenticated>is_login=true</@shiro.authenticated>
+    </script>
+</head>
+<body>
+<div class="hezi">
+<div id="pop-win-mobile" class="tankuang" >
+         <form class="nei" id="nei">
+            <input type="text" placeholder="请输入您的手机号" class="xingming frm-txt" name="mobile"/>
+            <input type="text" placeholder="验证码" class="yanz frm-txt" name="verifyCode"/>
+            <input type="button" value="发送验证码" class="ma" id="getverifycode"/>
+            <div class="clear"></div>
+            <a href="#" class="chaxu" id="input-mobile">查询</a>
+         </form>
+    </div>
+<div class="mack"></div><!-- 弹窗（OVER） -->
+<div class="main">
+<@shiro.authenticated>
+    <div class="left">
+        <dl>
+            <#if headImgFlg == true>
+                <dt><img src="${tenant.headImg}"></dt>
+            <#else>
+                <dt><img src="/images/head/${tenant.headImg}"></dt>
+            </#if>   
+             <#if tenant.nickname == null || tenant.nickname == ''>
+                 <h1>昵称未设置</h1>
+             <#else>
+                 <h1>${tenant.nickname}</h1>
+             </#if>
+             <dd>电话号码<br><span>${tenant.mobile}</span></dd>
+             <input type="hidden" id="tenant_id" name="tenantId" value="${tenant.id}"/>
+        </dl>
+    </div>
+    </@shiro.authenticated>
+    <div class="left-l">
+    </div>
+    <div class="right">
+        <div class='wrap'>
+            <div class='title'>
+                <ul>
+                    <li class='on first'><img src="${rc.contextPath}/images/pc/xin.jpg">我的收藏</li>
+                    <li><img src="${rc.contextPath}/images/pc/yy.jpg">我的预约</li>
+                    <@shiro.authenticated>
+                    <li><img src="${rc.contextPath}/images/pc/huodong.jpg" alt=""/>我的活动</li>
+                    <li><img src="${rc.contextPath}/images/pc/zl.jpg">个人资料</li>
+                    </@shiro.authenticated>
+                </ul>
+            </div>
+            <div class="contact contact1">
+                <div class="fen">
+                    <p class="f">
+                        <span id="favorite_currentPage">1</span>/
+                        <span id="favorite_totalPage">${pageList.totalPage}</span>
+                    </p>
+                    <img id="favorite_prev" src="${rc.contextPath}/images/pc/zuo.jpg" alt="" class="zuo"/> 
+                    <img id="favorite_next" src="${rc.contextPath}/images/pc/you.jpg" alt="" class="you"/>
+                </div><!--fen-->
+                <div id="favorite_list" class="yi">
+                    <#list pageList.list as house>
+                        <dl class="com">
+	                        <dt>
+	                            <a href="${rc.contextPath}/house/findHouseDetail?houseId=${house.houseId}" target="_blank">
+	                               <img src="${rc.contextPath}/images/house/${house.picPath}" alt=""/>
+	                            </a>
+	                            <span class="del"></span>
+	                        </dt>
+	                        <p class="wen">${house.branchName}</p>
+	                        <p class="zi">${house.layout} | ${house.area}m²</p>
+	                        <p class="qian">${house.monthlyPrice}元/月</p>
+	                        <input type="hidden" name="house_id" value="${house.houseId}"/>
+	                    </dl>
+                    </#list>
+                </div>
+                <div class="div-pagination xiafy">
+                    <div id="favorite_pagination"></div>
+                    <input type="hidden" id="favorite_page_limit" name="pageLimit" value="${pageList.pageLimit}"/>
+                    <input type="hidden" id="favorite_total" name="totalRecord" value="${pageList.totalRecord}"/>
+                    <input type="hidden" id="favorite_page_st" name="pageStart" value="${pageList.pageStart}"/>
+                </div>
+            </div>
+            <div class="contact contact2">
+               <div class="fen">
+                    <p class="f">
+                        <span id="preOrder_currentPage">1</span>/<span id="preOrder_totalPage">${pagePreOrder.totalPage}</span>
+                    </p>
+                    <img id="preOrder_prev" src="${rc.contextPath}/images/pc/zuo.jpg" alt="" class="zuo"/> 
+                    <img id="preOrder_next" src="${rc.contextPath}/images/pc/you.jpg" alt="" class="you"/>
+               </div><!--fen-->
+                <div id="preOrder_list" class="yi">
+                    <#list pagePreOrder.list as house>
+                     <dl class="com">
+                            <dt>
+                                <a href="${rc.contextPath}/house/findHouseDetail?houseId=${house.houseId}" target="_blank">
+                                   <img src="${rc.contextPath}/images/house/${house.picPath}" alt=""/>
+                                </a>
+                                <span class="del"></span>
+                            </dt>
+                            <p class="wen">${house.branchName}</p>
+                            <p class="zi">${house.layout} | ${house.area}m²</p>
+                            <p class="qian">${house.monthlyPrice}元/月</p>
+                            <input type="hidden" name="house_id" value="${house.houseId}"/>
+                        </dl>
+                    </#list>
+                </div>
+                <div class="div-pagination xiafy">
+                    <div id="preOrder_pagination"></div>
+                    <input type="hidden" id="preOrder_page_limit" name="pageLimit" value="${pagePreOrder.pageLimit}"/>
+                    <input type="hidden" id="preOrder_total" name="totalRecord" value="${pagePreOrder.totalRecord}"/>
+                    <input type="hidden" id="preOrder_page_st" name="pageStart" value="${pagePreOrder.pageStart}"/>
+                </div>
+            </div>
+            <div class="contact contact3">
+                <div class="fe">
+                    <p class="f">
+                        <span id="activity_currentPage">1</span>/<span id="activity_totalPage">${pageActivity.totalPage}</span>
+                    </p>
+                    <img id="activity_prev" src="${rc.contextPath}/images/pc/zuo.jpg" alt="" class="zuo"/> 
+                    <img id="activity_next" src="${rc.contextPath}/images/pc/you.jpg" alt="" class="you"/>
+                </div><!--fe-->
+                <div id='list'>
+                    <dl class='sel'>
+                        <dd>
+                            <ul id="activity_list" class="bj">
+                            <#list pageActivity.list as activity>
+                                <#if activity.reward?eval lt 101>
+                                    <div class="red com">
+                                <#elseif activity.reward?eval lt 301>
+                                    <div class="yellow com">
+                                <#elseif activity.reward?eval lt 501>
+                                    <div class="blue com">
+                                <#else>
+                                    <div class="green com">
+                                </#if>
+                                    <dt>
+                                    <h1><span>￥</span>${activity.reward}</h1>
+                                    <p>有效时间</p>
+                                    <p>${activity.startTime}至${activity.endTime}</p>
+                                    <span class="del"></span>
+                                    </dt>
+                                    <dd>${activity.name}</dd>
+                                <#if activity.dataFlg == 0>
+                                    <p class='jjks'>活动即将开始</p>
+                                <#elseif activity.dataFlg == 1>
+                                    <p class='jxz'>活动进行中</p>
+                                <#else>
+                                    <p class='yjs'>活动已结束</p>
+                                </#if>
+                                    <input type="hidden" name="house_id" value="${activity.id}"/>
+                                </div>
+                             </#list>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="div-pagination xiafy">
+                    <div id="activity_pagination"></div>
+                    <input type="hidden" id="activity_page_limit" name="pageLimit" value="${pageActivity.pageLimit}"/>
+                    <input type="hidden" id="activity_total" name="totalRecord" value="${pageActivity.totalRecord}"/>
+                    <input type="hidden" id="activity_page_st" name="pageStart" value="${pageActivity.pageStart}"/>
+                </div>
+            </div>
+            <div class="contact contact4"><div class="neirong">
+                <div class="neirong1">
+                    <p>昵称：<input type="text" class="t" name="nickname"/><span>仅限中英文</span></p>
+                    <p>姓名：<input type="text" class="t" name="name"/><span>仅限中英文</span></p>
+                    <p>性别：
+                        <select class="cc" name="gender">
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select><span>请随意</span></p>
+                    <p>出生日期：
+                        <select id="year"  class="a"></select>
+                        <select id="month" class="a1"></select>
+                        <select id="day"   class="a2"></select>
+                        <span>年-月-日</span>
+                     </p>
+                    <p>电子邮件：<input type="text" class="r" name="email"/><span>没什么用填不填都行</span></p>
+                    <p>新密码：<input type="text" class="c" name="password"/><span>随时获取动态码</span></p>
+                    <p>重复新密码：<input type="text" class="d" name="password2"/></p>
+                    <p><input type="button" value="更新个人资料" class="zll" id="update-btn"/><input type="button" value="注销登录" class="zhuxiao"/></p>
+                </div><!--neirong1-->
+            </div><!--neirong-->
+            </div>
+        </div>
+            
+        </div>
+    </div>
+</div>
+<input type="hidden" id="tab" name="tab" value="${tab}"/>
+<input type="hidden" id="cookie_mobile_null" name="cookie_mobile_null" value="${cookie_mobile_null}"/>
+ <input type="hidden" name="ctxPath" value="${rc.contextPath}" />
+<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/validation.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/common.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/pagination/jquery.simplePagination.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/userInfo/userInfoCenter.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/userInfo/birthday.js"></script>
+</body>
+</html>

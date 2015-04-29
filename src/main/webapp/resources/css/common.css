@@ -1,0 +1,157 @@
+/* ҳ�汳�� */
+html {
+    height: 100%;
+    background-color: #F6F6F6;
+}
+
+body {
+    height: 100%;
+    background-color: #F6F6F6;
+    font-size: 15px;
+}
+
+/* ҳ�涥�� */
+#div_head {
+    height: 4em;
+    background-color: #F39600;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+/* ҳ����� */
+.div_title {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+/* �ڲ�Ԫ�ؾ��� */
+.woniu-box-center {
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+
+/* �ڲ�Ԫ�ؿ��� */
+.woniu-box-end {
+    display: -webkit-box;
+    -webkit-box-align: end;
+}
+
+/* �ڲ�Ԫ�ؿ��Ҿ��� */
+.woniu-box-right {
+    display: -webkit-box;
+    -webkit-box-pack: end;
+    -webkit-box-align: center;
+}
+
+/* �������� */
+select[name ^= 'woniu_select'] {
+    width: 26%;
+    display: inline;
+    height: 3em;
+    text-align: center;
+}
+
+label {
+    width: 5%;
+    text-align: center;
+}
+
+/* ����ɫ */
+.background-white {
+    background_white: #FFFFFF;
+}
+
+/* ���� */
+hr {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-width: 1px;
+    width: 100%;
+    border-color: #D2D2D2;
+}
+
+.hide {
+    display: none;
+}
+
+/* ����  */
+/* �����С  */
+.font-small {
+    font-size: 13px;
+}
+
+.font-normal {
+    font-size: 15px;
+}
+
+.font-big {
+    font-size: 18px;
+}
+
+/* ������ɫ */
+.font-white {
+    color: #FFFFFF;
+}
+
+.font-gray {
+    color: #898989;
+}
+
+.font-yellow {
+    color: #F39600;
+}
+
+/* ��ť */
+/* ��ɫ��ť */
+.btn-yellow {
+    background-color: #F39600;
+    color: #FFFFFF;
+}
+
+/* ����Bootstrap���ڰ�ť��һЩ��Ч */
+.btn:hover, .btn:focus, .btn.focus {
+    color: #FFFFFF;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus {
+    outline: 0px;
+    outline-offset: 0px;
+}
+
+/* ��ť�߶�  */
+.btn-big {
+    height: 44px;
+}
+
+.btn-normal {
+    height: 34px;
+}
+
+/* ���岼�� */
+.container-fluid {
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #FFFFFF;
+}
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+[class *= 'col-xs-'] {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+/* С����  */
+h6 {
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    text-indent: 0.4em;
+}

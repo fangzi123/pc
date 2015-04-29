@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.RroleResourceDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.RroleResource">
+        <result column="RESOURCE_ROLE_ID" property="resourceRoleId" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_ID" property="resourceId" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_ROLE_NAME" property="resourceRoleName" jdbcType="VARCHAR"/>
+        <result column="URL_PATTERN" property="urlPattern" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        RESOURCE_ROLE_ID, RESOURCE_ID, RESOURCE_ROLE_NAME, URL_PATTERN
+    </sql>
+
+    <!-- 查询分页记录 -->
+    <select id="queryPaged" parameterType="com.micro.rent.common.comm.nmybatis.Page" resultMap="BaseResultMap">
+
+        SELECT R1.RESOURCE_ID,R1.URL_PATTERN,R2.RESOURCE_ROLE_ID,R2.RESOURCE_ROLE_NAME
+        FROM SET_RESOURCE R1 , SET_RESOURCE_ROLE R2, SET_RROLE_RESOURCE R3
+        WHERE R1.RESOURCE_ID = R3.RESOURCE_ID AND R2.RESOURCE_ROLE_ID = R3.RESOURCE_ROLE_ID
+        <if test="params.resourceRoleName != null">
+            AND R2.RESOURCE_ROLE_NAME LIKE concat('%',#{params.resourceRoleName},'%')
+        </if>
+        ORDER BY R2.RESOURCE_ROLE_ID DESC
+    </select>
+
+    <!-- 查询记录总数 -->
+    <select id="queryTotalCount" resultType="int" parameterType="map">
+        <![CDATA[
+			SELECT COUNT(1) FROM SET_RESOURCE R1 , SET_RESOURCE_ROLE R2, SET_RROLE_RESOURCE R3 
+			WHERE R1.RESOURCE_ID = R3.RESOURCE_ID AND R2.RESOURCE_ROLE_ID = R3.RESOURCE_ROLE_ID
+		]]>
+        <if test="resourceRoleName != null">
+            AND R2.RESOURCE_ROLE_NAME LIKE concat'%',#{resourceRoleName},'%')
+        </if>
+    </select>
+
+</mapper>

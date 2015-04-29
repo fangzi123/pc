@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.HouseDao">
+
+   
+    
+<!--     <select id="queryById" parameterType="Integer" -->
+<!--             resultType="House"> -->
+<!--         SELECT * -->
+<!--         from house -->
+<!--         WHERE  -->
+<!--         get_bit(flag, 0)='1' -->
+<!--         and id=#{id} -->
+<!--     </select> -->
+<resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.House">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="house_id" property="houseId" jdbcType="CHAR" />
+        <result column="branch_id" property="branchId" jdbcType="BIGINT" />
+        <result column="room_no" property="roomNo" jdbcType="CHAR" />
+        <result column="area" property="area" jdbcType="NUMERIC" />
+        <result column="available_area" property="availableArea" jdbcType="NUMERIC" />
+        <result column="layout" property="layout" jdbcType="OTHER" />
+        <result column="hall_number" property="hallNumber" jdbcType="SMALLINT" />
+        <result column="toilet_number" property="toiletNumber" jdbcType="SMALLINT" />
+        <result column="kitchen_number" property="kitchenNumber" jdbcType="SMALLINT" />
+        <result column="floor" property="floor" jdbcType="SMALLINT" />
+        <result column="total_floor" property="totalFloor" jdbcType="SMALLINT" />
+        <result column="orientation" property="orientation" jdbcType="OTHER" />
+        <result column="decoration" property="decoration" jdbcType="OTHER" />
+        <result column="accommodate" property="accommodate" jdbcType="SMALLINT" />
+        <result column="release_time" property="releaseTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="OTHER" />
+        <result column="payment_type_group_id" property="paymentTypeGroupId" jdbcType="BIGINT" />
+        <result column="price_group_id" property="priceGroupId" jdbcType="BIGINT" />
+        <result column="min_stay_group_id" property="minStayGroupId" jdbcType="BIGINT" />
+        <result column="amenity_group_id" property="amenityGroupId" jdbcType="BIGINT" />
+        <result column="fee_group_id" property="feeGroupId" jdbcType="BIGINT" />
+        <result column="available_time" property="availableTime" jdbcType="TIMESTAMP" />
+        <result column="rank_group_id" property="rankGroupId" jdbcType="BIGINT" />
+        <result column="address_id" property="addressId" jdbcType="BIGINT" />
+        <result column="flag" property="flag" jdbcType="BIT" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, house_id, branch_id, room_no, area, available_area, layout,
+        hall_number, toilet_number,
+        kitchen_number, floor, total_floor,
+        orientation, decoration, accommodate,
+        release_time,
+        status, payment_type_group_id, price_group_id, min_stay_group_id,
+        amenity_group_id,
+        fee_group_id, available_time, rank_group_id, address_id, flag
+    </sql>
+
+    <resultMap type="com.micro.rent.pc.entity.vo.HouseVo" id="houseBranchBrandResultMap" extends="BaseResultMap">
+        <association property="branch" javaType="com.micro.rent.pc.entity.Branch">
+            <result property="name" column="branch_name"/>
+            <result property="description" column="branch_description"/>
+        </association>
+        <association property="brand" javaType="com.micro.rent.pc.entity.Brand">
+            <result property="name" column="brand_name"/>
+            <result property="id" column="brand_id"/>
+        </association>
+        <association property="paymentTypeGroup" javaType="com.micro.rent.pc.entity.PaymentTypeGroup">
+            <result property="name" column="payment_type_group_name"/>
+        </association>
+        <association property="minStayGroup" javaType="com.micro.rent.pc.entity.MinStayGroup">
+            <result property="days" column="min_stay_group_days"/>
+        </association>
+    </resultMap>
+
+    <select id="findWithBranchBrandById" parameterType="java.util.Map" resultMap="houseBranchBrandResultMap">
+        SELECT
+          h.*,
+          b.name branch_name,
+          b.description branch_description,
+          d.name brand_name,
+          d.id brand_id,
+          ptg.name payment_type_group_name,
+          msg.days min_stay_group_days
+        FROM
+            house h
+            left join min_stay_group msg on h.min_stay_group_id = msg.id 
+            left join payment_type_group ptg  on h.payment_type_group_id = ptg.id,
+            branch b ,
+            brand d
+        WHERE
+            h.branch_id = b.id
+            AND b.brand_id = d.id
+            and h.id = #{houseId}
+    </select>
+    
+    <resultMap type="com.micro.rent.pc.entity.vo.HouseVo" id="houseAddressResultMap">
+        <association property="address" javaType="com.micro.rent.pc.entity.Address">
+            <id property="id" column="addr_id"/>
+            <result property="point" column="addr_point"/>
+            <result property="address" column="addr_address"/>
+        </association>
+    </resultMap>
+    
+    <select id="findWithAddressById" parameterType="java.util.Map" resultMap="houseAddressResultMap">
+         SELECT
+            addr.id addr_id,
+            addr.point addr_point, 
+            addr.address addr_address
+         FROM
+            house h ,
+            address addr
+         WHERE
+            h.address_id = addr.id
+            and h.id = #{houseId}
+    </select>
+
+    <select id="searchHousesByhouseIds" parameterType="com.micro.rent.common.comm.nmybatis.Page" 
+        resultType="HouseVo">
+         SELECT 
+         M.house_id as houseId
+        ,M.branchname
+        ,M.layout
+        ,FLOOR(M.area) as area
+        ,FLOOR(M.monthly_price::DECIMAL) as monthlyPrice
+        ,(select pic_path from house2pic where house_id = M.house_id order by priority desc limit 1) as picPath
+        FROM map_view M
+        WHERE house_id in (${params.houseIds})
+    </select>
+
+</mapper>

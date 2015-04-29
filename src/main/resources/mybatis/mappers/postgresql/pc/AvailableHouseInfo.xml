@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.AvailableHouseInfoDao">
+	<resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.AvailableHouseInfo">
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="branch_id" property="branchId" jdbcType="BIGINT" />
+		<result column="project_id" property="projectId" jdbcType="BIGINT" />
+		<result column="layout" property="layout" jdbcType="OTHER" />
+		<result column="area" property="area" jdbcType="NUMERIC" />
+		<result column="price_group_id" property="priceGroupId" jdbcType="BIGINT" />
+		<result column="total_number" property="totalNumber" jdbcType="INTEGER" />
+		<result column="flag" property="flag" jdbcType="BIT" />
+		<result column="house_id" property="houseId" jdbcType="BIGINT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, branch_id, project_id, layout, area, price_group_id, total_number, flag, house_id
+	</sql>
+
+	<sql id="Base_Column_List_Alias">
+		ahi.id, ahi.branch_id, ahi.project_id, ahi.layout, ahi.area, ahi.price_group_id, ahi.total_number, ahi.flag, ahi.house_id
+	</sql>
+
+	<resultMap type="com.micro.rent.pc.entity.vo.AvailableHouseInfoVo" id="housePriceGroupHouse2picResultMap">
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="branch_id" property="branchId" jdbcType="BIGINT" />
+		<result column="project_id" property="projectId" jdbcType="BIGINT" />
+		<result column="layout" property="layout" jdbcType="OTHER" />
+		<result column="area" property="area" jdbcType="NUMERIC" />
+		<result column="price_group_id" property="priceGroupId" jdbcType="BIGINT" />
+		<result column="total_number" property="totalNumber" jdbcType="INTEGER" />
+		<result column="flag" property="flag" jdbcType="BIT" />
+		<result column="pic_path" property="picPath" jdbcType="VARCHAR"/>
+		<result column="house_id" property="houseId" jdbcType="BIGINT" />
+
+		<association property="priceGroup" javaType="com.micro.rent.pc.entity.PriceGroup">
+			<result column="pg_id" property="id" jdbcType="BIGINT" />
+			<result column="pg_name" property="name" jdbcType="CHAR" />
+			<result column="pg_monthly_price" property="monthlyPrice" jdbcType="DECIMAL" />
+			<result column="pg_weekly_price" property="weeklyPrice" jdbcType="DECIMAL" />
+			<result column="pg_daily_price" property="dailyPrice" jdbcType="DECIMAL" />
+			<result column="pg_description" property="description" jdbcType="VARCHAR" />
+			<result column="pg_flag" property="flag" jdbcType="BIT" />
+		</association>
+ 
+		<!-- <collection property="house2picList" ofType="com.micro.rent.pc.entity.House2pic">
+			<id column="hp_id" property="id" jdbcType="BIGINT" />
+			<result column="hp_house_id" property="houseId" jdbcType="BIGINT" />
+			<result column="hp_pic_path" property="picPath" jdbcType="VARCHAR" />
+			<result column="hp_type" property="type" jdbcType="OTHER" />
+			<result column="hp_priority" property="priority" jdbcType="INTEGER" />
+		</collection>  -->
+
+	</resultMap>
+
+	<select id="findPagedByBranchId" parameterType="com.micro.rent.common.comm.nmybatis.Page" resultMap="housePriceGroupHouse2picResultMap">
+		select
+		<include refid="Base_Column_List_Alias" />
+		,
+		pg.id pg_id,
+		pg.name pg_name,
+		pg.monthly_price::numeric pg_monthly_price,
+		pg.weekly_price::numeric pg_weekly_price,
+		pg.daily_price::numeric pg_daily_price,
+		pg.description pg_description,
+		pg.flag pg_flag,
+		(select hp.pic_path from houselayout2pic hp where hp.branch_id = ahi.branch_id and hp.layout = ahi.layout order by hp.priority desc limit 1) pic_path
+		from available_house_info ahi, price_group pg
+		where ahi.price_group_id = pg.id 
+		<if test="params.branchId != null">
+			and ahi.branch_id = #{params.branchId} 
+		</if>
+		order by ahi.id
+	</select>
+	
+	<resultMap type="com.micro.rent.pc.entity.vo.AvailableHouseInfoVo" id="findMinByBranchIdResultMap" extends="BaseResultMap">
+        <result property="picPath" column="pic_path"/>
+		<association property="branch" javaType="com.micro.rent.pc.entity.Branch">
+            <result property="name" column="branch_name"/>
+            <result property="description" column="branch_description"/>
+        </association>
+        <association property="priceGroup" javaType="com.micro.rent.pc.entity.PriceGroup">
+            <result property="name" column="price_group_name"/>
+            <result property="monthlyPrice" column="price_group_monthly_price"/>
+        </association>
+	</resultMap>
+  
+  
+  <select id="findMinByBranchId" parameterType="java.util.Map" resultMap="findMinByBranchIdResultMap">
+    select <include refid="Base_Column_List_Alias"/>,
+    b.name branch_name,
+    b.description branch_description,
+    pg.name price_group_name,
+    pg.monthly_price::numeric price_group_monthly_price,
+    (select hp.pic_path from house2pic hp where hp.house_id = ahi.house_id order by hp.priority desc limit 1) pic_path
+    from available_house_info ahi, branch b,price_group pg 
+	where ahi.price_group_id = pg.id 
+	and ahi.branch_id = b.id
+	and ahi.branch_id=#{branchId}
+	order by pg.monthly_price asc
+	limit 4
+  </select>
+</mapper>

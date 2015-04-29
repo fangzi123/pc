@@ -1,0 +1,38 @@
+body {
+    background-color: #FFFFFF;
+}
+
+hr {
+    width: 100%;
+    margin-left: 0px;
+    border-color: #F39600;
+}
+
+.row {
+    margin-top: 0.8em;
+}
+
+.font-gray {
+    padding-right: 0px;
+}
+
+[name = 'div_title'] {
+    height: 6em;
+    margin-top: 3em;
+}
+
+.phone_number {
+    font-size: 1.5em;
+    position: relative;
+    top: -0.3em;
+}
+
+[name = 'house_time'] {
+    margin-top: -2em;
+}
+
+#check-img {
+    margin-right: 20px;
+    width: 4em;
+    height: 4em;
+}

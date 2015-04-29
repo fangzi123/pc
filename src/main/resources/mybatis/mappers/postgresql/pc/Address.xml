@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.micro.rent.pc.dao.AddressDao">
+	<resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.Address">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="country_id" jdbcType="VARCHAR" property="countryId" />
+		<result column="province_id" jdbcType="VARCHAR" property="provinceId" />
+		<result column="city_id" jdbcType="VARCHAR" property="cityId" />
+		<result column="district_id" jdbcType="VARCHAR" property="districtId" />
+		<result column="street" jdbcType="CHAR" property="street" />
+		<result column="building_no" jdbcType="CHAR" property="buildingNo" />
+		<result column="door_plate" jdbcType="CHAR" property="doorPlate" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="point" jdbcType="OTHER" property="point" />
+		<result column="zoom_level" jdbcType="OTHER" property="zoomLevel" />
+		<result column="flag" jdbcType="BIT" property="flag" />
+		<result column="plot" jdbcType="VARCHAR" property="plot" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, country_id, province_id, city_id, district_id, street, building_no,
+		door_plate,
+		address, point, zoom_level, flag, plot
+	</sql>
+
+	<sql id="Base_Column_list_Alias">
+		addr.id, addr.country_id, addr.province_id, addr.city_id, addr.district_id, addr.street, addr.building_no,
+		addr.door_plate,
+		addr.address, addr.point, addr.zoom_level, addr.flag, addr.plot
+	</sql>
+	<select id="findAddressByBranchId" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_list_Alias" />
+		from address addr, branch b where b.address_id = addr.id and b.id = #{branchId}
+	</select>
+	<select id="findAddressByAddress"  resultType="Long">
+		select id from address 
+        where 
+        address = #{0}
+	</select>
+    <insert id="add" parameterType="Address" keyProperty="id" useGeneratedKeys="true">
+    insert into address(province_id,city_id, district_id,address, point, zoom_level) 
+    values(#{provinceId},#{cityId},#{districtId},#{address},#{point},#{zoomLevel}::address_zoom_level_enum)
+    </insert>
+</mapper>

@@ -1,0 +1,61 @@
+h6 {
+    font-weight: bold;
+    margin-top: 22px;
+    font-size: 13px;
+    text-indent: 0.4em;
+}
+
+.row {
+    margin-top: 0.6em;
+}
+
+.yanzhengma {
+    width: 60%;
+    display: inline-block;
+}
+
+.yanzhengma-btn {
+    width: 35%;
+    display: inline-block;
+    float: right;
+}
+
+#div_footer, #div_footer > div {
+    width: 100%;
+}
+
+#div_footer button {
+    background-color: #F39600;
+    margin-bottom: 0.4em;
+}
+
+#img-woniu {
+    position: absolute;
+    top: -33px;
+    height: 80px;
+    width: 52px;
+    z-index: 99999;
+    right: 0px;
+}
+
+.container-fluid {
+    background-color: #F6F6F6;
+}
+
+/* 自定义下拉菜单 */
+.dropdown button {
+    width: 100%;
+    text-align: left;
+    position: relative;
+    height: 44px;
+}
+
+.dropdown button span:last-child {
+    position: absolute;
+    right: 10px;
+    top: 45%;
+}
+
+.dropdown ul {
+    width: 100%;
+}

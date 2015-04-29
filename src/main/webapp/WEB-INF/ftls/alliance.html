@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>窝牛租房</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=11" />
+    <link rel="stylesheet" href="${rc.contextPath}/resources/pc/css/common/common.css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/resources/pc/css/alliance.css"/>
+</head>
+<body>
+<#include  "/common/header.html">
+<div class="box">
+<div class="top">
+   <div class="woniu">
+       <img src="${rc.contextPath}/images/pc/step2.png" alt="" class="niu"/>
+   </div><!--woniu-->
+    <div class="mian">
+      <div class="mian1">
+       <div class="kongbai"> </div><!--kongbai-->
+       <div class="left">
+         <div class="gyxinxi">
+           <h1>填写公寓信息</h1>
+         </div><!--gyxinxi-->
+           <div class="jiameng">
+              <p>如果您在经营公寓，想加盟窝牛租房或使用窝牛公寓的管理系统，请提供一下信息，以便我们的小伙伴及时跟您联系。</p>
+           </div>
+           <form id="alliance-detail" action="" class="fangshi" >
+               <div class="control-group"><span id="xing">*&nbsp;&nbsp;</span>联&nbsp;&nbsp;系&nbsp;&nbsp;人
+                   <input type="text" class="kuang" name="contactPerson"
+                        required
+                        data-validation-required-message="请输入联系人"
+                        maxlength="10"/>
+                   <input name="gender" type="radio" value="男" checked="true"/>先生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <input name="gender" type="radio" value="女" />女士
+                   <div class="help-block"></div>
+               </div>
+               <div class="control-group">
+                   <span id="xing">*&nbsp;&nbsp;</span>手&nbsp;&nbsp;机&nbsp;&nbsp;号
+                   <input type="text" class="lianxi" name="phone"
+                        required
+		                data-validation-required-message="请输入手机号"
+	                    data-validation-regex-regex="1[0-9]{10}"
+		                data-validation-regex-message="请输入正确的手机号"/>
+		           <div class="help-block"></div>
+               </div>
+               <div class="control-group">
+                   <span id="xing">*&nbsp;&nbsp;</span>验&nbsp;&nbsp;证&nbsp;&nbsp;码
+                   <input type="text" class="yan" name="verifyCode" id="alliance_verifyCode"
+                        required
+                        data-validation-required-message="请输入验证码"/>
+                   <input type="button" value="发送验证码" class="maa" id="alliance-verify"/>
+                   <div class="help-block"></div>
+               </div>
+               <div class="fangs control-group"><span id="xing">*&nbsp;&nbsp;</span>邮　　箱
+                    <input type="text" class="youxiang" name="email" 
+                        required
+                        data-validation-required-message="请输入联系邮箱"
+                        data-validation-regex-regex="^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"
+                        data-validation-regex-message="请输入正确的邮箱格式 如: **@**"/>
+                    <div class="help-block"></div>
+               </div>
+               <div class="control-group" class="diz">
+                   <span id="xing">*&nbsp;&nbsp;</span>地　　址
+                   <select class="aa" id="province"
+                        required
+                        data-validation-required-message="请输入地址">
+                     <option value="">请选择</option>
+                     <#list regionInfo as region>
+                     <option value="${region.regionCode}" data="${region.tRegionInfoId}">${region.regionName}</option>
+                     </#list>
+                   </select>省
+                   <select class="aa1" id="city" 
+                        required
+                        data-validation-required-message="请输入地址">
+                     <option value="">请选择</option>
+                   </select>市
+                   <select class="aa2" id="districtId"
+                        required
+                        data-validation-required-message="请输入地址">
+                    <option value="">请选择</option>
+                   </select>区/县
+                   <div class="help-block"></div>
+               </div>
+               <div class="fangs control-group">
+                    <input type="text" placeholder="小区" class="dizhi" name="community"
+                        required
+                        data-validation-required-message="请输入小区地址"
+                        maxlength="40"
+                        />
+                    <div class="help-block"></div>
+               </div>
+               <div class="fangs control-group"><span id="xing">*&nbsp;&nbsp;</span>公寓名称
+                    <input type="text" name="brandName"
+                        required
+                        data-validation-required-message="请输入公寓名称"
+                        maxlength="20"/>
+                    <div class="help-block"></div>
+               </div>
+               <div class="diz control-group"><span id="xing">&nbsp;&nbsp;&nbsp;</span>公寓类型
+                   <select class="lei" name="managementType">
+                       <option value="集中式">集中式</option>
+                       <option value="分布式">分布式</option>
+                    </select>
+               </div>
+               <div class="fangs control-group">
+                   <span id="xing">&nbsp;&nbsp;&nbsp;</span>房源数量
+                   <input type="text"  name="totalHouseNumber"
+                        data-validation-regex-regex="([0-9]){0,8}"
+                        data-validation-regex-message="请输入8位以下数字" />
+                   <div class="help-block"></div>
+               </div>
+               <div class="control-group">
+                   <p id="shu">公寓介绍</p>
+                   <textarea  rows="10" cols="50" class="wenben" name="description" id="alliance_description"
+                        maxlength="400"> </textarea>
+               </div>
+               <input type="button" value="提交" class="tjj" id="alliance-btn"/>
+           </form>
+       </div><!--left-->
+        <div class="right">
+            <div class="gyxinxi">
+                <h1>为什么要和窝牛合作？
+                    <!--『窝牛公寓管理系统』是“最好用”的「公寓管理系统」-->
+                </h1>
+            </div><!--gyxinxi-->
+            <div class="bjj">
+                <p class="zufang">窝牛租房是国内首家长租公寓平台</p>
+            </div><!---->
+            <!--<div class="pinpa">-->
+                  <!--<div class="cheng">-->
+
+                  <!--</div>-->
+                <!--<div class="lan">-->
+
+                <!--</div>-->
+                <!--<div class="lv">-->
+                    <!--<p>高效的渠道服务无端口费远低于其他渠道的成交佣金</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="pinpa">
+                <div class="cheng">
+                    <p>我们是</br><strong class="ppt">公寓长租平台</strong></br>而且我们</br><strong class="ppt">只做公寓</strong></p>
+                </div>
+                <div class="lan">
+                    <p>达成合作</br><strong class="ppt">超过200家</strong></br>公寓公司</p>
+                </div>
+                <div class="lv">
+                    <p>高效的渠道服务</br>无端口费</br><strong class="ppt">远低于其他渠道的</strong></br>成交佣金</p>
+                </div>
+            </div>
+            <p class="guanl">『窝牛公寓管理系统』是“最好用”的「公寓管理系统」</p>
+            <p class="bushu">以房源管理为核心，搭建<span>云端版、高扩展性</span>的公寓管理系统，零部署；</br>提供高效的预定和渠道管理，帮助公寓<span>提高房源使用效率，
+                降低营销成本；</span></br>同时只吃短租和长租公寓的管理，帮助公寓公司快捷地<span>调整租约策略；</span></br>丰富的<span>报表体系</span>，帮助公寓公司快速、及时
+                了解经营状况；</br>消费及应用级别的用户界面，<span>零学习成本</span>。</p>
+        </div><!--right-->
+      </div><!--main1-->
+    </div><!--mian-->
+</div>
+</div>
+<div class="clear"></div>
+<input type="hidden" name="ctxPath" value="${rc.contextPath}"></input>
+<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/validation.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/common.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/alliance.js"></script>
+<#include  "/common/footer.html">
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.myrent.ThousePicDao">
+
+    <resultMap id="picMap" type="com.micro.rent.dbaccess.entity.myrent.ThousePic">
+        <result column="Picture" property="picture" jdbcType="VARCHAR"/>
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="base_col">
+        T_HOUSE_PIC_ID,HOUSE_ID,PICTURE
+    </sql>
+    <insert id="batchSave" parameterType="com.micro.rent.dbaccess.entity.myrent.ThousePic">
+        insert into T_HOUSE_PIC
+        (<include refid="base_col"/>)
+        values(#{tHousePicId},#{houseId},#{picture})
+    </insert>
+
+    <select id="selectHousePicListByHouseId" resultMap="picMap" parameterType="string">
+        select house_id,picture
+        from t_house_pic
+        where house_id=#{houseId}
+        order by picture
+    </select>
+
+
+</mapper>

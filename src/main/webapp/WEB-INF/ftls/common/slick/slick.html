@@ -1,0 +1,27 @@
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/slick.css"/>
+<div class="your-class" style="width:100%;height: 500px;">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+    <div>10</div>
+    <div>11</div>
+    <div>12</div>
+</div>
+<script type="text/javascript" src="${rc.contextPath}/resources/pc/js/common/slick.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.your-class').slick({
+          dots: true,
+          infinite: true,
+          speed: 300,
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        });
+    });
+ </script>

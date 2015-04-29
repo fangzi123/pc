@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>窝牛租房</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=11" />
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/slick/slick.css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/resources/pc/css/shouye.css"/>
+</head>
+<body>
+<#include  "/common/header.html">
+ 
+<div class="box">
+    <div class="main">
+        <div class="main1">
+            <img src="${rc.contextPath}/images/pc/slogan.png" alt=""/>
+        </div><!--main1-->
+        <div class="div-sou">
+          <form action="${rc.contextPath}/match/list" id="search-form" method="post">
+            <div class="sou">
+                <input id="txt-search" type="text" placeholder="请输入小区名称或地址或公寓名牌" name="address" class="sousuo"/>
+                <input id="btn-search" type="button" value="搜 索" class="btn" id="search-btn"/>
+            </div>
+         </form>
+        </div>
+    </div><!--main-->
+
+    <div class="zhuanye">
+        <div class="woniu-tese">
+            <div class="jingpin">
+                <img src="${rc.contextPath}/images/pc/navigateright_r1_c1.png" class="dian"/>
+                <p>为什么用窝牛</p>
+            </div><!--jingpin-->
+        </div>
+        <div class="zhuan">
+            <dl class="z">
+                <dt><img src="${rc.contextPath}/images/pc/icon1.png" alt="" /></dt>
+                <dd><img src="${rc.contextPath}/images/pc/zhuou.png" alt="" /></dd>
+            </dl>
+            <dl class="ye">
+                <dt><img src="${rc.contextPath}/images/pc/icon2.png" alt="" /></dt>
+                <dd><img src="${rc.contextPath}/images/pc/zh.png" alt=""/></dd>
+            </dl>
+            <dl class="z">
+                <dt><img src="${rc.contextPath}/images/pc/icon3.png" alt="" /></dt>
+                <dd><img src="${rc.contextPath}/images/pc/zhuang.png" alt="" /></dd>
+            </dl>
+        </div><!--zhuan-->
+    </div><!--zhuanye-->
+
+    <div class="lunbo">
+        <div class="lunbo-center">
+             <div class="jingpin">
+                <p>推荐品牌</p>
+            </div><!--jingpin-->
+            <div class="recomd-brands">
+              <#list brandVoList as data>
+                <div class="brand">
+                    <div class="brand-pic">
+                        <img src="${rc.contextPath}/images/brand/${data.pic}" />
+                        <div class="cover">
+                        <a class="niu" href="${rc.contextPath}/brand/brandDetail?brandId=${data.id}" target="_blank">公寓详情</a>
+                    </div>
+                    </div>
+                    <div class="brand-word">
+                        <div class="brand-name">${data.name}</div>
+                        <div class="brand-slogan">${data.tagline}</div>
+                    </div>
+                </div>
+              </#list>
+                
+            </div>
+        </div>
+    </div><!--lunbo-->
+
+</div><!--box-->
+<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/slick/slick.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/validation.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/common.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/shouye.js"></script>
+<#include  "/common/footer.html">
+</body>
+</html>

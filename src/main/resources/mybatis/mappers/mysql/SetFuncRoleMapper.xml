@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.SetFuncRoleDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.SetFuncRole">
+        <id column="FUNC_ROLE_ID" property="funcRoleId" jdbcType="VARCHAR"/>
+        <result column="FUNC_ROLE_CODE" property="funcRoleCode" jdbcType="VARCHAR"/>
+        <result column="FUNC_ROLE_NAME" property="funcRoleName" jdbcType="VARCHAR"/>
+        <result column="FUNC_ROLE_TYPE" property="funcRoleType" jdbcType="VARCHAR"/>
+        <result column="FUNC_ROLE_DESC" property="funcRoleDesc" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="CHAR"/>
+        <result column="LAST_UPDATOR" property="lastUpdator" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        FUNC_ROLE_ID, FUNC_ROLE_CODE, FUNC_ROLE_NAME, FUNC_ROLE_TYPE, FUNC_ROLE_DESC, STATUS,
+        LAST_UPDATOR, LAST_UPDATE_TIME
+    </sql>
+
+    <select id="querySelectedResource" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+        SELECT
+        SR.FUNC_ROLE_ID, SR.FUNC_ROLE_NAME
+        FROM
+        SET_FUNC_ROLE SR
+        INNER JOIN
+        SET_RGROUP_FROLE SRR
+        ON
+        SR.FUNC_ROLE_ID = SRR.FUNC_ROLE_ID
+        WHERE
+        SRR.RGROUP_ID = #{rgroupId}
+    </select>
+
+
+    <select id="queryCandidateResource" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+        <![CDATA[
+  		SELECT 
+  			FUNC_ROLE_ID, FUNC_ROLE_NAME 
+  		FROM 
+  			SET_FUNC_ROLE 
+  			WHERE 
+  			FUNC_ROLE_ID NOT IN 
+  			(
+	  			SELECT 
+			        SR.FUNC_ROLE_ID 
+				FROM 
+			        SET_FUNC_ROLE SR 
+			        INNER JOIN 
+			        SET_RGROUP_FROLE SRR
+			        ON 
+			        SR.FUNC_ROLE_ID = SRR.FUNC_ROLE_ID 
+			        WHERE 
+			        SRR.RGROUP_ID = #{rgroupId}
+  			)
+    ]]>
+    </select>
+
+
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SET_FUNC_ROLE
+    </select>
+
+    <!-- 得到Sequences -->
+    <select id="getSequences" resultType="java.lang.String">
+        select SEQ_SET_FUNC_ROLE.nextVal from dual
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal">
+        select
+        <include refid="Base_Column_List"/>
+        from SET_FUNC_ROLE
+        where FUNC_ROLE_ID = #{funcRoleId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+        delete from SET_FUNC_ROLE
+        where FUNC_ROLE_ID = #{funcRoleId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.micro.rent.dbaccess.entity.SetFuncRole">
+        insert into SET_FUNC_ROLE (FUNC_ROLE_ID, FUNC_ROLE_CODE, FUNC_ROLE_NAME,
+        FUNC_ROLE_TYPE, FUNC_ROLE_DESC, STATUS,
+        LAST_UPDATOR, LAST_UPDATE_TIME)
+        values (#{funcRoleId,jdbcType=VARCHAR}, #{funcRoleCode,jdbcType=VARCHAR}, #{funcRoleName,jdbcType=VARCHAR},
+        #{funcRoleType,jdbcType=VARCHAR}, #{funcRoleDesc,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+        #{lastUpdator,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.micro.rent.dbaccess.entity.SetFuncRole">
+        update SET_FUNC_ROLE
+        <set>
+            <if test="funcRoleCode != null">
+                FUNC_ROLE_CODE = #{funcRoleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="funcRoleName != null">
+                FUNC_ROLE_NAME = #{funcRoleName,jdbcType=VARCHAR},
+            </if>
+            <if test="funcRoleType != null">
+                FUNC_ROLE_TYPE = #{funcRoleType,jdbcType=VARCHAR},
+            </if>
+            <if test="funcRoleDesc != null">
+                FUNC_ROLE_DESC = #{funcRoleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=CHAR},
+            </if>
+            <if test="lastUpdator != null">
+                LAST_UPDATOR = #{lastUpdator,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where FUNC_ROLE_ID = #{funcRoleId,jdbcType=VARCHAR}
+    </update>
+</mapper>

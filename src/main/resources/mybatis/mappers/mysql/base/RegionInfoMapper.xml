@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.base.RegionDao">
+
+    <resultMap type="com.micro.rent.dbaccess.entity.base.RegionInfo" id="baseResultMap">
+        <id column="T_region_info_ID" property="tRegionInfoId" jdbcType="VARCHAR"/>
+        <result column="Region_Code" property="regionCode" jdbcType="VARCHAR"/>
+        <result column="Region_Name" property="regionName" jdbcType="VARCHAR"/>
+        <result column="Parent_ID" property="parentId" jdbcType="DECIMAL"/>
+        <result column="Region_Level" property="regionLevel" jdbcType="DECIMAL"/>
+        <result column="Region_Order" property="regionOrder" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="findReginsByParentId" resultMap="baseResultMap" parameterType="int">
+        SELECT T_region_info_ID,Region_Code,Region_Name,Parent_ID,Region_Level,Region_Order
+        FROM t_region_info
+        WHERE Parent_ID = #{parentId}
+        order by region_code
+    </select>
+    <select id="findDirectCityByGovnmentByParentId" resultMap="baseResultMap" parameterType="int">
+        SELECT T_region_info_ID,Region_Code,Region_Name,Parent_ID,Region_Level,Region_Order
+        FROM t_region_info
+        WHERE Parent_ID in
+        (
+        select t_region_info_id from t_region_info where parent_id = #{parentId}
+        )
+        order by region_code
+    </select>
+
+
+    <select id="findReginsByParentCodeAndRegionLevel" resultMap="baseResultMap" parameterType="int">
+        SELECT T_region_info_ID,Region_Code,Region_Name,Parent_ID,Region_Level,Region_Order
+        FROM t_region_info
+        WHERE Parent_ID = #{parentId}
+        and Region_Level = #{regionLevel}
+        order by region_code
+    </select>
+
+    <select id="findReginsByRegionCode" resultMap="baseResultMap" parameterType="string">
+        SELECT T_region_info_ID,Region_Code,Region_Name,Parent_ID,Region_Level,Region_Order
+        FROM t_region_info
+        WHERE Region_Code = #{regionCode}
+    </select>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.FeeDao">
+	<resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.Fee">
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="fee_group_id" property="feeGroupId" jdbcType="BIGINT" />
+		<result column="type" property="type" jdbcType="OTHER" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, fee_group_id, type, price::numeric
+	</sql>
+	
+	<sql id="Base_Column_List_Alias">
+        f.id, f.fee_group_id, f.type, f.price::numeric
+    </sql>
+
+    <resultMap type="com.micro.rent.pc.entity.Fee" id="priceGroupResultMap" extends="BaseResultMap">
+        <association property="feeGroup" javaType="com.micro.rent.pc.entity.Fee">
+            <id property="id" column="fee_group_id"/>
+            <result property="name" column="fee_group_name"/>
+            <result property="description" column="fee_group_description"/>
+            <result property="flag" column="fee_group_flag"/>
+        </association>
+    </resultMap>
+
+	<select id="findWithPriceGroupByHouseId" parameterType="java.util.Map" resultMap="priceGroupResultMap">
+		SELECT
+			pg.id fee_group_id,
+			pg.name fee_group_name,
+			pg.description fee_group_description,
+			pg.flag fee_group_flag,
+			<include refid="Base_Column_List_Alias"/>
+		FROM
+			house h ,
+			price_group pg ,
+			fee f
+		WHERE
+			h.price_group_id = pg.id
+			AND f.fee_group_id = h.fee_group_id
+            and h.id = #{houseId}
+	</select>
+	
+	<select id="findByHouseId" parameterType="java.util.Map" resultMap="BaseResultMap">
+		SELECT
+			<include refid="Base_Column_List_Alias"/>
+		FROM
+			house h ,
+			fee f
+		WHERE
+			f.fee_group_id = h.fee_group_id
+            and h.id = #{houseId}
+	</select>
+</mapper>

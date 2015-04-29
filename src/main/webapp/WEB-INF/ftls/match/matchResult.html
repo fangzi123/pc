@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=11" />
+    <title>窝牛租房</title>
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/rangeSlider/ion.rangeSlider.css">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/rangeSlider/ion.rangeSlider.skinHTML5.css">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/pagination/simplePagination.css"/>
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/slick/slick.css">
+    <link rel="stylesheet" href="${rc.contextPath}/resources/pc/css/snail.css">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/yuyue.css">
+    <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+</head>
+<body>
+    <#include  "/common/header.html">
+    <#include  "/favoriteorder.html">
+    <div class="snail">
+        <div class="content">
+            <div class="conditions">
+                <div class="search">
+                    <input id="txt-search" type="text" placeholder="请输入小区名称或地址或公寓品牌" class="ser" name="address" value="${address}"/>
+                    <img id="btn-search" class="search" src="${rc.contextPath}/images/pc/ser.png">
+                </div>
+                <div id="zone-price" class="div-range">
+                    <div class="condition-name">租金:</div>
+                    <ul >
+                      <li id="price-buxian" class="active">不限</li>
+                    </ul>
+                    <div class="range">
+                        <input type="text" id="range" value="" name="range" />
+                    </div>
+                </div>
+                <div id="zone-huxing">
+                    <div class="condition-name">户型:</div>
+                    <ul id="huxing">
+                      <li class="active">不限</li>
+                     <#list house_layout_enum as house_layout>
+                        <li data="${house_layout}">${house_layout}</li>
+                     </#list>
+                    </ul>
+                </div>
+                <div id="">
+                    <div class="condition-name">其他:</div>
+                    <ul id="qita">
+                      <li id="buxian" class="active">不限</li>
+                      <li>
+                          <select>
+                            <option value="">不限</option>
+                            <#list house_orientation_enum as house_orientation>
+                            <option value="${house_orientation}">${house_orientation}</option>
+                            </#list>
+                          </select>
+                      </li>
+                      <li><input type="checkbox" id="balcony" data="阳台" class="content-input"><label id="balcony" for="balcony">阳台</label></li>
+                      <li><input type="checkbox" id="bathroom" data="独卫" class="content-input"><label id="bathroom" for="bathroom">独卫</label></li>
+                      <li><input type="checkbox" id="bayWindow" data="飘窗" class="content-input"><label id="bayWindow" for="bayWindow">飘窗</label></li>
+                    </ul>
+                </div>
+                <div id="div-conditions">
+                    <div class="condition-name">条件:</div>
+                    <div id="fast-tab-model" class="fast-tab" style="display:none;">
+                        <span></span>
+                        <img class="delete" src="${rc.contextPath}/images/pc/delect.png">
+                    </div>
+                    <div id="clear-con" class="delete-all">
+                        <img src="${rc.contextPath}/images/pc/trash.png">
+                        <span>清空筛选选项</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 结果浏览 -->
+            <div class="house-left">
+                 <ul class="hus-subnav">
+                     <li data="0" class="sort-active"><a>默认</a></li>
+                     <li data="1"><a>最新</a></li>
+                     <li data="2"><a class="sort rise">价格 <div class="hus-arrow arrow-up"></div></a></li>
+                     <li data="3"><a class="sort descend">面积 <div class="hus-arrow arrow-down"></div></a></li>
+                 </ul>  
+                 <p class="page">
+                     <a id="currentPage" class="page-high">1</a>/<a id="totalPage">${pageList.totalPage}</a>
+                     <a href="#"><img id="top-prev" src="${rc.contextPath}/images/pc/prev-page.png"></a>
+                     <a href="#"><img id="top-next" src="${rc.contextPath}/images/pc/next-page.png"></a>
+                 </p>
+                 <div class="clear"></div>
+                 <div class="sub-con" id="house-list">
+                 <#list pageList.list as house>
+                       <dl>
+                           <dt><img src="/images/house/${house.housePics[0]} "></dt>
+                           <dd class="first-child">
+                                <h1><a href="${rc.contextPath}/house/findHouseDetail?houseId=${house.hid}" target="_blank">${house.communityName}</a></h1>
+                                <span class="title"><a class="title" href="${rc.contextPath}/branch/branchDetail?branchId=${house.branchId}"  target="_blank">${house.branchName}</a></span>
+                                <span class="address">${house.address}</span>
+                                <span>${house.layout} | ${house.availableArea}m²</span>
+                                <span class="price">${house.monthlyPrice}元/月</span>
+                           </dd>
+                           <dd class="last-child">
+                               <a href="javascript:void(0);" class="look">预览</a>
+                               <a href="${rc.contextPath}/house/findHouseDetail?houseId=${house.hid}" class="des" target="_blank">公寓详情</a>
+                              <div class="arrow  <#if house_index != 0>hidden</#if>"></div>
+                           </dd>
+                           <input type="hidden" value="${house.hid}" name="houseId" />
+                           <input type="hidden" value="${house.housePics?size}" name="pics_length"/>
+                           <#list house.housePics as pic>
+                           <input type="hidden" value="/images/house/${pic}" name="pic${pic_index}" />
+                           </#list>
+                           <input type="hidden" value="${house.communityName}" name="communityName" />
+                           <input type="hidden" value="${house.brandName}" name="brandName" />
+                           <input type="hidden" value="${house.branchName}" name="branchName" />
+                           <input type="hidden" value="${house.address}" name="address" />
+                           <input type="hidden" value="${house.layout}" name="layout" />
+                           <input type="hidden" value="${house.availableArea}" name="availableArea" />
+                           <input type="hidden" value="${house.monthlyPrice}" name="monthlyPrice" />
+                           <input type="hidden" value="${house.phone}" name="phone" />
+                           <input type="hidden" value="${house.availableTime}" name="availableTime" />
+                           <input type="hidden" value="${house.floor}" name="floor" />
+                           <input type="hidden" value="${house.totalFloor}" name="totalFloor" />
+                           <input type="hidden" value="${house.lng}" name="cur_lng"/>
+                           <input type="hidden" value="${house.lat}" name="cur_lat"/>
+                           <input type="hidden" value="${house.paymentType}" name="paymentType"/>
+                           <input type="hidden" value="${house.months}" name="months"/>
+                           <input type="hidden" value="${house.orientation}" name="orientation"/>
+                       </dl>
+                  </#list>
+                 </div>
+                 <div class="div-pagination">
+                     <div id="pagination">
+                     </div>
+                 </div>
+            </div>
+            <div class="house-right">
+                 <div id="preView">
+            <#list pageList.list as house><#if house_index = 0>
+                    <input type="hidden" id="houseId" value="${house.hid}"/>
+                    <div id="house-pic" class="house1">
+                   <#list house.housePics as pic>
+                        <div class="house-pic"><img src="/images/house/${pic}"></div>
+                   </#list>
+                    </div>
+                    <div class="house2">
+                        <h1>${house.communityName}</h1> 
+                        <p>${house.branchName}</p>
+                    </div>
+                    <div class="house3">
+                        <input type="hidden" name="cur_lng" value="${house.lng}">
+                        <input type="hidden" name="cur_lat" value="${house.lat}">
+                        <div name="map" id="map" style="height:200px"></div>
+                    </div>
+                    <div class="house4">
+                        <ul class="dizhi">
+                            <li>地址：${house.address}</li>
+                            <li>电话：${house.phone}</li>
+                             <#if house.availableTime!=null&&house.availableTime!="null" >
+                            <li>入住时间：${house.availableTime}  </li>
+                             </#if>
+                            <li>概况：${house.layout} | ${house.availableArea}m&sup2;<#if house.floor!=null&&house.floor!="null" > | ${house.floor}/${house.totalFloor} </#if> | ${house.orientation}</li>
+                            <li>支付方式：${house.paymentType}</li>
+                            <#if house.months!=null&&house.months!="null" >
+                            <li>最短租约：${house.months}</li>
+                            </#if>
+                        </ul>
+                    </div><!--house4-->
+                    <div class="house5">
+                      <p><span>${house.monthlyPrice}</span>元/月<p>
+                        <ul class="yuyue">
+                          <li class="xin" id="favoriteHouse"></li>
+                          <li class="yue" id="preorder">预约</li>
+                        </ul>
+                    </div>
+            </#if></#list>
+                </div>
+            </div>
+        </div>
+    </div>
+    <#include  "/common/footer.html">
+    <!-- 隐藏变量区 -->
+    <input type="hidden" name="ctxPath" value="${rc.contextPath}" />
+    <input type="hidden" id="page-start" name="pageStart" value="${pageList.pageStart}" />
+    <input type="hidden" id="page-limit" name="pageLimit" value="${pageList.pageLimit}" />
+    <input type="hidden" id="total-record" name="totalRecord" value="${pageList.totalRecord}" />
+    <input type="hidden" id="pricerange_min"  value="${pricerange.minPrice}" />
+    <input type="hidden" id="pricerange_max"  value="${pricerange.maxPrice}" />
+    <!--  -->
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=108b50eb45abfdb30d056ec907130e22"></script>
+    <script src="${rc.contextPath}/resources/pc/js/common/validation.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/common.js"></script>
+    <script src="${rc.contextPath}/resources/pc/js/common/cookie.js"></script>
+    <script src="${rc.contextPath}/resources/pc/js/common/slick/slick.js"></script>
+    <script src="${rc.contextPath}/resources/pc/js/common/rangeSlider/ion.rangeSlider.min.js" ></script>
+    <script src="${rc.contextPath}/resources/pc/js/common/pagination/jquery.simplePagination.js"></script>
+    <script src="${rc.contextPath}/resources/pc/js/order.js"></script>
+    <script src="${rc.contextPath}/resources/pc/js/favorite.js"></script>
+    <script src="${rc.contextPath}/resources/pc/js/matchResult.js" type="text/javascript"></script>
+</body>
+</html>

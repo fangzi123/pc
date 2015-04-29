@@ -1,0 +1,167 @@
+.box{
+    width: 100%;
+    height: auto;
+    background-color: #F4F4F4 !important;
+}
+.toubu{
+    height: 301px;
+    width: 100%;
+    background: url("../../../../images/pc/midbanner.jpg");
+}
+.toubu1{
+    width: 1180px;
+    height: 130px;
+    margin: 0 auto;
+    padding-top: 150px;
+}
+.yuanjing{
+    font-size: 30px;
+    color: #ffffff;
+    line-height: 55px;
+}
+    a.yuanjing:hover{
+        color: white;
+    }
+.xian{
+    width: 27%;
+    border: 1px #ffffff solid;
+}
+.toubu1 p{
+    width: 771px;
+    height: 53px;
+    font-size: 14px;
+    color: #ffffff;
+    padding-top: 15px;
+    line-height: 1.3;
+}
+.main{
+    width: 1180px;
+    height: 590px;
+    background-color: #ffffff;
+    margin: 0 auto;
+}
+.main-left{
+    height: 100%;
+    width: 783px;
+    float: left;
+}
+.main-right{
+    float: right;
+    width: 396px;
+    height: 585px;
+    overflow: auto;
+    overflow-x:hidden; }
+.red{
+    float: left;
+}
+.mingcheng{
+    font-size: 14px;
+    color: black;
+    padding-top: 3px;
+    width: 190px;
+    border-bottom: 0px solid;
+    cursor: pointer;
+    line-height: 16px;
+}
+.mingcheng:hover{
+    border-bottom: 1px solid #F19A00;
+    color: #F39800;
+
+}
+.wenzi{
+    float: left;
+}
+.xiangqing{
+    width: 80px;
+    height: 24px;
+    display: inline-block;
+    background: transparient;
+    border-radius: 4px;
+    border: 1px #f39800 solid;
+    line-height: 24px;
+    text-align: center;
+    margin-top: 10px;
+    color: #f39800;
+}
+.qian{
+    float: left;
+    padding-top: 16px;
+    padding-right: 40px;
+}
+.xiangqing:hover{
+    color: #ffffff;
+    background-color:#f39800;
+}
+.aa{
+    margin-top: 10px;
+    margin-left:10px;
+    padding-top: 8px;
+    padding-bottom: 3px;
+    width: 376px;
+    height: 128px;
+    
+}
+.bao{
+    display: table;
+}
+.dizhi{
+    padding-top: 8px;
+    line-height: 14px;
+    padding-bottom: 8px;
+}
+.a1{
+    background: url(../../../../images/pc/point.png);
+    width: 22px;
+    height: 28px;
+    text-align: center;
+    line-height: 25px;
+    font-size: 12px;
+    color: white;
+    float: left;
+    margin-left: 10px;
+}
+.a2{
+    width: 211px;
+    height: 130px;
+    float: left;
+    margin-left: 10px;
+}
+.a3{
+    width: 112px;
+    height: 86px;
+    float: left;
+}
+.a3 img{
+    padding-top: 21px;
+    width: 100%;
+    height: 100%;
+}
+.qian span{
+    color: #F69802;
+}
+.hovered {
+    background: #fff3e1;
+}
+    .map-point {
+        background: url(../../../../images/pc/point.png);
+        width: 22px;
+        height: 28px;
+        text-align: center;
+        line-height: 25px;
+        font-size: 12px;
+        color: white;
+    }
+    .p-unactive {
+        background-position: 0px 0px;
+    }
+    .p-active {
+        background: url(../../../../images/pc/point.png);
+        background-position: 30px 0px;
+        width: 26px;
+        height:32px;
+        line-height: 30px;
+        z-index: 999999;
+    }
+label.active {
+    z-index: 99999 !important;
+}

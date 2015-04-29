@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.shiro.UserDao">
+
+    <select id="findByUserName" parameterType="String"
+            resultType="Tenant">
+        select id,mobile,nickname,name,password,flag,head_img
+        from tenant
+        where 
+        get_bit(flag,0)='1'
+        and mobile=#{0} <!--  and flag='1'-->
+    </select>
+    
+</mapper>

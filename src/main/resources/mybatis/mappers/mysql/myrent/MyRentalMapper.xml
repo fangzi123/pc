@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.myrent.MyRentalDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.biz.myrent.vo.MatchResultVo">
+        <result column="Project_ID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="T_House_ID" property="tHouseId" jdbcType="VARCHAR"/>
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+        <result column="community_Name" property="communityName"
+                jdbcType="VARCHAR"/>
+        <result column="Longitude" property="longitude" jdbcType="DECIMAL"/>
+        <result column="Latitude" property="latitude" jdbcType="DECIMAL"/>
+        <result column="Province_Id" property="provinceCode" jdbcType="VARCHAR"/>
+        <result column="City_Code" property="cityCode" jdbcType="VARCHAR"/>
+        <result column="District_Code" property="districtCode"
+                jdbcType="VARCHAR"/>
+        <result column="Building_NO" property="buildingNO" jdbcType="VARCHAR"/>
+        <result column="Room_Number" property="roomNumber" jdbcType="VARCHAR"/>
+        <result column="layout" property="layout" jdbcType="VARCHAR"/>
+        <result column="renovation" property="renovation" jdbcType="VARCHAR"/>
+        <result column="LONG_PRICE" property="longPrice" jdbcType="DECIMAL"/>
+
+        <result column="PICTURE" property="houPicture" jdbcType="VARCHAR"/>
+        <result column="USE_AREA" property="useArea" jdbcType="DECIMAL"/>
+        <result column="HALL_QUANTITY" property="hallQuantity"
+                jdbcType="DECIMAL"/>
+        <result column="DOORPLATE" property="doorplate" jdbcType="DECIMAL"/>
+
+    </resultMap>
+
+    <select id="selectProjectByQueryVo" resultMap="BaseResultMap"
+            parameterType="com.micro.rent.biz.myrent.vo.MyRentQueryVo">
+        select
+        A.Project_ID,A.Longitude,A.Latitude,A.community_Name,A.Province_Id,
+        A.City_Code, A.District_Code,
+        Building_NO,Room_Number,layout,renovation,B.T_House_ID,B.LONG_PRICE,b.house_id
+        from t_project A, T_HOUSE B
+        WHERE A.PROJECT_ID = B.PROJECT_ID
+
+        AND A.City_Code = #{cityCode}
+
+        AND B.Status = '1'
+
+        <if test="longPrice != null and longPrice != ''">
+            AND B.LONG_PRICE <![CDATA[<=]]>
+            #{longPrice}
+        </if>
+        <if test="rentalType != null and rentalType != ''">
+            AND B.Rental_Type = #{rentalType}
+        </if>
+        order by A.Project_ID , B.AREA,A.Total_Floor DESC,B.Long_Price ASC
+    </select>
+
+    <select id="selectAllProject" resultMap="BaseResultMap">
+        select
+        A.Project_ID,A.Longitude,A.Latitude,A.community_Name,A.Province_Id, A.City_Code, A.District_Code,
+        Building_NO,Room_Number,layout,renovation,B.T_House_ID,b.house_Id
+        from t_project A, T_HOUSE B
+        WHERE A.PROJECT_ID = B.PROJECT_ID
+        AND B.Status =
+        '1'
+        order by A.Project_ID , B.AREA,A.Total_Floor DESC,B.Long_Price ASC
+    </select>
+
+    <select id="selectCoverProject" resultMap="BaseResultMap"
+            parameterType="map">
+        select distinct
+        A.Project_ID,A.Longitude,A.Latitude,A.community_Name,A.Province_Id,
+        A.City_Code, A.District_Code,
+        Building_NO,Room_Number,layout,renovation,B.T_House_ID,b.house_Id
+        from t_project A, T_HOUSE B
+        WHERE A.PROJECT_ID = B.PROJECT_ID
+        AND
+        A.Longitude > #{lngButtom}
+        AND  <![CDATA[A.Longitude <#{lngTop} ]]>
+        AND A.Latitude > #{latLeft}
+        AND  <![CDATA[A.Latitude <#{latRight} ]]>
+        AND B.Status = '1'
+        order by A.Project_ID , B.AREA,A.Total_Floor
+        DESC,B.Long_Price ASC
+    </select>
+
+    <select id="findHouseByQueryVo" resultMap="BaseResultMap"
+            parameterType="com.micro.rent.biz.myrent.vo.MyRentQueryVo">
+        SELECT
+        th.House_ID,
+        tp.Latitude,
+        tp.Longitude
+        FROM
+        t_house th,
+        t_project tp
+        WHERE
+        th.project_id = tp.project_id
+        AND th.Status = '1'
+        <if test="longPrice !=10001">
+            and th.Long_Price  <![CDATA[<=]]> #{longPrice}
+        </if>
+        <if test="longPrice ==10001">
+            and th.Long_Price  <![CDATA[>=]]> #{longPrice}
+        </if>
+        <choose>
+            <when test="layout == 0">
+            </when>
+            <when test="layout == 1">
+                AND th.layout = #{layout}
+            </when>
+            <when test="layout == 2">
+                AND th.layout = #{layout}
+            </when>
+            <otherwise>
+                AND th.layout >= #{layout}
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 取得列表页房源信息（条件检索用） -->
+    <select id="findHousesByHouseIds" resultMap="BaseResultMap">
+        SELECT
+        t1.Project_ID,
+        t1.House_ID,
+        t1.Long_Price,
+        t1.Community_Name,
+        t1.Use_Area,
+        t1.layout,
+        t1.Doorplate,
+        t1.Building_NO,
+        t1.Room_Number,
+        t1.Hall_Quantity,
+        t1.Longitude,
+        t1.Latitude,
+        t2.picture
+        FROM
+        (
+        SELECT
+        th.Project_ID,
+        th.House_ID,
+        th.Long_Price,
+        th.Community_Name,
+        th.Use_Area,
+        th.layout,
+        th.Doorplate,
+        th.Building_NO,
+        th.Room_Number,
+        th.Hall_Quantity,
+        tp.Longitude,
+        tp.Latitude
+        FROM
+        t_house th,
+        t_project tp
+        WHERE
+        th.Project_ID = tp.Project_ID
+        AND th.House_ID IN
+        <foreach item="houseId" index="index" collection="list" open="(" separator="," close=")">
+            #{houseId}
+        </foreach>
+        ) t1
+        LEFT JOIN (
+        SELECT
+        house_id,
+        min(picture) AS picture
+        FROM
+        t_house_pic
+        WHERE
+        House_ID IN
+        <foreach item="houseId" index="index" collection="list" open="(" separator="," close=")">
+            #{houseId}
+        </foreach>
+        GROUP BY
+        House_ID
+        ) t2 ON t1.House_ID = t2.house_id
+    </select>
+
+    <select id="selectHouseByQueryVo" resultMap="BaseResultMap"
+            parameterType="com.micro.rent.biz.myrent.vo.MyRentQueryVo">
+        select x.*,y.picture from (
+        select
+        A.Project_ID,A.Longitude,A.Latitude,B.House_ID,B.LONG_PRICE,b.COMMUNITY_NAME,b.DOORPLATE,b.BUILDING_NO,b.ROOM_NUMBER
+        , b.USE_AREA,b.LAYOUT,b.HALL_QUANTITY
+        from t_project A, (select * from T_HOUSE bb where bb.Status = '1'
+        <if test="longPrice !=10000">
+            and bb.LONG_PRICE  <![CDATA[<=]]>
+            #{longPrice}
+        </if>
+        <if test="longPrice ==10000">
+            and bb.LONG_PRICE  <![CDATA[>=]]>
+            #{longPrice}
+        </if>
+        <choose>
+            <when test="layout == 0">
+            </when>
+            <when test="layout == 1">
+                AND bb.layout = #{layout}
+            </when>
+            <when test="layout == 2">
+                AND bb.layout = #{layout}
+            </when>
+            <otherwise>
+                AND bb.layout >= #{layout}
+            </otherwise>
+        </choose>
+        ) B WHERE A.PROJECT_ID = B.PROJECT_ID
+        order by B.Long_Price DESC limit
+        <if test="stackIndex != null and stackIndex != ''">
+            #{stackIndex}
+        </if>
+        <if test="stackIndex ==null or stackIndex==''">0</if>
+        ,10
+        ) X join (select * from t_house_pic C ) as Y on
+        x.house_id=Y.house_id group by x.house_id
+        order by x.Long_Price DESC
+    </select>
+    <select id="selectOneProjectByQueryVo" resultMap="BaseResultMap"
+            parameterType="com.micro.rent.biz.myrent.vo.MyRentQueryVo">
+        select x.*,y.picture from(
+        select
+        A.Project_ID,A.Longitude,A.Latitude,B.House_ID,B.LONG_PRICE,b.COMMUNITY_NAME,b.DOORPLATE,b.BUILDING_NO,b.ROOM_NUMBER
+        , b.USE_AREA,b.LAYOUT,b.HALL_QUANTITY
+        from t_project A, (select * from T_HOUSE bb where bb.Status = '1'
+        <if test="longPrice != null and longPrice != ''">
+            and bb.LONG_PRICE   <![CDATA[<=]]>
+            #{longPrice}
+        </if>
+        <choose>
+            <when test="layout == 0">
+            </when>
+            <when test="layout == 1">
+                AND bb.layout = #{layout}
+            </when>
+            <when test="layout == 2">
+                AND bb.layout = #{layout}
+            </when>
+            <otherwise>
+                <if test="layout !=null ">
+                    AND bb.layout >= #{layout}
+                </if>
+            </otherwise>
+        </choose>
+        ) B
+        WHERE A.PROJECT_ID = B.PROJECT_ID
+        <!-- 		and a.PROJECT_ID=#{projectId} -->
+        and b.COMMUNITY_NAME=#{communityName}
+        order by B.Long_Price DESC limit
+        <if test="stackIndex != null and stackIndex != ''">
+            #{stackIndex}
+        </if>
+        <if test="stackIndex ==null or stackIndex==''">0</if>
+        ,10
+        ) x join (select * from t_house_pic C ) as Y on
+        x.house_id=Y.house_id group by x.house_id
+        order by x.Long_Price DESC
+    </select>
+
+
+</mapper>

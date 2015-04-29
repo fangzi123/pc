@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>窝牛租房</title>
+<meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=11" />
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/common.css">
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/slick/slick.css">
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/pagination/simplePagination.css" />
+<link rel="stylesheet" href="${rc.contextPath}/resources/pc/css/community/comniDetail.css">
+<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+</head>
+<body>
+	<#include "/common/header.html">
+	<div class="box">
+		<div class="main">
+			<div class="main1">
+				<ul>
+					<li><a href="${rc.contextPath}/match/home">首页</a></li>
+					<li class="gray">/</li>
+					<li><a href="${rc.contextPath}/brand/brandDetail?brandId=${branch.brandId!0}">公寓品牌</a></li>
+					<li class="gray">/</li>
+					<li>公寓项目详情</li>
+				</ul>
+			</div>
+			<!--main1-->
+			<div class="main2">
+				<div class="main2-left">
+					<div class="house-pic">
+						<div class="house-pic-bg">
+							<!-- TODO: A. 需要放入项目图片 -->
+							<#if branch2picList ? exists><#list branch2picList as bp>
+							<div>
+								<img src="${rc.contextPath}/images/house/${bp.picPath}" alt="" />
+							</div>
+							</#list></#if>
+						</div>
+						<!--datu-->
+						<div class="house-pic-sm">
+							<!-- TODO: A处放什么这里就放什么 -->
+							<#if branch2picList ? exists><#list branch2picList as bp>
+							<div>
+								<img src="${rc.contextPath}/images/house/${bp.picPath}" alt="" />
+							</div>
+							</#list></#if>
+						</div>
+					</div>
+					<!--  房屋具体信息 -->
+					<div class="house-info">
+						<div class="daohang">
+							<ul>
+								<li><a href="#A">可用房源</a></li>
+								<li><a href="#B">物业信息</a></li>
+								<!-- <li><a href="#C">生活设施</a></li> -->
+								<li><a href="#D">附近房源</a></li>
+							</ul>
+						</div>
+						<!--daohang-->
+						<a name="A"></a>
+						<div class="fangyuan">
+							<h1>
+								可用房源
+							</h1>
+							<!--h1-->
+						</div>
+						<!--fangyuan-->
+						<div class="biao">
+							<div class="biaot">
+								<ul class="huxing">
+									<li class="first-child">　</li>
+									<li>户型</li>
+									<li>面积(㎡)</li>
+									<li>价格（元/月）</li>
+									<li class="last-child">
+									    <span id="currentPage">${availableHouseInfoPage.pageStart}</span> 
+									    <span>/</span>
+									    <span>${availableHouseInfoPage.totalPage}</span>
+										<div id="prev" class="arrow-left"></div>
+										<div id="next" class="arrow-right"></div></li>
+								</ul>
+							</div>
+							<div class="clear"></div>
+							<input type="hidden" id="availableHouseInfoPageTotalRecord" value="${availableHouseInfoPage.totalRecord}" /> <input type="hidden"
+								id="availableHouseInfoPageLimit" value="${availableHouseInfoPage.pageLimit}" /> <input type="hidden" id="branchId" value="${branch.id}" />
+							<div id="house-list" class="biaoge">
+								<dl>
+									<!-- TODO: 以此为单位生产房源列表 -->
+									<#list availableHouseInfoList as ahi>
+									<dd>
+										<dl>
+											<dt>
+												<img src="${rc.contextPath}/images/layout/${ahi.picPath}" alt="" />
+											</dt>
+											<dd>${ahi.layout}</dd>
+											<dd>${ahi.area}</dd>
+											<dd>${ahi.priceGroup.monthlyPrice}</dd>
+											<dd>
+												<!-- TODO: 根据情况不同生成下面按钮之一 -->
+												<!-- <a class="btn-over">已订完</a> -->
+												<!-- <a class="btn-detail">详情</a> -->
+												<#if ahi.totalNumber gt 0> <a class="btn-detail" href="${rc.contextPath}/house/findHouseDetail?houseId=${ahi.houseId}">详情</a> <#else> <a class="btn-over"
+													href="javascript:;">已订完</a> </#if>
+											</dd>
+										</dl>
+										<div class="clear"></div>
+									</dd>
+									</#list>
+									<!-- OVER -->
+								</dl>
+								<div class="div-pagination">
+									<div id="pagination"></div>
+								</div>
+								<div class="clear"></div>
+							</div>
+							<!--biaoge-->
+						</div>
+						<!--biao-->
+						<a name="B"></a>
+						<div class="xinxi">
+							<div class="fangyuan">
+								<h1>
+									物业信息
+								</h1>
+								<!--h1-->
+							</div>
+							<!--fangyuan-->
+							<div class="wuye-xinxi">
+							    <p>物业类型：${branch.propertyType}</p>
+                                <p>房间数量：<#if availableHouseInfoPage?exists> ${availableHouseInfoPage.totalRecord}</#if></p>
+							</div>
+						</div>
+						<!--xinxi-->
+						<!-- <a name="C"></a>
+						<div class="sheshi">
+							<div class="fangyuan">
+								<h1>
+									生活设施
+								</h1>
+								h1
+							</div>
+							fangyuan
+							<div class="fangy">
+								TODO: 根据结果显示不同的图标
+								<#if amenityList ? exists><#list amenityList as amenity>
+								<dl>
+									<#if amenity.type == '床上用品'> <dt class="bedclothes"></dt>
+									<#elseif amenity.type == '沙发'> <dt class="sofa"></dt>
+									<#elseif amenity.type == '洗衣机'> <dt class="washer"></dt>
+									<#elseif amenity.type == '热水'> <dt class="hot-water"></dt>
+									<#elseif amenity.type == '洗漱用品'> <dt class="toiletries"></dt>
+									<#elseif amenity.type == '电视'> <dt class="tv"></dt> 
+									<#elseif amenity.type == '微波炉'> <dt class="microwave"></dt>
+									<#elseif amenity.type == '电梯'> <dt class="elevator"></dt>
+									<#elseif amenity.type == '床'> <dt class="bed"></dt>
+									<#elseif amenity.type == '空调'> <dt class="air-conditions"></dt>
+									<#elseif amenity.type == '网络'> <dt class="wifi"></dt>
+									<#elseif amenity.type == '衣柜'> <dt class="public-space"></dt>
+									<#elseif amenity.type == '冰箱'> <dt class="fridge"></dt>
+									<#elseif amenity.type == '暖气'> <dt class="heater"></dt>
+									<#elseif amenity.type == '书桌'> <dt class="desk"></dt>
+									<#else> <dt class="others"></dt>
+									</#if>
+									<dd>${amenity.type}</dd>
+								</dl>
+								</#list></#if>
+							</div>
+							fangyuan
+						</div> -->
+						<!--sheshi-->
+					</div>
+				</div>
+				<!--main2-left-->
+				<div class="main2-right">
+					<div>
+						<!-- TODO: 项目详情 -->
+						<div class="house2">
+							<h1>${branch.name}</h1>
+							<p class="detail">${branch.description}</p>
+							<input type="hidden" id="addressX" value="${address.x}" /> <input type="hidden" id="addressY" value="${address.y}" />
+							<p class="address">地址：${address.address}</p>
+							<p class="phone">电话：${contact.phone}</p>
+							<p class="price">
+								<span class="orange">${priceGroup.monthlyPrice}元/月</span>起
+							</p>
+						</div>
+						<div id="map" class="map"></div>
+					</div>
+				</div>
+				<!--mian2-right-->
+			</div>
+			<!--main2-->
+			<div class="clear"></div>
+			<a name="D"></a> 
+			<#include "/common/nearBy.html">
+		</div>
+		<!--mian-->
+	</div>
+	<!--box-->
+	<#include "/common/footer.html">
+	<script src="${rc.contextPath}/resources/pc/js/common/validation.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/common.js"></script>
+	<script src="${rc.contextPath}/resources/pc/js/common/slick/slick.js"></script>
+	<script src="${rc.contextPath}/resources/pc/js/common/pagination/jquery.simplePagination.js"></script>
+	<script src="http://api.map.baidu.com/api?v=2.0&ak=108b50eb45abfdb30d056ec907130e22"></script>
+	<script src="${rc.contextPath}/resources/pc/js/community/comniDetail.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	var contextPath = "${rc.contextPath}";
+	</script>
+</body>
+</html>

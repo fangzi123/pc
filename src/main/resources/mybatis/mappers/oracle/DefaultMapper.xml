@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.micro.rent.dbaccess.dao.DefaultDao">
+    <resultMap id="SetFuncMenuResultMap"
+               type="com.micro.rent.dbaccess.entity.SetFuncMenu">
+        <id column="MENU_ID" property="menuId" jdbcType="DECIMAL"/>
+        <result column="PMENU_ID" property="pmenuId" jdbcType="DECIMAL"/>
+        <result column="MENU_CODE" property="menuCode" jdbcType="VARCHAR"/>
+        <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR"/>
+        <result column="MENU_NAME_BRIEF" property="menuNameBrief"
+                jdbcType="VARCHAR"/>
+        <result column="IS_LEAF" property="isLeaf" jdbcType="CHAR"/>
+        <result column="LV" property="lv" jdbcType="DECIMAL"/>
+        <result column="URL" property="url" jdbcType="VARCHAR"/>
+        <result column="DISPLAY_ORDER" property="displayOrder"
+                jdbcType="DECIMAL"/>
+        <result column="STATUS" property="status" jdbcType="CHAR"/>
+        <result column="LAST_UPDATOR" property="lastUpdator" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime"
+                jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="SetFuncMenu_Column_List">
+        MENU_ID, PMENU_ID, MENU_CODE, MENU_NAME, MENU_NAME_BRIEF, IS_LEAF, LV, URL,
+        DISPLAY_ORDER,
+        STATUS, LAST_UPDATOR, LAST_UPDATE_TIME
+    </sql>
+    <select id="findAllMenu" resultMap="SetFuncMenuResultMap"
+            parameterType="java.math.BigDecimal">
+        SELECT
+        <include refid="SetFuncMenu_Column_List"/>
+        FROM
+        SET_FUNC_MENU
+        WHERE
+        STATUS = '1'
+        ORDER BY
+        DISPLAY_ORDER
+    </select>
+
+
+    <sql id="SetFuncMenu_Column_List2">
+        DISTINCT SFM.MENU_ID,SFM.PMENU_ID,SFM.MENU_CODE,SFM.MENU_NAME,
+        SFM.MENU_NAME_BRIEF,SFM.IS_LEAF,SFM.LV,SFM.URL,SFM.DISPLAY_ORDER,
+        SFM.STATUS,SFM.LAST_UPDATOR,SFM.LAST_UPDATE_TIME
+    </sql>
+    <select id="findMenuByUserName" resultMap="SetFuncMenuResultMap"
+            parameterType="string">
+        SELECT
+        <include refid="SetFuncMenu_Column_List2"/>
+        FROM
+        SET_USER SU
+        INNER JOIN
+        SET_USER_RGROUP SUR
+        ON
+        SU.USER_ID = SUR.USER_ID
+        INNER JOIN
+        SET_ROLE_GROUP SRG
+        ON
+        SRG.RGROUP_ID = SUR.RGROUP_ID
+        INNER JOIN
+        SET_RGROUP_FROLE SRF
+        ON
+        SRG.RGROUP_ID = SRF.RGROUP_ID
+        INNER JOIN
+        SET_FUNC_ROLE SFR
+        ON
+        SFR.FUNC_ROLE_ID = SRF.FUNC_ROLE_ID
+        INNER JOIN
+        SET_FROLE_FMENU SFF
+        ON
+        SFF.FUNC_ROLE_ID = SFR.FUNC_ROLE_ID
+        INNER JOIN
+        SET_FUNC_MENU SFM
+        ON
+        SFM.MENU_ID = SFF.FUNC_MENU_ID
+        WHERE
+        SFM.STATUS = '1'
+        AND
+        SFR.STATUS = '1'
+        AND
+        SU.STATUS = '1'
+        AND
+        SU.USERNAME = #{username}
+        ORDER BY
+        SFM.DISPLAY_ORDER
+    </select>
+
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.pay.WeixinPayDao">
+
+    <!-- 生成支付日志 -->
+    <insert id="insertPayLog" parameterType="com.micro.rent.dbaccess.entity.pay.PayLog">
+        INSERT INTO t_pay_log
+        (trade_no,
+        weixin_id,
+        trade_type,
+        request_api,
+        request_content,
+        create_time)
+        VALUES
+        (#{tradeNo},
+        #{weixinId},
+        #{tradeType},
+        #{requestApi},
+        #{requestContent},
+        #{createTime})
+    </insert>
+
+</mapper>

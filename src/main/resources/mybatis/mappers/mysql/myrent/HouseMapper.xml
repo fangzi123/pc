@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.myrent.HouseInfoDao">
+    <resultMap id="BaseResultMap"
+               type="com.micro.rent.dbaccess.entity.myrent.HouseInfo">
+        <id column="T_House_ID" property="tHouseId" jdbcType="VARCHAR"/>
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+        <result column="Project_ID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="Status" property="status" jdbcType="VARCHAR"/>
+        <result column="Rent_Begin_Date" property="rentBeginDate"
+                jdbcType="VARCHAR"/>
+        <result column="Rent_End_Date" property="rentEndDate" jdbcType="VARCHAR"/>
+        <result column="Rent_Avail_Period" property="rentAvailPeriod"
+                jdbcType="VARCHAR"/>
+        <result column="Province_ID" property="provinceId" jdbcType="VARCHAR"/>
+        <result column="City_Code" property="cityCode" jdbcType="VARCHAR"/>
+        <result column="District_Code" property="districtCode"
+                jdbcType="VARCHAR"/>
+        <result column="Community_Name" property="communityName"
+                jdbcType="VARCHAR"/>
+        <result column="Doorplate" property="doorplate" jdbcType="VARCHAR"/>
+        <result column="Building_NO" property="buildingNo" jdbcType="VARCHAR"/>
+        <result column="Room_Number" property="roomNumber" jdbcType="VARCHAR"/>
+        <result column="Use_Area" property="useArea" jdbcType="DECIMAL"/>
+        <result column="layout" property="layout" jdbcType="VARCHAR"/>
+        <result column="Hall_Quantity" property="hallQuantity"
+                jdbcType="INTEGER"/>
+        <result column="Toilet_Quantity" property="toiletQuantity"
+                jdbcType="INTEGER"/>
+        <result column="Kitchen_Quantity" property="kitchenQuantity"
+                jdbcType="INTEGER"/>
+        <result column="Floor" property="floor" jdbcType="DECIMAL"/>
+        <result column="Total_Floor" property="totalFloor" jdbcType="DECIMAL"/>
+        <result column="Orientation" property="orientation" jdbcType="VARCHAR"/>
+        <result column="Area" property="area" jdbcType="DECIMAL"/>
+        <result column="Long_Price" property="longPrice" jdbcType="DECIMAL"/>
+        <result column="Short_Price" property="shortPrice" jdbcType="DECIMAL"/>
+        <result column="Payment_Type" property="paymentType" jdbcType="VARCHAR"/>
+        <result column="Renovation" property="renovation" jdbcType="VARCHAR"/>
+        <result column="Furniture" property="furniture" jdbcType="VARCHAR"/>
+        <result column="Appliances" property="appliances" jdbcType="VARCHAR"/>
+        <result column="TV" property="tv" jdbcType="VARCHAR"/>
+        <result column="Internet" property="internet" jdbcType="VARCHAR"/>
+        <result column="Water_Price" property="waterPrice" jdbcType="DECIMAL"/>
+        <result column="Electric_Price" property="electricPrice"
+                jdbcType="DECIMAL"/>
+        <result column="Warm_Price" property="warmPrice" jdbcType="DECIMAL"/>
+        <result column="Refrigeration_price" property="refrigerationPrice"
+                jdbcType="DECIMAL"/>
+        <result column="Release_Time" property="releaseTime" jdbcType="DATE"/>
+        <result column="Rental_Type" property="rentalType" jdbcType="VARCHAR"/>
+
+        <result column="Project_Desc" property="projectDesc" jdbcType="VARCHAR"/>
+        <result column="Company_Desc" property="companyDesc" jdbcType="VARCHAR"/>
+        <result column="Longitude" property="longitude" jdbcType="VARCHAR"/>
+        <result column="Latitude" property="latitude" jdbcType="VARCHAR"/>
+        <result column="Telephone" property="telephone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.micro.rent.biz.myrent.vo.ProjectWrap"
+               id="statMap">
+        <result column="min_price" property="minPrice" jdbcType="DECIMAL"/>
+        <result column="max_price" property="maxPrice" jdbcType="DECIMAL"/>
+        <result column="count" property="count" jdbcType="DECIMAL"/>
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+        <result column="Project_ID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="street" property="address" jdbcType="VARCHAR"/>
+        <result column="community_name" property="communityName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <resultMap id="HouseMap" type="com.micro.rent.biz.myrent.vo.HouseWrapVo">
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+        <result column="Project_ID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="Community_Name" property="communityName"
+                jdbcType="VARCHAR"/>
+        <result column="Street" property="street" jdbcType="VARCHAR"/>
+        <result column="Doorplate" property="doorplate" jdbcType="VARCHAR"/>
+        <result column="Building_NO" property="buildingNo" jdbcType="VARCHAR"/>
+        <result column="Room_Number" property="roomNumber" jdbcType="VARCHAR"/>
+        <result column="Use_Area" property="useArea" jdbcType="DECIMAL"/>
+        <result column="Area" property="area" jdbcType="DECIMAL"/>
+        <result column="layout" property="layout" jdbcType="VARCHAR"/>
+        <result column="Hall_Quantity" property="hallQuantity"
+                jdbcType="INTEGER"/>
+        <result column="Toilet_Quantity" property="toiletQuantity"
+                jdbcType="INTEGER"/>
+        <result column="Kitchen_Quantity" property="kitchenQuantity"
+                jdbcType="INTEGER"/>
+        <result column="Orientation" property="orientation" jdbcType="VARCHAR"/>
+        <result column="Long_Price" property="longPrice" jdbcType="DECIMAL"/>
+        <result column="Short_Price" property="shortPrice" jdbcType="DECIMAL"/>
+        <result column="Payment_Type" property="paymentType" jdbcType="VARCHAR"/>
+        <result column="Renovation" property="renovation" jdbcType="VARCHAR"/>
+        <result column="Project_Desc" property="projectDesc" jdbcType="VARCHAR"/>
+        <result column="Longitude" property="longitude" jdbcType="VARCHAR"/>
+        <result column="Latitude" property="latitude" jdbcType="VARCHAR"/>
+        <result column="Telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="Brand_Name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="Company_Desc" property="companyDesc" jdbcType="VARCHAR"/>
+        <result column="Shortest_period" property="shortestPeriod" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="NearHouseMap" type="com.micro.rent.biz.personal.vo.HouseVo">
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+        <result column="community_Name" property="communityName"
+                jdbcType="VARCHAR"/>
+        <result column="Street" property="street" jdbcType="VARCHAR"/>
+        <result column="LONG_PRICE" property="longPrice" jdbcType="DECIMAL"/>
+        <result column="USE_AREA" property="useArea" jdbcType="DECIMAL"/>
+        <result column="layout" property="layout" jdbcType="VARCHAR"/>
+        <result column="HALL_QUANTITY" property="hallQuantity" jdbcType="INTEGER"/>
+        <!-- <result column="picture" property="picture" jdbcType="VARCHAR" /> -->
+        <result column="Area" property="area" jdbcType="DECIMAL"/>
+        <result column="Brand_Name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="picture" property="picture" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        T_House_ID, House_ID, Project_ID, Status, Rent_Begin_Date,
+        Rent_End_Date,
+        Rent_Avail_Period,
+        Province_ID, City_Code, District_Code,
+        Community_Name, Doorplate, Building_NO,
+        Room_Number,
+        Use_Area, layout,
+        Hall_Quantity, Toilet_Quantity, Kitchen_Quantity, Floor,
+        Total_Floor,
+        Orientation, Area, Long_Price, Short_Price, Payment_Type, Renovation,
+        Furniture,
+        Appliances, TV, Internet, Water_Price, Electric_Price,
+        Warm_Price,
+        Refrigeration_price,
+        Release_Time, Rental_Type,Telephone,Gas_Price
+    </sql>
+
+    <insert id="batchSave" parameterType="com.micro.rent.dbaccess.entity.myrent.HouseInfo">
+        insert into T_HOUSE(
+        <include refid="Base_Column_List"/>
+        )
+        values(#{tHouseId},#{houseId},#{projectId},#{status},#{rentBeginDate},
+        #{rentEndDate},#{rentAvailPeriod},#{provinceId},#{cityCode},#{districtCode},
+        #{communityName},#{doorplate},#{buildingNo},#{roomNumber},#{useArea},
+        #{layout},#{hallQuantity},#{toiletQuantity},#{kitchenQuantity},#{floor},
+        #{totalFloor},#{orientation},#{area},#{longPrice},#{shortPrice},
+        #{paymentType},#{renovation},#{furniture},#{appliances},#{tv},
+        #{internet},#{waterPrice},#{electricPrice},#{warmPrice},#{refrigerationPrice},
+        #{releaseTime},#{rentalType},#{telephone},#{gasPrice})
+    </insert>
+
+    <select id="findBaseHouseInfoBytHouseId" parameterType="string"
+            resultMap="BaseResultMap">
+        select T_House_ID, House_ID, A.Project_ID, A.Community_Name,
+        A.Doorplate,
+        A.Building_NO, A.Room_Number,
+        Use_Area, layout,
+        Hall_Quantity, A.Floor, A.Total_Floor,Orientation, Area,
+        Long_Price,
+        Short_Price,
+        Payment_Type, A.Renovation, A.Rental_Type,B.Project_Desc,
+        B.Company_Desc,
+        B.Longitude,B.Latitude,Telephone
+        from T_House A left
+        join t_project B ON A.PROJECT_ID = B.PROJECT_ID
+        WHERE A.T_House_ID =
+        #{tHouseId}
+        limit 1
+    </select>
+
+    <select id="findBaseHouseInfoByHouseId" parameterType="string"
+            resultMap="BaseResultMap">
+        select T_House_ID, House_ID, A.Project_ID, A.Community_Name,
+        A.Doorplate,
+        A.Building_NO, A.Room_Number,
+        Use_Area, layout,
+        Hall_Quantity, A.Floor, A.Total_Floor,Orientation, Area,
+        Long_Price,
+        Short_Price,
+        Payment_Type, A.Renovation, A.Rental_Type,B.Project_Desc,
+        B.Company_Desc,
+        B.Longitude,B.Latitude,Telephone
+        from T_House A left
+        join t_project B ON A.PROJECT_ID = B.PROJECT_ID
+        WHERE A.House_ID =
+        #{houseId}
+        limit 1
+    </select>
+
+    <select id="statHouseByProject" parameterType="com.micro.rent.dbaccess.entity.myrent.HouseInfo"
+            resultMap="statMap">
+        select min(long_price) as min_price,max(long_price) max_price,count(*)
+        as count,house_id,P.project_id,street,H.community_name
+        from t_house H
+        join t_project P on H.project_id=P.project_id
+        where P.community_name=#{communityName}
+        AND status="1"
+        <if test="layout != null and layout>0 and layout &lt; 3">
+            AND layout = #{layout}
+        </if>
+        <if test="layout != null and layout == 3">
+            AND layout >= 3
+        </if>
+        <if test="longPrice != null and longPrice &lt; 10000">
+            AND <![CDATA[long_Price <= #{longPrice}  ]]>
+        </if>
+        <if test="longPrice != null and longPrice >10000">
+            AND long_Price >10000
+        </if>
+    </select>
+
+
+    <select id="findHouseInfoByHouseId" parameterType="string"
+            resultMap="HouseMap">
+        select House_ID,A.Project_Id, A.Community_Name, A.Doorplate,
+        A.Building_NO, A.Room_Number,Area,street,
+        Use_Area, layout,
+        Hall_Quantity,Toilet_Quantity,Kitchen_Quantity,Orientation,
+        Long_Price, Short_Price,
+        Payment_Type, A.Renovation,
+        A.Rental_Type,B.Project_Desc,
+        B.Longitude,B.Latitude,A.Telephone,B.Brand_Name,B.Company_Desc,A.Shortest_period
+        from T_House A join t_project B ON A.PROJECT_ID = B.PROJECT_ID
+        WHERE
+        A.House_ID = #{houseId}
+        limit 1
+    </select>
+
+    <select id="findNearHouseList" resultMap="NearHouseMap"
+            parameterType="map">
+        select H.house_id,P.community_name,long_price,use_area,layout,HALL_QUANTITY
+        from t_house H
+        join t_project P on H.project_id=P.project_id
+        where
+        H.house_id != #{houseId}
+        AND P.Longitude > #{lngButtom}
+        AND  <![CDATA[P.Longitude <#{lngTop} ]]>
+        AND P.Latitude > #{latLeft}
+        AND  <![CDATA[P.Latitude <#{latRight} ]]>
+        AND H.Status = '1'
+    </select>
+
+    <select id="findHousesInOneProject" resultMap="HouseMap" parameterType="String">
+        select h.house_id,h.long_price,h.use_area,hp.picture
+        from t_house h
+        join t_house_pic hp
+        on h.house_id=hp.house_id
+        where
+        h.project_id = #{projectId}
+        AND h.Status = '1'
+        order by h.house_id
+    </select>
+    <select id="findTheMaxPriceHouseIdByComName" resultType="String" parameterType="String">
+        select h.house_id
+        from t_house h
+        where
+        h.COMMUNITY_NAME = #{communityName}
+        AND h.Status = '1'
+        order by h.long_price desc limit 1
+    </select>
+
+    <select id="searchRecommendHouseList" resultMap="NearHouseMap">
+        SELECT
+        TH.Long_Price,
+        TH.layout,
+        TH.Hall_Quantity,
+        TH.Area,
+        TH.HOUSE_ID,
+        TP.Brand_Name,
+        THP.picture
+        FROM
+        t_house TH
+        LEFT JOIN
+        t_project TP ON TH.Project_ID = TP.Project_ID
+        LEFT JOIN
+        t_house_pic THP ON TH.House_ID = THP.House_ID
+        WHERE
+        TH.flag = 1
+    </select>
+
+    <select id="searchNearHousesUnitProject" resultMap="NearHouseMap">
+        SELECT
+        TH.Long_Price,
+        TH.layout,
+        TH.Hall_Quantity,
+        TH.Area,
+        TH.HOUSE_ID,
+        TP.Brand_Name,
+        THP.picture
+        FROM
+        t_house TH
+        LEFT JOIN
+        t_project TP ON TH.Project_ID = TP.Project_ID
+        LEFT JOIN
+        t_house_pic THP ON TH.House_ID = THP.House_ID
+        INNER JOIN
+        (SELECT
+        MAX(house_id) AS house_id, P.Community_Name
+        FROM
+        t_house H
+        INNER JOIN t_project P ON H.project_id = P.project_id
+        WHERE
+        P.Longitude > #{lngButtom}
+        AND  <![CDATA[P.Longitude < #{lngTop} ]]>
+        AND P.Latitude > #{latLeft}
+        AND  <![CDATA[P.Latitude <#{latRight} ]]>
+        AND H.Status = '1'
+        GROUP BY P.Community_Name) A ON A.house_id = TH.House_ID
+    </select>
+
+    <!-- 取得指定项目的最大房屋编号 -->
+    <select id="selectMaxHouseIdByProjectId" parameterType="String" resultType="String">
+        SELECT
+        max(house_id) AS maxHouseId
+        FROM
+        t_house t
+        WHERE
+        t.project_id = #{projectId}
+    </select>
+</mapper>

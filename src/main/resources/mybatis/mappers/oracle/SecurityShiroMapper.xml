@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.micro.rent.dbaccess.dao.ShiroDbDao">
+    <resultMap id="SetUserResultMap"
+               type="com.micro.rent.dbaccess.entity.SetUser">
+        <id column="USER_ID" property="userId" jdbcType="DECIMAL"/>
+        <result column="USERNAME" property="username" jdbcType="VARCHAR"/>
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="CHAR"/>
+        <result column="LAST_UPDATOR" property="lastUpdator" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+
+        <result column="org_code" property="orgCode" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="SetUser_Column_List">
+        USER_ID, USERNAME, PASSWORD, STATUS, LAST_UPDATOR, LAST_UPDATE_TIME,org_code
+    </sql>
+
+    <!-- 通过用户名查询用户信息，不判用户状态，交由Shiro验证帐户关闭状态 -->
+    <select id="findByUserName" resultMap="SetUserResultMap" parameterType="string">
+        SELECT
+        <include refid="SetUser_Column_List"/>
+        FROM SET_USER
+        WHERE USERNAME = #{username,jdbcType=VARCHAR}
+    </select>
+
+
+    <resultMap id="SetResourceResultMap"
+               type="com.micro.rent.dbaccess.entity.SetResource">
+        <id column="RESOURCE_ID" property="resourceId" jdbcType="DECIMAL"/>
+        <result column="SECURITY_FILTER" property="securityFilter" jdbcType="VARCHAR"/>
+        <result column="URL_PATTERN" property="urlPattern" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="CHAR"/>
+        <result column="LAST_UPDATOR" property="lastUpdator" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="SetResource_Column_List">
+        DISTINCT SR.RESOURCE_ID, SR.SECURITY_FILTER, SR.URL_PATTERN, SR.STATUS, SR.LAST_UPDATOR, SR.LAST_UPDATE_TIME
+    </sql>
+
+    <!-- 通过用户名称查询用户资源权限 -->
+    <select id="findResourceRolesByUserName" resultMap="SetResourceResultMap" parameterType="string">
+        SELECT
+        <include refid="SetResource_Column_List"/>
+        FROM
+        SET_USER SU
+        INNER JOIN
+        SET_USER_RGROUP SUR
+        ON SU.USER_ID = SUR.USER_ID
+        INNER JOIN
+        SET_ROLE_GROUP SRG
+        ON SRG.RGROUP_ID = SUR.RGROUP_ID
+        INNER JOIN
+        SET_RGROUP_RROLE SRR
+        ON SRG.RGROUP_ID = SRR.RGROUP_ID
+        INNER JOIN
+        SET_RESOURCE_ROLE SRR2
+        ON SRR2.RESOURCE_ROLE_ID = SRR.RESOURCE_ROLE_ID
+        INNER JOIN
+        SET_RROLE_RESOURCE SRR3
+        ON SRR2.RESOURCE_ROLE_ID = SRR3.RESOURCE_ROLE_ID
+        INNER JOIN
+        SET_RESOURCE SR
+        ON SR.RESOURCE_ID = SRR3.RESOURCE_ID
+        WHERE
+        SRR2.STATUS = '1'
+        AND
+        SR.STATUS = '1'
+        AND
+        SU.STATUS = '1'
+        AND
+        SU.USERNAME = #{username,jdbcType=VARCHAR}
+    </select>
+
+
+    <resultMap id="SFilterResultMap"
+               type="com.micro.rent.dbaccess.entity.SFilter">
+        <id column="RESOURCE_ID" property="resourceId" jdbcType="DECIMAL"/>
+        <result column="SECURITY_FILTER" property="securityFilter" jdbcType="VARCHAR"/>
+        <result column="URL_PATTERN" property="urlPattern" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findAllFilters" resultMap="SFilterResultMap">
+        SELECT
+        RESOURCE_ID, SECURITY_FILTER, URL_PATTERN
+        FROM
+        SET_RESOURCE
+        WHERE
+        STATUS = '1'
+    </select>
+
+</mapper>

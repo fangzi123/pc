@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>窝牛租房</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=11" />
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/slick/slick.css">
+    <link rel="stylesheet" href="${rc.contextPath}/resources/pc/css/house/houseDetail.css">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/resources/pc/css/common/yuyue.css">
+    <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+</head>
+<body>
+<#include  "/common/header.html">
+<#include  "/favoriteorder.html">
+<div class="box">
+    <div class="main">
+    <div class="main1">
+       <ul>
+            <!-- TODO: 点击首页跳转到首页 -->
+            <li><a href="${rc.contextPath}/match/home">首页</a></li>
+            <li class="gray">/</li>
+            <!-- TODO: 跳转到条件找房页面 -->
+            <li><a href="">条件找房</a></li>
+            <li class="gray">/</li>
+          	<li>${vo.branch.name}</li>
+       </ul>
+     </div><!--main1-->
+        <div class="main2">
+            <div class="main2-left">
+                <div class="house-pic">
+                    <div class="house-pic-bg">
+                        <!-- TODO: A. 需要放入房源图片 -->
+                        <#if house2picList ? exists><#list house2picList as t>
+                        <div><img src="${rc.contextPath}/images/house/${t.picPath}" alt=""/></div>
+                        </#list></#if>
+                    </div><!--datu-->
+                    <div class="house-pic-sm">
+                        <!-- TODO: A处放什么这里就放什么 -->
+                        <#if house2picList ? exists><#list house2picList as t>
+                        <div><img src="${rc.contextPath}/images/house/${t.picPath}" alt=""/></div>
+                        </#list></#if>
+                    </div>
+                </div>
+                <!--  房屋具体信息 -->
+                <div class="house-info">
+                    <div class="daohang">
+                       <ul>
+                           <li><a href="#A">收费明细</a></li>
+                           <li><a href="#B">生活设施</a></li>
+                           <li><a href="#C">公寓介绍</a></li>
+                           <li><a href="#D">社区信息</a></li>
+                           <li><a href="#E">附近房源</a></li>
+                       </ul> 
+                    </div><!--daohang-->
+                    <a name="A"></a>
+                    <div class="fangyuan">
+                        <h1>收费明细</h1><!--h1-->
+                    </div><!--fangyuan-->
+                    <div  class="biao">
+                        <div class="clear"></div>
+                        <ul>
+                            <li>月租价：${priceGroup.monthlyPrice}元/月</li>
+                        	<#if feeVoList ? exists><#list feeVoList as t>
+                        	<li>${t.type}：${t.price}元</li>
+                        	</#list></#if>
+                        </ul>
+                        <!-- div class="clear"></div>
+                        <ul>
+                            <li>其他：无/民用/商用/自定义</li>
+                        </ul-->
+                        <div class="clear"></div>
+                    </div>
+                    <a name="B"></a>
+                    <div class="sheshi">
+                        <div class="fangyuan">
+                            <h1>生活设施</h1><!--h1-->
+                        </div><!--fangyuan-->
+                        <div class="fangy">
+                        	<#if amenityList ? exists><#list amenityList as amenity>
+							<dl>
+								<#if amenity.type == '床上用品'> <dt class="bedclothes"></dt>
+								<#elseif amenity.type == '沙发'> <dt class="sofa"></dt>
+								<#elseif amenity.type == '洗衣机'> <dt class="washer"></dt>
+								<#elseif amenity.type == '热水'> <dt class="hot-water"></dt>
+								<#elseif amenity.type == '洗漱用品'> <dt class="toiletries"></dt>
+								<#elseif amenity.type == '电视'> <dt class="tv"></dt> 
+								<#elseif amenity.type == '微波炉'> <dt class="microwave"></dt>
+								<#elseif amenity.type == '电梯'> <dt class="elevator"></dt>
+								<#elseif amenity.type == '床'> <dt class="bed"></dt>
+								<#elseif amenity.type == '空调'> <dt class="air-conditions"></dt>
+								<#elseif amenity.type == '网络'> <dt class="wifi"></dt>
+								<#elseif amenity.type == '衣柜'> <dt class="public-space"></dt>
+								<#elseif amenity.type == '冰箱'> <dt class="fridge"></dt>
+								<#elseif amenity.type == '暖气'> <dt class="heater"></dt>
+								<#elseif amenity.type == '书桌'> <dt class="desk"></dt>
+								<#else> <dt class="others"></dt>
+								</#if>
+								<dd>${amenity.type}</dd>
+							</dl>
+							</#list></#if>
+                        </div><!--fangyuan-->
+                    </div><!--sheshi-->
+                    <div class="clear"></div>
+                    <div class="jieshao">
+                    <a name="C"></a>
+                    <div class="fangyuan">
+                        <h1>公寓介绍</h1><!--h1-->
+                    </div><!--fangyuan-->
+                    <p class="zhongdeng">${vo.branch.description}</p>
+                    </div>
+                      
+                    <div class="shequ">
+                    <a name="D"></a>
+                    <div class="fangyuan">
+                        <h1>社区信息</h1><!--h1-->
+                    </div><!--fangyuan-->
+                    <p class="xiaoqu">${community.description}</p>
+                </div>
+                
+                    </div>
+            </div><!--main2-left-->
+            <div class="main2-right">
+                <div class="fixed">
+                    <div class="house2">
+                        <!-- TODO: 房屋详情 -->
+                        <h1>${vo.branch.name}</h1> 
+                        <p>${vo.brand.name}</p>
+                    </div>
+                    <div class="house3" id="map">
+                        <!-- img src="${rc.contextPath}/images/pc/ditu.jpg" alt=""/-->
+                    </div>
+                    <div class="house4">
+                        <ul class="dizhi">
+                            <li>地址：${houseVo.address.address}</li>
+                            <li>电话：${contact.phone}</li>
+                            <li>入住时间：<#if vo.releaseTime?exists><#if (.now > vo.releaseTime?datetime)>随时入住<#else>${vo.releaseTime?string("yyyy-mm-dd HH:mm:ss")}</#if></#if></li>
+                            <li>概况：${vo.layout} | ${vo.area}m&sup2; | ${vo.orientation}</li>
+                            <li>支付方式：${vo.paymentTypeGroup.name}</li>
+                            <!--<li>最短租约：<#if vo.minStayGroup.days ? exists>${vo.minStayGroup.days/30}</#if>个月</li>-->
+                        </ul>
+                    </div><!--house4-->
+                    <div class="house5">
+                        <p><span>${priceGroup.monthlyPrice}</span>元/月<p>
+                        <ul class="yuyue">
+                          <li class="xin" id="favoriteHouse"></li>
+                          <li class="yue" id="preorder">预约</li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!--mian2-right-->
+            
+        </div><!--main2-->
+        <a name="E"></a>
+        <div class="clear"></div>
+        <#include "/common/nearBy.html">
+    </div><!--mian-->
+</div><!--box-->
+<#include  "/common/footer.html">
+<input type="hidden" value="${houseId}" id="houseId" />
+<script src="${rc.contextPath}/resources/pc/js/common/validation.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/common.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/slick/slick.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/house/houseDetail.js" type="text/javascript"></script>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=108b50eb45abfdb30d056ec907130e22"></script>
+<script src="${rc.contextPath}/resources/pc/js/order.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/favorite.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/cookie.js"></script>
+<script type='text/javascript'>
+    var contextPath = "${rc.contextPath}";
+	//百度地图定位
+	var x = ${(houseVo.address.x)?string("0.###########")};
+	var y = ${(houseVo.address.y)?string("0.###########")};
+	var map = new BMap.Map('map');
+	var mapPoint = new BMap.Point(x, y);
+	map.centerAndZoom(mapPoint, 12);
+	map.enableScrollWheelZoom(true);
+</script>
+</body>
+</html>

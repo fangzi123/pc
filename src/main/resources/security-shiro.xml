@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <description>Shiro配置</description>
+
+    <!-- Shiro's main business-tier object for web-enabled applications -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="sessionManager" ref="defaultWebSessionManager" />
+        <property name="cacheManager" ref="cacheManager" />
+        <!-- <property name="realm" ref="shiroDbRealm" /> -->
+        <property name="realms">
+            <list>
+                <ref bean="shiroDbRealm"/>
+                <ref bean="shiroTenantRealm"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 自定义基于JDBC的Realm -->
+    <bean id="shiroDbRealm" class="com.micro.rent.biz.shiro.ShiroDbRealm">
+        <property name="shiroDbService" ref="shiroDbService"/>
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashIterations" ref="hashIterations"/>
+                <!-- 摘要做迭代，增加安全性 -->
+                <property name="hashAlgorithmName" value="MD5"/>
+            </bean>
+        </property>
+        <!-- 忽略验证码，供测试使用，随环境配置加载 -->
+        <property name="captchaIgnore" value="${captcha.ignore}"/>
+        <property name="captchaService" ref="captchaService"/>
+        <property name="defaultService" ref="defaultService"/>
+
+    </bean>
+
+    <bean id="shiroDbService" class="com.micro.rent.biz.shiro.service.impl.ShiroDbServiceImpl"/>
+
+    <bean id="shiroTenantRealm" class="com.micro.rent.pc.web.shiro.ShiroTenantRealm">
+        <property name="realmService" ref="realmService"/>
+    </bean>
+    <bean id="realmService" class="com.micro.rent.pc.service.impl.RealmServiceImpl"/>
+
+    <bean id="defaultWebSessionManager"
+        class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="redisSessionDAO" />
+        <property name="sessionIdCookie" ref="redisSession"/>
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+    </bean>
+    <bean id="sessionValidationScheduler"
+      class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+        <property name="interval" value="3600000"/>
+        <property name="sessionManager" ref="defaultWebSessionManager"/>
+    </bean>
+    <bean id="redisSession" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg name="name" value="REDISSESSION"/>
+    </bean>
+    <bean id="redisSessionDAO" class="com.micro.rent.pc.dao.redis.RedisSessionDAO">
+        <property name="keyPrefix" value="shiro_session:"/>
+    </bean>
+    
+    <bean id="cacheManager" class="com.micro.rent.pc.service.redis.RedisCacheManager"></bean>
+ 
+    <!-- 动态资源扩展服务 -->
+    <bean id="shiroService" class="com.micro.rent.common.comm.shiro.service.impl.DefaultShiroService">
+        <property name="captchaFormAuthenticationFilter" ref="captchaFormAuthc"/>
+        <property name="customRolesAuthorizationFilter" ref="customRolesAuthorization"/>
+    </bean>
+
+    <!-- Shiro Filter -->
+    <bean id="shiroFilter" class="com.micro.rent.biz.shiro.web.filter.ShiroDbFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login.html"/>
+        <property name="unauthorizedUrl" value="/secure/unauthorized.html"/>
+        <property name="shiroDbService" ref="shiroDbService"/>
+        <!-- 追加于数据库配置之后的静态定义 -->
+        <property name="appendChainDefinition">
+            <map>
+                <entry key="/secure/authentication.html" value="anon"/>
+                <entry key="/secure/unauthorized.html" value="anon"/>
+                <entry key="/login.html" value="anon"/>
+                <entry key="/user/isExistAccount.json" value="anon"/>
+                <entry key="/user/validatePwd.json" value="anon"/>
+                <entry key="/rental/**/*.html" value="anon"/>
+                <entry key="/rent/entry.html" value="anon"/>
+                <entry key="/resource/*" value="anon"/>
+                <entry key="/graph/*" value="anon"/>
+                <entry key="/upload/displayUploadPage.html" value="anon"/>
+                <entry key="/**/*.html" value="cAuthc,cRoles[_SHIRO_GLOBAL_KEY.ROOT]"/>
+            </map>
+        </property>
+        <!-- 新增自定义filters -->
+        <property name="filters">
+            <map>
+                <entry key="cAuthc" value-ref="captchaFormAuthc"/>
+                <entry key="cRoles" value-ref="customRolesAuthorization"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 附带验证码校验的身份验证过滤器 -->
+    <bean id="captchaFormAuthc" class="com.micro.rent.biz.shiro.web.filter.CaptchaFormAuthenticationFilter">
+        <property name="usernameParamName" value="${login.username}"/>
+        <property name="passwordnameParamName" value="${login.password}"/>
+        <property name="captchaParamName" value="${login.captcha}"/>
+    </bean>
+
+    <!-- 自定义鉴权过滤器 -->
+    <bean id="customRolesAuthorization" class="com.micro.rent.biz.shiro.web.filter.CustomRolesAuthorizationFilter"/>
+
+
+    <!-- 保证实现了Shiro内部lifecycle方法的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- AOP式方法级权限检查  -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <!-- hash迭代次数 -->
+    <bean id="hashIterations" class="java.lang.Integer">
+        <constructor-arg value="${security.shiro.md5.hashIter}"/>
+    </bean>
+</beans>

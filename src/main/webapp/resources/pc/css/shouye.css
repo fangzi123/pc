@@ -1,0 +1,219 @@
+@charset "utf-8";
+ .main{
+    height: 460px;
+    width: 100%;
+    background-image:  url("../../../images/pc/topbanner.jpg");
+
+ }
+.main p{
+    font-family:"微软雅黑";
+}
+
+.main1{
+    width: 1180px;
+    margin: 0 auto;
+    padding-top: 140px;
+    font-size: 16px; 
+    color: #535353;
+}
+.sousuo {
+    width: 592px;
+    height: 50px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    font-size: 16px;
+    text-indent: 1.5em;
+    line-height: 50px;
+    float: left;
+    outline: solid 0px #959595;
+}
+.btn{
+    width: 160px;
+    height: 50px;
+    background-image: url("../../../images/pc/Searchbtn.png");
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-color: #F39600;
+    float: right;
+    color: #ffffff; 
+    font-size: 16px;
+    outline: solid 0px;
+    cursor: pointer;
+}
+.div-sou {
+    width: 1180px;
+    margin: 0 auto;
+}
+.sou{
+    margin: 70px auto;
+    width: 752px;
+}
+
+/* 窝牛特色 */
+.zhuanye {
+    height: 348px;
+    width: 100%;
+    background: #ffffff;
+}
+    .jingpin {
+        width: 320px;
+        height: 98px;
+        margin: 0 auto;
+        position:relative;
+    }
+    .dian{
+        position: absolute;
+        left: 131px; 
+        top: -20px;
+    }
+    .jingpin p {
+        text-align: center; 
+        padding-bottom: 24px;
+        padding-top: 46px;
+        font-size: 30px;
+        border-bottom: solid 1px #f39600;
+    }
+.zhuanye dl{
+    width:352px;
+    height: 200px;
+    background-color: #ffffff;
+    float: left;
+}
+    .woniu-tese {
+        width: 1180px;
+        margin: 0 auto 20px;
+    }
+.ye{
+    margin-left: 62px;
+    margin-right: 62px;
+}
+.zhuanye dl dd{
+    color: #F39800;
+    font-size: 30px;
+}
+.zhuan{
+    width: 1180px;
+    margin: 0 auto;
+}
+    .zhuan dt img {
+        padding-left: 136px; 
+        padding-top: 5px;
+    }
+    .zhuan dd img {
+        padding-left: 88px; 
+        padding-top: 10px;
+    }
+
+/* 推荐品牌 */
+.lunbo{
+    height: 461px;
+    background-image: url("../../../images/pc/midbanner.jpg");
+}
+    .lunbo-center {
+        width: 1180px;
+        margin: 0 auto;
+    }
+    .lunbo-center p {
+        color: white;
+    }
+.recomd-brands {
+    width: 1180px;
+    height: 260px;
+    margin-top: 20px;
+}
+    .brand {
+        width: 283px;
+        height: 260px;
+        margin-right: 6px;
+        margin-left: 6px;
+    }
+        .brand-pic {
+            position: relative;
+            width: 283px;
+            height: 210px;
+        }
+        .brand-pic img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+            .cover {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 183px;
+                height: 110px;
+                line-height: 2em;
+                padding: 50px;
+                font-size: 16px;
+                color: white;
+                z-index: 999;
+            }
+             .niu {
+                width:160px;
+                height: 34px;
+                border-radius: 4px;
+                background: rgba(0,0,0,0);
+                border: 1px solid #f39800;
+                color: #f39800;
+                margin: 0 auto;
+                margin-left: 12px;
+                margin-top: 40px;
+                cursor: pointer;
+                display: inline-block;
+                text-align: center;
+                /* IE8 hack */
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#10ffffff ,endColorstr=#10ffffff)\0;
+            }
+        .brand-word {
+            height: 34px;
+            width: 251px;
+            padding-left: 16px;
+            padding-right: 16px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            background:#ffffff;
+        }
+            .brand-name {
+                font-size: 16px;
+                color: #535353;
+            }
+            .brand-slogan {
+                font-size: 12px;
+                color: #f39800;
+                margin-top: 5px;
+            }
+/* 轮播图按钮 */
+.div-pre, .div-nxt {
+    width: 25px;
+    height: 20px;
+    bottom: -50px;
+    top: initial;
+    position: absolute;
+    z-index: 999;
+}
+.div-pre {
+    background: url(../../../images/pc/slick-btn.png);
+    left: 340px;
+}
+.div-nxt {
+    background: url(../../../images/pc/slick-btn.png) 60px 0 ;
+    left: 820px;
+}
+.div-pre:hover {
+    background: url(../../../images/pc/slick-btn.png) 0 20px;
+}
+.div-nxt:hover {
+    background: url(../../../images/pc/slick-btn.png) 60px 20px;
+}
+.slick-dots li {
+    background: url(../../../images/pc/slick-btn.png) 129px 0;
+    width: 18px !important;
+    height: 15px !important;
+}
+.slick-dots li.slick-active {
+    background: url(../../../images/pc/slick-btn.png) 129px 18px;
+}
+.slick-dots li button:before {
+    content: "" !important;
+}

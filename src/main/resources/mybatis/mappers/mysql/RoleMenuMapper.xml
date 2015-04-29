@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.RoleMenuDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.RoleMenu">
+        <result column="FUNC_ROLE_ID" property="roleId" jdbcType="VARCHAR"/>
+        <result column="MENU_ID" property="menuId" jdbcType="VARCHAR"/>
+        <result column="FUNC_ROLE_NAME" property="roleName" jdbcType="VARCHAR"/>
+        <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        FUNC_ROLE_ID, MENU_ID, FUNC_ROLE_NAME, MENU_NAME
+    </sql>
+
+    <!-- 查询分页记录 -->
+    <select id="queryPaged" parameterType="com.micro.rent.common.comm.nmybatis.Page" resultMap="BaseResultMap">
+        SELECT M.MENU_ID,M.MENU_NAME,R.FUNC_ROLE_ID,R.FUNC_ROLE_NAME
+        FROM SET_FUNC_MENU M , SET_FUNC_ROLE R, SET_FROLE_FMENU RM
+        WHERE M.MENU_ID = RM.FUNC_MENU_ID AND R.FUNC_ROLE_ID = RM.FUNC_ROLE_ID
+        <if test="params.roleName != null">
+            AND R.FUNC_ROLE_NAME LIKE concat('%',#{params.roleName},'%')
+        </if>
+        ORDER BY R.FUNC_ROLE_ID DESC
+    </select>
+
+    <!-- 查询记录总数 -->
+    <select id="queryTotalCount" resultType="int" parameterType="map">
+        <![CDATA[
+			SELECT COUNT(1) FROM SET_FUNC_MENU M , SET_FUNC_ROLE R, SET_FROLE_FMENU RM 
+			WHERE M.MENU_ID = RM.FUNC_MENU_ID AND R.FUNC_ROLE_ID = RM.FUNC_ROLE_ID
+		]]>
+        <if test="roleName != null">
+            AND R.FUNC_ROLE_NAME LIKE concat('%',#{roleName},'%')
+        </if>
+    </select>
+
+</mapper>

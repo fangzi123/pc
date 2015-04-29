@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean class="com.micro.rent.common.support.ApplicationContextUtil"/>
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.micro.rent">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <import resource="classpath:/spring-env.xml"/>
+    <import resource="classpath*:/spring-resource-*.xml"/>
+    <import resource="classpath:/spring-aspect.xml"/>
+    <import resource="classpath:/cache/spring-cache.xml"/>
+    <import resource="classpath:/security-shiro.xml"/>
+    <import resource="classpath:/task/task.xml"/>
+    <import resource="classpath:/spring-redis.xml" />
+
+
+    <!-- ************************************************************************************************* -->
+    <!-- ************************************* 消息资源加载/访问 ******************************************* -->
+    <!-- ************************************************************************************************* -->
+
+    <!-- 资源加载 -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="useCodeAsDefaultMessage" value="true"/>
+        <property name="basenames">
+            <array>
+                <value>classpath:/msg/message</value>
+            </array>
+        </property>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <!-- 资源访问器 -->
+    <bean id="msa" class="com.micro.rent.common.aspect.MessageSourceAccessorProxy" factory-method="getProxy">
+        <constructor-arg>
+            <ref bean="messageSource"/>
+        </constructor-arg>
+    </bean>
+</beans>

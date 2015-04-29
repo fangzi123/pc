@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.PriceGroupDao">
+	<resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.PriceGroup">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="CHAR" />
+		<result column="monthly_price" property="monthlyPrice" jdbcType="DECIMAL" />
+		<result column="weekly_price" property="weeklyPrice" jdbcType="DECIMAL" />
+		<result column="daily_price" property="dailyPrice" jdbcType="DECIMAL" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="BIT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, name, monthly_price::numeric, weekly_price::numeric, daily_price::numeric, description, flag
+	</sql>
+	
+	<sql id="Base_Column_List_Alias">
+        pg.id, pg.name, pg.monthly_price::numeric, pg.weekly_price::numeric, pg.daily_price::numeric, 
+        pg.description, pg.flag
+    </sql>
+
+    <select id="findByBranchId" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List_Alias"/>
+        from price_group pg, available_house_info ahi
+        where pg.id  = ahi.price_group_id and ahi.branch_id = #{branchId} order by pg.monthly_price desc limit 1
+    </select>
+    
+    <select id="findByHouseId" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from price_group
+        where id in (select price_group_id from house where id = #{houseId})
+    </select>
+</mapper>

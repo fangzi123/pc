@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 	<property name="log.base" value="/var/logs/rent/" /> -->
+    <!-- 	<property name="log.base" value="/home/userc/diamond/logs/" /> -->
+    <property name="log.base" value="/home/woniu/logs"/>
+    <property name="pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceNo}] [%X{sessionId}] %-5level [%thread] %logger{80} :%msg%n"/>
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--根 -->
+    <appender name="root"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/rent-root.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/rent-root-%i.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>20MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="biz"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/rent-biz.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/rent-biz-%i.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>20MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="common"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/rent-common.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/rent-common-%i.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>20MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 日志过滤 -->
+    <logger name="org.springframework">
+        <level value="info"/>
+    </logger>
+    <logger name="java.sql">
+        <level value="info"/>
+    </logger>
+    <logger name="org.apache">
+        <level value="info"/>
+    </logger>
+
+
+    <!-- 按模块输出业务日志 -->
+    <logger name="com.micro.rent.biz" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="biz"/>
+    </logger>
+
+    <logger name="com.micro.rent.common" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="common"/>
+    </logger>
+
+
+    <!--JDBC输出 -->
+    <appender name="jdbc"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/rent-jdbc.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/rent-jdbc-%i.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>30MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.jdbcdslog" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="jdbc"/>
+    </logger>
+
+
+    <!-- root级别控制 -->
+    <root level="info">
+        <appender-ref ref="root"/>
+    </root>
+</configuration>  

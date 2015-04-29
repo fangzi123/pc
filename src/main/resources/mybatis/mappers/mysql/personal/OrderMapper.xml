@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.personal.MyOrderDao">
+
+    <resultMap type="com.micro.rent.dbaccess.entity.personal.Order" id="baseResultMap">
+        <id column="T_order_ID" property="tOrderId" jdbcType="VARCHAR"/>
+        <result column="Project_ID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="HOUSE_ID" property="houseId" jdbcType="VARCHAR"/>
+        <result column="Weixin_ID" property="weixinId" jdbcType="VARCHAR"/>
+        <result column="Order_Date" property="orderDate" jdbcType="VARCHAR"/>
+        <result column="Order_Time" property="orderTime" jdbcType="VARCHAR"/>
+        <result column="Order_Type" property="orderType" jdbcType="VARCHAR"/>
+        <result column="Reserve_Date" property="reseerveDate" jdbcType="VARCHAR"/>
+        <result column="Time_Limit" property="timeLimit" jdbcType="DECIMAL"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="idType" property="idType" jdbcType="VARCHAR"/>
+        <result column="idNo" property="idNo" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="orderMap" type="com.micro.rent.dbaccess.entity.personal.OrderInfo">
+        <result column="Weixin_ID" property="weixinId" jdbcType="VARCHAR"/>
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+        <result column="Project_ID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="T_House_ID" property="tHouseId" jdbcType="VARCHAR"/>
+        <result column="Community_Name" property="communityName" jdbcType="VARCHAR"/>
+        <result column="Doorplate" property="doorplate" jdbcType="VARCHAR"/>
+        <result column="Building_NO" property="buildingNo" jdbcType="VARCHAR"/>
+        <result column="Room_Number" property="roomNumber" jdbcType="VARCHAR"/>
+        <result column="layout" property="layout" jdbcType="VARCHAR"/>
+        <result column="Hall_Quantity" property="hallQuantity" jdbcType="INTEGER"/>
+        <result column="Toilet_Quantity" property="toiletQuantity" jdbcType="INTEGER"/>
+        <result column="Floor" property="floor" jdbcType="DECIMAL"/>
+        <result column="Total_Floor" property="totalFloor" jdbcType="DECIMAL"/>
+        <result column="Long_Price" property="longPrice" jdbcType="DECIMAL"/>
+        <result column="Short_Price" property="shortPrice" jdbcType="DECIMAL"/>
+        <result column="T_order_ID" property="tOrderId" jdbcType="VARCHAR"/>
+        <result column="Order_Date" property="orderDate" jdbcType="VARCHAR"/>
+        <result column="Order_Time" property="orderTime" jdbcType="VARCHAR"/>
+        <result column="Order_Type" property="orderType" jdbcType="VARCHAR"/>
+        <result column="Reserve_Date" property="reseerveDate" jdbcType="VARCHAR"/>
+        <result column="Time_Limit" property="timeLimit" jdbcType="DECIMAL"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="id_Type" property="idType" jdbcType="VARCHAR"/>
+        <result column="id_No" property="idNo" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="houseMap" type="com.micro.rent.biz.personal.vo.HouseVo">
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+
+        <result column="community_Name" property="communityName"
+                jdbcType="VARCHAR"/>
+
+        <result column="Building_NO" property="buildingNo" jdbcType="VARCHAR"/>
+        <result column="Room_Number" property="roomNumber" jdbcType="VARCHAR"/>
+        <result column="layout" property="layout" jdbcType="VARCHAR"/>
+        <result column="renovation" property="renovation" jdbcType="VARCHAR"/>
+        <result column="LONG_PRICE" property="longPrice" jdbcType="DECIMAL"/>
+        <result column="USE_AREA" property="useArea" jdbcType="DECIMAL"/>
+        <result column="latitude" property="latitude" jdbcType="DECIMAL"/>
+        <result column="longitude" property="longitude" jdbcType="DECIMAL"/>
+        <result column="weixin_id" property="weixinId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.micro.rent.dbaccess.entity.personal.Order" id="SimpleMap">
+        <id column="T_order_ID" property="tOrderId" jdbcType="VARCHAR"/>
+        <result column="Project_ID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="HOUSE_ID" property="houseId" jdbcType="VARCHAR"/>
+        <result column="Weixin_ID" property="weixinId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <insert id="addPreOrder" parameterType="com.micro.rent.dbaccess.entity.personal.Order">
+        insert into t_order
+        (T_order_ID,Project_ID,HOUSE_ID,Weixin_ID,Order_Date,Order_Time,Order_Type,name,telephone,status)
+        values(#{tOrderId},#{projectId},#{houseId},#{weixinId},#{orderDate},#{orderTime},#{orderType},#{name},#{telephone},#{status})
+    </insert>
+    <!--
+    <select id="queryOrderList" parameterType="string" resultMap="orderMap" >
+        select Weixin_ID,T_House_ID,H.House_ID,H.Project_ID,H.Community_Name,Doorplate,Building_NO,Room_Number,
+            layout,Hall_Quantity,Toilet_Quantity,Floor,Total_Floor,Total_Floor,Long_Price,Short_Price,T_order_ID,
+            Order_Date,Order_Time,Order_Type,Reserve_Date,Time_Limit,name,H.telephone,id_Type,id_no,A.status
+        from T_order A, T_House H
+        WHERE A.House_ID = H.House_ID
+        AND A.Project_ID = H.Project_ID
+        AND Weixin_ID = #{weixinId}
+    </select>
+     -->
+    <select id="queryOrderByHouseIdAndWeixinId" parameterType="string"
+            resultMap="SimpleMap">
+        select T_order_ID,Project_ID,HOUSE_ID,Weixin_ID
+        from T_order
+        where HOUSE_ID = #{houseId} and Weixin_ID = #{weixinId} and status='1'
+    </select>
+
+    <select id="queryOrderHouseList" parameterType="string" resultMap="houseMap">
+        select O.house_id ,weixin_id,
+        H.Community_Name,Building_NO,Room_Number,layout,renovation,Long_Price,use_area,latitude,longitude
+        from t_order O
+        left join t_house H on O.house_id=H.house_id
+        left join t_project P on P.project_id=H.project_id
+        where Weixin_ID =#{weixinId}
+    </select>
+
+    <!-- 根据微信ID、HouseID、预约日期查询预约信息 -->
+    <select id="queryOrderCountByHouseIdAndWeixinIdAndOrderDate" parameterType="string"
+            resultType="int">
+        select count(Weixin_id)
+        from T_order
+        where HOUSE_ID = #{houseId} and Weixin_ID = #{weixinId} and ORDER_DATE = #{orderDate}
+    </select>
+
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.SetResourceRoleDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.SetResourceRole">
+        <id column="RESOURCE_ROLE_ID" property="resourceRoleId" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_ROLE_CODE" property="resourceRoleCode" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_ROLE_NAME" property="resourceRoleName" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_ROLE_TYPE" property="resourceRoleType" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_ROLE_DESC" property="resourceRoleDesc" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="CHAR"/>
+        <result column="LAST_UPDATOR" property="lastUpdator" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        RESOURCE_ROLE_ID, RESOURCE_ROLE_CODE, RESOURCE_ROLE_NAME, RESOURCE_ROLE_TYPE, RESOURCE_ROLE_DESC,
+        STATUS, LAST_UPDATOR, LAST_UPDATE_TIME
+    </sql>
+
+    <select id="querySelectedResource" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+        SELECT
+        SR.RESOURCE_ROLE_ID, SR.RESOURCE_ROLE_NAME
+        FROM
+        SET_RESOURCE_ROLE SR
+        INNER JOIN
+        SET_RGROUP_RROLE SRR
+        ON
+        SR.RESOURCE_ROLE_ID = SRR.RESOURCE_ROLE_ID
+        WHERE
+        SRR.RGROUP_ID = #{rgroupId}
+    </select>
+
+
+    <select id="queryCandidateResource" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+        <![CDATA[
+  		SELECT 
+  			RESOURCE_ROLE_ID, RESOURCE_ROLE_NAME 
+  		FROM 
+  			SET_RESOURCE_ROLE 
+  			WHERE 
+  			RESOURCE_ROLE_ID NOT IN 
+  			(
+			  	SELECT 
+			        SR.RESOURCE_ROLE_ID
+				FROM 
+			        SET_RESOURCE_ROLE SR 
+			        INNER JOIN 
+			        SET_RGROUP_RROLE SRR
+			        ON 
+			        SR.RESOURCE_ROLE_ID = SRR.RESOURCE_ROLE_ID 
+			        WHERE 
+			        SRR.RGROUP_ID = #{rgroupId}
+  			)
+    ]]>
+    </select>
+
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SET_RESOURCE_ROLE
+    </select>
+
+    <!-- 得到Sequences -->
+    <select id="getSequences" resultType="java.lang.String">
+        select SEQ_SET_RESOURCE_ROLE.nextVal from dual
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal">
+        select
+        <include refid="Base_Column_List"/>
+        from SET_RESOURCE_ROLE
+        where RESOURCE_ROLE_ID = #{resourceRoleId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+        delete from SET_RESOURCE_ROLE
+        where RESOURCE_ROLE_ID = #{resourceRoleId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.micro.rent.dbaccess.entity.SetResourceRole">
+        insert into SET_RESOURCE_ROLE (RESOURCE_ROLE_ID, RESOURCE_ROLE_CODE,
+        RESOURCE_ROLE_NAME, RESOURCE_ROLE_TYPE, RESOURCE_ROLE_DESC,
+        STATUS, LAST_UPDATOR, LAST_UPDATE_TIME
+        )
+        values (#{resourceRoleId,jdbcType=VARCHAR}, #{resourceRoleCode,jdbcType=VARCHAR},
+        #{resourceRoleName,jdbcType=VARCHAR}, #{resourceRoleType,jdbcType=VARCHAR},
+        #{resourceRoleDesc,jdbcType=VARCHAR},
+        #{status,jdbcType=CHAR}, #{lastUpdator,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.micro.rent.dbaccess.entity.SetResourceRole">
+        update SET_RESOURCE_ROLE
+        <set>
+            <if test="resourceRoleCode != null">
+                RESOURCE_ROLE_CODE = #{resourceRoleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceRoleName != null">
+                RESOURCE_ROLE_NAME = #{resourceRoleName,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceRoleType != null">
+                RESOURCE_ROLE_TYPE = #{resourceRoleType,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceRoleDesc != null">
+                RESOURCE_ROLE_DESC = #{resourceRoleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=CHAR},
+            </if>
+            <if test="lastUpdator != null">
+                LAST_UPDATOR = #{lastUpdator,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where RESOURCE_ROLE_ID = #{resourceRoleId,jdbcType=VARCHAR}
+    </update>
+</mapper>

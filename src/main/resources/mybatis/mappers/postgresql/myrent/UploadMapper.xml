@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.myrent.UploadDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.myrent.TUpload">
+        <result column="T_upload" property="uploadId" jdbcType="VARCHAR"/>
+        <result column="FILE_TYPE" property="fileType" jdbcType="VARCHAR"/>
+        <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
+        <result column="CRT_TIME" property="crtTime" jdbcType="DATE"/>
+        <result column="OPER" property="oper" jdbcType="VARCHAR"/>
+        <result column="RESULT" property="result" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.micro.rent.dbaccess.entity.myrent.TUpload">
+        insert into T_upload
+        (UPLOAD_ID,FILE_TYPE,FILE_NAME,CRT_TIME,OPER,RESULT,STATUS,REMARK)
+        values(#{uploadId},#{fileType},#{fileName},#{crtTime},#{oper},#{result},#{status},#{remark})
+    </insert>
+    <!-- 查询分页记录 -->
+    <select id="findUploadPaged" parameterType="com.micro.rent.common.comm.nmybatis.Page"
+            resultMap="BaseResultMap">
+        SELECT t.UPLOAD_ID,t.FILE_TYPE,t.FILE_NAME,t.CRT_TIME,t.OPER,t.RESULT,t.STATUS,t.REMARK
+        FROM T_upload t
+    </select>
+    <!-- 查询记录总数 -->
+    <select id="queryTotalCount" resultType="int" parameterType="map">
+        <![CDATA[
+			SELECT COUNT(1) FROM T_upload
+		]]>
+    </select>
+</mapper>

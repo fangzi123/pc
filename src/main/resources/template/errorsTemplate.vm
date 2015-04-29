@@ -1,0 +1,17 @@
+package ${package};
+
+/**
+* @Description: 错误码(Generated via template)
+* @author:
+*
+* @version: 1.0
+*/
+public class Errors {
+#foreach($errorKey in $errors.keySet())
+/**
+* $errors.get($errorKey)
+*/
+public final static String ${prefix}_$errorKey = "$errorKey";
+
+#end
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>窝牛租房</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=11" />
+    <link rel="stylesheet" href="${rc.contextPath}/resources/pc/css/common/common.css"/>
+    <link rel="stylesheet" href="${rc.contextPath}/resources/pc/css/match/matchByMap.css"/>
+</head>
+<body>
+    <#include  "/common/header.html">
+    <div id="house-info" class="info">
+        <ul>
+        </ul>
+    </div>
+    <div class="conditions">
+        <div>
+            <div class="search">
+                <input type="text" id="input-address" name="" placeholder="请输入小区名称或地址或公寓品牌" />
+                <input type="button" id="btn-address" value="" />
+            </div>
+            <div class="price">
+                <span>租金:</span>
+                <div class="max sel">
+                    <div class="arrow"></div>
+                    <span id="span-min-price">最低价</span>
+                    <div class="list">
+                        <div>最低价</div>
+                        <div>1000</div>
+                        <div>2000</div>
+                        <div>3000</div>
+                        <div>4000</div>
+                        <div>5000</div>
+                    </div>
+                </div>
+                <div class="min sel">
+                    <div class="arrow"></div>
+                    <span id="span-max-price">最高价</span>
+                     <div class="list">
+                        <div>最高价</div>
+                        <div>2000</div>
+                        <div>3000</div>
+                        <div>4000</div>
+                        <div>5000</div>
+                        <div>7000</div>
+                        <div>10000</div>
+                        <div>13000</div>
+                        <div>16000</div>
+                    </div>
+                </div>
+            </div>
+            <div class="house-type">
+                <span>户型:</span>
+                <div class="sel">
+                    <div class="arrow"></div>
+                    <span id="span-house-type">不限</span>
+                    <div class="list">
+                        <div>不限</div>
+                        <#list house_layout_enum as house_layout>
+                        <div>${house_layout}</div>
+                        </#list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="map" class="map"></div>
+<!--     <#include  "/common/footer.html"> -->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=108b50eb45abfdb30d056ec907130e22"></script>
+    <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+    <script src="${rc.contextPath}/resources/pc/js/common/validation.js"></script>
+<script src="${rc.contextPath}/resources/pc/js/common/common.js"></script>
+    <script type="text/javascript" src="${rc.contextPath}/resources/pc/js/common/map/markerCluster.js"></script>
+    <script type="text/javascript" src="${rc.contextPath}/resources/pc/js/match/matchByMap.js"></script>
+    <input type="hidden" value='${mapResultVo}' name="mapResult" id="mapResult"/>
+</body>
+</html>

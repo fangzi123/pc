@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.ActivityDao">
+
+    <select id="selectActivityByTenantId" parameterType="com.micro.rent.common.comm.nmybatis.Page" resultType="ActivityVo">
+        SELECT
+		 A.id
+		,A.reward
+		,to_char(A.start_time, 'YYYY-MM-DD') as startTime
+		,to_char(A.end_time, 'YYYY-MM-DD') as endTime
+		,A.name
+		,A.url
+		FROM tenant T
+		INNER JOIN activity_order AO
+		       ON T.id = AO.tenant_id
+		LEFT JOIN activity A
+		       ON AO.activity_id = A.id
+		<where>
+		    <if test="params.mobile != null and params.mobile != ''">
+		        AND T.mobile = #{params.mobile}
+		    </if>
+		</where>
+    </select>
+    
+    <delete id="deleteActivity" parameterType="Map">
+        DELETE 
+            FROM activity_order 
+        WHERE 
+            activity_id = ${activityId}
+            AND tenant_id = ${tenantId}
+    </delete>
+</mapper>

@@ -1,0 +1,124 @@
+﻿    <!-- 弹窗 -->
+    <!-- 注册 -->
+    <!-- 登录 -->
+    <!-- 预约 -->
+    <div id="pop-win-yuyue" class="tankuang" >
+         <form class="neirong" id="orderform">
+            <input type="text" placeholder="请输入您的姓名" class="xingming frm-txt" name="name"/>
+            <select name="orderDate" id="sel-date" class="riqi frm-txt">
+            </select>
+            <input type="text" placeholder="请输入您的手机号" class="xingming frm-txt" name="mobile"/>
+            <input type="text" placeholder="验证码" class="yanzheng frm-txt" name="verifyCode"/>
+            <input type="button" value="发送验证码" class="ma" id="getverifycode"/>
+            <div class="clear"></div>
+            <p>姓名  手机号用于客服人员与您联系，窝牛租房承诺局不会泄露您的个人信息。</p>
+            <a href="#" class="queren" id="order">确认预约</a>
+         </form>
+    </div>
+    <!-- 已登录或者cookie里有预约信息 -->
+    <div id="pop-win-yuyue-date" class="tankuang" >
+         <form class="neirong" id="orderform-date">
+            <select name="orderDate" id="sel-date-date" class="riqi frm-txt">
+            </select>
+            <div class="clear"></div>
+            <p>姓名  手机号用于客服人员与您联系，窝牛租房承诺局不会泄露您的个人信息。</p>
+            <a href="#" class="queren" id="order-date">确认预约</a>
+         </form>
+    </div>
+    
+    <!-- 预约成功 -->
+    <div id="pop-win-yuyue-true" class="hidden tankuang">
+     <div class="chenggong" id="ordertrue">
+           <p class="biaoqing">恭喜你，预约已提交！</p>
+
+              <p class="lianxi">客服人员稍后会与您联系</p>
+              <p class="lianxi">您也可以使用预约过的手机号</p>
+              <p class="lianxi">登陆网站查看您的预约信息</p>
+              <p class="guanzhu">关注 窝牛租房 公众号</p>
+              <img src="${rc.contextPath}/images/pc/erwei_40.png" alt="" class="erwei"/>
+              <p class="yongyou">您将拥有：</p>
+              <p class="quantian">1、全天在线客服        随时解答您的疑问</p>
+              <p class="quantian">2、随身移动工作台 重要信息不遗漏</p>
+              <p class="quantian">3、账号保护利器        支持微信扫码登录</p>
+              <p class="saomiao">用微信扫描二维码</p>
+              <div class="denglushaoma">
+               <a class="deng">登录</a><a class="fang">不方便扫码？跳过→</a>
+              </div>
+          </div>
+    </div>
+    
+    <!-- 预约失败 -->
+    <div id="pop-win-yuyue-false" class="hidden tankuang">
+      <div class="chenggong" id="orderfalse">
+           <p class="biaoqing">Σ(っ °Д °;)っ</p>
+             <p class="gongxi">啊，失败了！</p>
+              <p class="lianxi">再试一次</p>
+              <!--<p class="lianxi">您也可以使用预约过的手机号</p>-->
+              <!--<p class="lianxi">登陆网站查看您的预约信息</p>-->
+              <p class="guanzhu">关注 窝牛租房 公众号</p>
+              <img src="${rc.contextPath}/images/pc/erwei_40.png" alt="" class="erwei"/>
+              <p class="yongyou">您将拥有：</p>
+              <p class="quantian">1、全天在线客服        随时解答您的疑问</p>
+              <p class="quantian">2、随身移动工作台 重要信息不遗漏</p>
+              <p class="quantian">3、账号保护利器        支持微信扫码登录</p>
+              <p class="saomiao">用微信扫描二维码</p>
+              <div class="denglushaoma">
+               <a class="deng">登录</a><a class="fang">不方便扫码？跳过→</a>
+              </div>
+          </div>
+        </div>
+    <!-- 已预约 -->
+    <div id="pop-win-yuyue-already" class="hidden tankuang">
+     <div class="chenggong" id="ordertrue">
+           <p class="biaoqing">您已经预约</p>
+              <p class="lianxi">客服人员稍后会与您联系</p>
+              <p class="lianxi">您也可以使用预约过的手机号</p>
+              <p class="lianxi">登陆网站查看您的预约信息</p>
+              <p class="guanzhu">关注 窝牛租房 公众号</p>
+              <img src="${rc.contextPath}/images/pc/erwei_40.png" alt="" class="erwei"/>
+              <p class="yongyou">您将拥有：</p>
+              <p class="quantian">1、全天在线客服        随时解答您的疑问</p>
+              <p class="quantian">2、随身移动工作台 重要信息不遗漏</p>
+              <p class="quantian">3、账号保护利器        支持微信扫码登录</p>
+              <p class="saomiao">用微信扫描二维码</p>
+              <div class="denglushaoma">
+               <a class="deng">登录</a><a class="fang">不方便扫码？跳过→</a>
+              </div>
+          </div>
+        </div>
+    <div class="mack"></div><!-- 弹窗（OVER） -->
+<script type="text/javascript">
+// 初始化日期选择下拉列表
+    var date = new Date();
+    for (var i=0; i<7; i++) {
+        date = new Date(date.getTime() + 86400000);
+        var weekDay = date.getDay();
+        if (weekDay == 0) weekDay = "星期日";
+        else if (weekDay == 1) weekDay = "星期一";
+        else if (weekDay == 2) weekDay = "星期二";
+        else if (weekDay == 3) weekDay = "星期三";
+        else if (weekDay == 4) weekDay = "星期四";
+        else if (weekDay == 5) weekDay = "星期五";
+        else if (weekDay == 6) weekDay = "星期六";
+        var datestring=formatToYYYYMMDD(date);
+        $("<option value='"+datestring+"'>" + date.getFullYear() + "-" + (date.getMonth() + 1) + 
+            "-" + date.getDate() + "　" + weekDay + " </option>").appendTo($("#sel-date,#sel-date-date"));
+    }
+    
+    /*
+     * 返回日期格式 (YYYYMMDD) 
+     */
+    function formatToYYYYMMDD(date) {
+        var month = (date.getMonth() < 9) ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+        var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        return date.getFullYear() + "" + month + "" + day;
+    }
+    //点击跳过 弹框消失
+    $(document).ready(function(){
+        $(".fang").on("click",function(){
+           $(".tankuang").hide();
+              $(".mack").hide();
+
+       })
+     });
+</script>

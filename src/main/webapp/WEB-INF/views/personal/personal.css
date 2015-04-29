@@ -1,0 +1,104 @@
+* {
+    line-height: 1.1;
+}
+
+#div_footer {
+    width: 100%;
+    position: fixed;
+    bottom: -1px;
+}
+
+#div_footer button {
+    border-radius: 0px;
+    border-bottom-width: 0px;
+    width: 50%;
+    display: inline;
+}
+
+#div_footer button:first-child {
+    border-left-width: 0px;
+}
+
+#div_footer button:last-child {
+    border-right-width: 0px;
+    margin-right: -3px;
+}
+
+#content {
+    padding-bottom: 42px;
+}
+
+img {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #BBBBBB;
+}
+
+div.container-fluid {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #FFFFFF;
+}
+
+div.container-fluid > div.row, div.container-fluid > div.row > div {
+    min-height: 67px;
+}
+
+div.div-img {
+    width: 90px;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    float: left;
+    height: 100%;
+}
+
+div.container-fluid img {
+    height: 67px;
+    width: 90px;
+}
+
+div.house-detail {
+    padding-left: 10px;
+    overflow: hidden;
+}
+
+div.house-address, div.house-info {
+    height: 2.5em;
+    width: 100%;
+}
+
+div.house-info > div:first-child {
+    display: -webkit-box;
+    -webkit-box-align: end;
+}
+
+div.house-info > div:first-child > div:first-child {
+    /* position: absolute;
+    bottom: 0px; */
+}
+
+div.price {
+    display: -webkit-box;
+    -webkit-box-pack: end;
+    position: relative;
+    top: 2px;
+}
+
+div.unit {
+    display: -webkit-box;
+    -webkit-box-pack: end;
+}
+
+[class *= col-xs-] {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+div.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.blank {
+    height: 60px;
+}

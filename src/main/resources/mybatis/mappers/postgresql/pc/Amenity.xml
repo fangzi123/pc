@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.AmenityDao">
+	<resultMap id="BaseResultMap" type="com.micro.rent.pc.entity.Amenity">
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="amenity_group_id" property="amenityGroupId" jdbcType="BIGINT" />
+		<result column="type" property="type" jdbcType="OTHER" />
+		<result column="sub_type" property="subType" jdbcType="OTHER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, amenity_group_id, type, sub_type
+	</sql>
+
+    <sql id="Base_Column_list_Alias">
+        a.id, a.amenity_group_id, a.type, a.sub_type
+    </sql>
+
+    <select id="findAmenityById" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from amenity
+        where id=#{id}
+    </select>
+
+	<select id="findAmenityByBranchId" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+		  <include refid="Base_Column_list_Alias" />
+		from branch b, amenity a 
+		where b.amenity_group_id = a.amenity_group_id
+		  and b.id = #{branchId}
+	</select>
+	
+	<select id="findByHouseId" parameterType="java.util.Map" resultMap="BaseResultMap">
+	   select
+	       <include refid="Base_Column_list_Alias"/>
+	   from house h, amenity a
+	   where a.amenity_group_id = h.amenity_group_id
+	       and h.id=#{houseId}
+	</select>
+</mapper>

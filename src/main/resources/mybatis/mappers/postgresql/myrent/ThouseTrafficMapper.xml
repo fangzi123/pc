@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.myrent.ThouseTrafficDao">
+    <resultMap type="com.micro.rent.biz.myrent.vo.TrafficVo" id="trafficMap">
+        <result column="community_name" property="communityName" jdbcType="VARCHAR"/>
+        <result column="traffic_name" property="trafficName" jdbcType="VARCHAR"/>
+        <result column="traffic_station" property="trafficStation" jdbcType="VARCHAR"/>
+        <result column="distance" property="distance" jdbcType="DECIMAL"/>
+        <result column="longitude" property="longitude" jdbcType="DECIMAL"/>
+        <result column="latitude" property="latitude" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="base_col">
+        T_HOUSE_TRAFFIC_ID,PROJECT_ID,TRAFFIC_TYPE,TRAFFIC_NAME,TRAFFIC_STATION,DISTANCE
+    </sql>
+    <insert id="batchSave" parameterType="com.micro.rent.dbaccess.entity.myrent.ThouseTraffic">
+        insert into T_HOUSE_TRAFFIC
+        (<include refid="base_col"/>)
+        values(#{tHouseTrafficId},#{projectId},#{trafficType},#{trafficName},#{trafficStation},#{distance})
+    </insert>
+
+    <select id="selectHouseTrafficByProjectId" resultMap="trafficMap" parameterType="string">
+        select TRAFFIC_NAME,TRAFFIC_STATION,DISTANCE,COMMUNITY_NAME,LATITUDE,LONGITUDE
+        from t_project P
+        left join t_house_traffic T on P.project_id=T.project_id
+        where P.project_id=#{projectId}
+    </select>
+
+</mapper>

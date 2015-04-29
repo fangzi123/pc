@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.SetResourceDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.SetResource">
+        <id column="RESOURCE_ID" property="resourceId" jdbcType="VARCHAR"/>
+        <result column="SECURITY_FILTER" property="securityFilter" jdbcType="VARCHAR"/>
+        <result column="URL_PATTERN" property="urlPattern" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="CHAR"/>
+        <result column="LAST_UPDATOR" property="lastUpdator" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        RESOURCE_ID, SECURITY_FILTER, URL_PATTERN, STATUS, LAST_UPDATOR, LAST_UPDATE_TIME
+    </sql>
+
+
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SET_RESOURCE
+    </select>
+
+    <!-- 查询分页记录 -->
+    <select id="queryPaged" resultMap="BaseResultMap" parameterType="com.micro.rent.common.comm.nmybatis.Page">
+        SELECT * FROM SET_RESOURCE WHERE STATUS = 1
+        <if test="params.urlPattern != null">
+            AND URL_PATTERN LIKE concat('%',#{params.urlPattern},'%')
+        </if>
+        ORDER BY RESOURCE_ID DESC
+    </select>
+
+    <!-- 查询记录总数 -->
+    <select id="queryTotalCount" resultType="int" parameterType="map">
+        <![CDATA[
+			SELECT COUNT(1) FROM SET_RESOURCE WHERE STATUS = 1 
+		]]>
+        <if test="urlPattern != null">
+            AND URL_PATTERN LIKE CONCAT('%',#{urlPattern},'%')
+        </if>
+    </select>
+
+    <!-- 得到Sequences -->
+    <select id="getSequences" resultType="java.lang.String">
+        select SEQ_SET_RESOURCE.nextVal from dual
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal">
+        select
+        <include refid="Base_Column_List"/>
+        from SET_RESOURCE
+        where RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+        delete from SET_RESOURCE
+        where RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.micro.rent.dbaccess.entity.SetResource">
+        insert into SET_RESOURCE (RESOURCE_ID, SECURITY_FILTER, URL_PATTERN,
+        STATUS, LAST_UPDATOR, LAST_UPDATE_TIME
+        )
+        values (#{resourceId,jdbcType=VARCHAR}, #{securityFilter,jdbcType=VARCHAR}, #{urlPattern,jdbcType=VARCHAR},
+        #{status,jdbcType=CHAR}, #{lastUpdator,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.micro.rent.dbaccess.entity.SetResource">
+        update SET_RESOURCE
+        <set>
+            <if test="securityFilter != null">
+                SECURITY_FILTER = #{securityFilter,jdbcType=VARCHAR},
+            </if>
+            <if test="urlPattern != null">
+                URL_PATTERN = #{urlPattern,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=CHAR},
+            </if>
+            <if test="lastUpdator != null">
+                LAST_UPDATOR = #{lastUpdator,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
+    </update>
+
+    <select id="querySelectedResource" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+        SELECT
+        SR.RESOURCE_ID, SR.URL_PATTERN
+        FROM
+        SET_RESOURCE SR
+        INNER JOIN
+        SET_RROLE_RESOURCE SRR
+        ON
+        SR.RESOURCE_ID = SRR.RESOURCE_ID
+        WHERE
+        SRR.RESOURCE_ROLE_ID = #{resourceId}
+    </select>
+
+
+    <select id="queryCandidateResource" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+        <![CDATA[
+  		SELECT 
+  			RESOURCE_ID, URL_PATTERN 
+  		FROM 
+  			SET_RESOURCE 
+  			WHERE 
+  			RESOURCE_ID NOT IN 
+  			(
+	  			SELECT 
+			        SR.RESOURCE_ID
+				FROM 
+			        SET_RESOURCE SR 
+			        INNER JOIN 
+			        SET_RROLE_RESOURCE SRR
+			        ON 
+			        SR.RESOURCE_ID = SRR.RESOURCE_ID 
+			        WHERE 
+			        SRR.RESOURCE_ROLE_ID = #{resourceId}
+  			)
+  	
+	  	
+    ]]>
+    </select>
+
+</mapper>

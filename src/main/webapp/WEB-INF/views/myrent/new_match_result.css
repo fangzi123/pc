@@ -1,0 +1,129 @@
+img {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #BBBBBB;
+}
+
+* {
+    line-height: 1.1;
+}
+
+div.container-fluid {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #FFFFFF;
+}
+
+div.container-fluid > div.row, div.container-fluid > div.row > div {
+    min-height: 67px;
+}
+
+div.div-img {
+    width: 90px;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    float: left;
+    height: 100%;
+}
+
+div.container-fluid img {
+    height: 67px;
+    width: 90px;
+}
+
+div.house-detail {
+    padding-left: 10px;
+    overflow: hidden;
+}
+
+div.house-address, div.house-info {
+    height: 2.5em;
+    width: 100%;
+}
+
+div.house-info > div:first-child {
+    display: -webkit-box;
+    -webkit-box-align: end;
+}
+
+div.house-info > div:first-child > div:first-child {
+    /* position: absolute;
+    bottom: 0px; */
+}
+
+div.price {
+    display: -webkit-box;
+    -webkit-box-pack: end;
+    position: relative;
+    top: 2px;
+}
+
+div.unit {
+    display: -webkit-box;
+    -webkit-box-pack: end;
+}
+
+[class *= col-xs-] {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+div.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+/* 正在加载中动画效果  */
+@-webkit-keyframes danchu2 {
+    0% {
+        opacity: 0
+    }
+    32% {
+        opacity: 0
+    }
+    33% {
+        opacity: 1
+    }
+    99% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0
+    }
+}
+
+@-webkit-keyframes danchu3 {
+    0% {
+        opacity: 0
+    }
+    65% {
+        opacity: 0
+    }
+    66% {
+        opacity: 1
+    }
+    99% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0
+    }
+}
+
+.point1 {
+    -webkit-animation: danchu2 1s linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+.point2 {
+    -webkit-animation: danchu3 1s linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+[class ^= point] {
+    display: inline-block;
+}
+
+#lodaing {
+    height: 44px;
+}

@@ -1,0 +1,206 @@
+/* 顶部样式  */
+#div_head {
+    padding-top: 0.8em;
+}
+
+/* 底部按钮样式 */
+#div_footer {
+    margin-top: 1.8em;
+    margin-bottom: 1.4em;
+    width: 100%;
+}
+
+#div_footer button {
+    background-color: #F39600;
+    letter-spacing: 0.5em;
+}
+
+/* 圆角  */
+.circle-border {
+    border-radius: 8px;
+}
+
+/* 行上边距 */
+#div_content {
+    /* background-color: #F6F6F6; */
+}
+
+/* TABLE区域样式 */
+table {
+    width: 100%;
+    background-color: #FFFFFF;
+}
+
+td {
+    width: 20%;
+    text-align: center;
+    height: 44px;
+    border-style: ridge;
+    border-width: 1px;
+    border-color: #ccc;
+}
+
+td.on {
+    background: #F39600;
+    color: #FFFFFF;
+}
+
+td.off {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+/* 交通方式样式 */
+[id ^= "transf_method_"] {
+    background-color: #FFFFFF;
+}
+
+#transf_method_bus {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    margin-right: -2px;
+}
+
+#transf_method_walk {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-left: -2px;
+}
+
+.div-border {
+    border-style: solid;
+    border-width: 2px;
+    border-color: #F39600;
+    color: #F39600;
+}
+
+[id *= 'transf_method_'] > div {
+    height: 20px;
+    width: 20px;
+}
+
+[id *= 'transf_method_'].on {
+    background: #F39600;
+    color: #FFFFFF;
+}
+
+[id ^= 'transf_method_'].off {
+    background: #FFFFFF;
+    color: #F39600;
+}
+
+[id ^= 'icon_'] {
+    background-size: 100%;
+}
+
+#icon_walk.on {
+    background-image: url(../../images/walk-on.png);
+}
+
+#icon_walk.off {
+    background-image: url(../../images/walk-off.png);
+}
+
+#icon_car.on {
+    background-image: url(../../images/car-on.png);
+}
+
+#icon_car.off {
+    background-image: url(../../images/car-off.png);
+}
+
+#icon_bus.on {
+    background-image: url(../../images/bus-on.png);
+}
+
+#icon_bus.off {
+    background-image: url(../../images/bus-off.png);
+}
+
+#workPlaceId_error {
+    display: none;
+    top-margin: -5px;
+    color: red;
+    text-align: center;
+}
+
+#workPlaceId_error + span {
+    color: red;
+    text-align: center;
+}
+
+/*  自动提示 */
+div[id *= 'suggestion'] td {
+    height: 2em;
+    padding-left: 10px;
+    text-align: left;
+}
+
+/* 附近房源  */
+.fujinfangyuan {
+    padding-top: 10px;
+    background-color: #F6F6F6;
+}
+
+hr {
+    border-color: #F39600 !important;
+    margin-bottom: 8px;
+}
+
+/* 小标题 */
+h6 {
+    font-weight: bold;
+}
+
+.house-picture > div {
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.house-picture img {
+    width: 140px;
+    height: 105px;
+}
+
+div.div-price {
+    width: 140px;
+    display: -webkit-box;
+    -webkit-box-pack: end;
+    position: absolute;
+    top: 75px;
+}
+
+div.div-price > div {
+    background-color: #F39600;
+    color: #FFFFFF;
+
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+div.div-house-info {
+    background-color: #FFFFFF;
+    width: 140px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+div.div-house-info .col-xs-12 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.brandName {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+/* 页面底端 */
+.bottom {
+    height: 3em;
+}

@@ -1,0 +1,62 @@
+/******* modify at your own risk *********/
+.combobox {
+    display: inline;
+    padding: 0;
+}
+
+.combobox input {
+    display: inline;
+    width: 100%;
+    line-height: 28px;
+    border: 0;
+    padding: 0;
+    background: none;
+    color: #666;
+    font-size: 14px;
+    line-height: 28px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.combobox .button {
+    padding: 0;
+    margin: 0;
+    display: inline;
+    vertical-align: bottom;
+}
+
+.inputbox .select span {
+    right: -5px;
+    top: 10px;
+    z-index: 100;
+}
+
+#comboboxDropdown {
+    margin: 0;
+    padding: 0;
+    border: 1px solid #d2ccc4;
+    position: absolute;
+    display: none;
+    z-index: 1001;
+    background: #fff;
+    width: 99%;
+}
+
+#comboboxDropdown li {
+    /* list-style-type: none;
+    border: solid 1px #ccc;
+    padding: 3px;
+    border-width: 0 0 1px; */
+    cursor: pointer;
+}
+
+/******* modify this to custom the appearance of the suggestions *******/
+#comboboxDropdown li {
+    color: #29b4f0;
+}
+
+/* #comboboxDropdown li.selected
+{
+    color: white;
+    background-color: black;
+} */

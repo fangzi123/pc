@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.FavoriteDao">
+    
+    <insert id="saveFavorite" parameterType="Favorite"
+        keyProperty="id" useGeneratedKeys="true">
+        insert into favorite(
+        tenant_id,
+        <choose>
+            <when test="houseId!=null">house_id,</when>
+            <when test="projectId!=null">project_id,</when>
+            <when test="brandId!=null">brand_id,</when>
+            <when test="branchId!=null">branch_id,</when>
+        </choose>
+        created_time,
+        flag
+        ) values(
+        #{tenantId},
+        <choose>
+            <when test="houseId!=null">#{houseId},</when>
+            <when test="projectId!=null">#{projectId},</when>
+            <when test="brandId!=null">#{brandId},</when>
+            <when test="branchId!=null">#{branchId},</when>
+        </choose>
+        now(),
+        #{flag}::bit(64)
+        )
+    </insert>
+
+    <select id="queryFavoriteHouseIdByTenantId" parameterType="Integer" resultType="Integer">
+        SELECT house_id
+        from favorite
+        WHERE
+        get_bit(flag, 0)='1'
+        and tenant_id=#{tenantId}
+    </select>
+    
+    <select id="qurtyFavoriteByTenantAndHouseId" parameterType="Favorite" resultType="Favorite">
+        SELECT id,flag
+        from favorite
+        WHERE
+        house_id=#{houseId}
+        and tenant_id=#{tenantId}
+    </select>
+    
+    <update id="updateFavoriteFlagById" parameterType="Favorite">
+     update favorite 
+     set 
+     flag=set_bit(flag,0,'${flag}')
+     where id=#{id}
+    </update>
+    
+    <select id="selectFavouriteHouseInfoForPage" parameterType="com.micro.rent.common.comm.nmybatis.Page" 
+        resultType="HouseVo">
+        SELECT 
+		 M.house_id as houseId
+		,M.branchname
+		,M.layout
+		,FLOOR(M.area) as area
+		,FLOOR(M.monthly_price::DECIMAL) as monthlyPrice
+		,(select pic_path from house2pic where house_id = F.house_id order by priority desc limit 1) as picPath
+		FROM tenant T
+		INNER JOIN favorite F
+		       ON T.id = F.tenant_id
+		LEFT JOIN map_view M
+		       ON M.house_id = F.house_id
+		<where>
+            get_bit(f.flag,0)='1'
+		    <if test="params.mobile != null and params.mobile != ''">
+		      and T.mobile = #{params.mobile}
+		    </if>
+		</where>
+		ORDER BY monthly_price asc
+    </select>
+    
+    <delete id="deleteFavouriteHouse" parameterType="Map">
+        DELETE FROM favorite 
+        <where>
+            <if test="houseId != null and houseId != ''">
+                AND house_id = #{houseId}::DECIMAL
+            </if>
+            <if test="id != null and id != ''">
+                AND tenant_id = #{id}::DECIMAL
+            </if>
+        </where>
+    </delete>
+</mapper>

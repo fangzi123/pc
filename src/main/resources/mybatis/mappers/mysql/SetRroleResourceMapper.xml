@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.SetRroleResourceDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.SetRroleResource">
+        <id column="RESOURCE_ROLE_ID" property="resourceRoleId" jdbcType="VARCHAR"/>
+        <id column="RESOURCE_ID" property="resourceId" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATOR" property="lastUpdator" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        RESOURCE_ROLE_ID, RESOURCE_ID, LAST_UPDATOR, LAST_UPDATE_TIME
+    </sql>
+
+    <delete id="deleteByRoleId" parameterType="java.math.BigDecimal">
+        delete from SET_RROLE_RESOURCE
+        where RESOURCE_ROLE_ID = #{resourceRoleId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="com.micro.rent.dbaccess.entity.SetRroleResourceKey">
+        select
+        <include refid="Base_Column_List"/>
+        from SET_RROLE_RESOURCE
+        where RESOURCE_ROLE_ID = #{resourceRoleId,jdbcType=VARCHAR}
+        and RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.micro.rent.dbaccess.entity.SetRroleResourceKey">
+        delete from SET_RROLE_RESOURCE
+        where RESOURCE_ROLE_ID = #{resourceRoleId,jdbcType=VARCHAR}
+        and RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.micro.rent.dbaccess.entity.SetRroleResource">
+        insert into SET_RROLE_RESOURCE (RESOURCE_ROLE_ID, RESOURCE_ID, LAST_UPDATOR,
+        LAST_UPDATE_TIME)
+        values (#{resourceRoleId,jdbcType=VARCHAR}, #{resourceId,jdbcType=VARCHAR}, #{lastUpdator,jdbcType=VARCHAR},
+        #{lastUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.micro.rent.dbaccess.entity.SetRroleResource">
+        update SET_RROLE_RESOURCE
+        <set>
+            <if test="lastUpdator != null">
+                LAST_UPDATOR = #{lastUpdator,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where RESOURCE_ROLE_ID = #{resourceRoleId,jdbcType=VARCHAR}
+        and RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
+    </update>
+</mapper>

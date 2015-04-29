@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.pc.dao.MatchByMapDao">
+
+    <select id="findAllCommunityByZoom" parameterType="com.micro.rent.pc.entity.vo.MapQueryVo"
+        resultType="Mark">
+        select c.id communityId,c.name zoneName,c.total_number houseNum,a.point::text point
+        from
+            community c
+            join address a on a.id=c.address_id
+        where 
+            a.city_id=#{cityId}
+            and a.zoom_level::text=#{zoom}
+    </select>
+    <select id="findAllCommunityByFilter" parameterType="com.micro.rent.pc.entity.vo.MapQueryVo"
+        resultType="Mark">
+        select 
+        <if test="zoom =='小区'">communityId,communityName zoneName,communityPoint::text point,
+        array_to_string(array_accum(house_id),',') houseIds,
+        </if>
+        <if test="zoom =='行政区'">sarName zoneName,sarPoint::text point,</if>
+        sum(total_number) houseNum
+        from
+            map_view mv
+        where 1=1
+        <if test="address != null and  address!=''">
+            and (mv.communityName like '%${address}%' or mv.communityAddress like '%${address}%' or mv.brandName like '%${address}%')
+        </if>
+        <if test="maxPrice != null and  maxPrice!='' and maxPrice!='最高价' ">
+            and  <![CDATA[mv.monthly_price::decimal <= ${maxPrice}]]> 
+        </if>
+        <if test="minPrice != null and  minPrice!='' and minPrice!='最低价' ">
+            and  <![CDATA[mv.monthly_price::decimal >= ${minPrice}]]> 
+        </if>
+        <if test="layout != null and  layout!='' and layout!='不限'">
+            <if test="layout!='四室'">
+             and mv.layout::text=#{layout}
+            </if>
+            <if test="layout=='四室'">
+            and mv.layout::text in ('四室','五室')
+            </if>
+        </if>
+        <if test="zoom =='小区'">
+        <if test="maxLng != null and  maxLng !=''">
+            and  <![CDATA[communityPoint[0] <= ${maxLng}]]> 
+        </if>
+        <if test="maxLat != null and  maxLat !=''">
+            and  <![CDATA[communityPoint[1] <= ${maxLat}]]> 
+        </if>
+        <if test="minLng != null and  minLng !=''">
+            and  <![CDATA[communityPoint[0] >= ${minLng}]]> 
+        </if>
+        <if test="minLat != null and  minLat !=''">
+            and  <![CDATA[communityPoint[1] >= ${minLat}]]> 
+        </if>
+        </if>
+        <if test="zoom =='行政区'">
+        <if test="maxLng != null and  maxLng !=''">
+            and  <![CDATA[sarPoint[0] <= ${maxLng}]]> 
+        </if>
+        <if test="maxLat != null and  maxLat !=''">
+            and  <![CDATA[sarPoint[1] <= ${maxLat}]]> 
+        </if>
+        <if test="minLng != null and  minLng !=''">
+            and  <![CDATA[sarPoint[0] >= ${minLng}]]> 
+        </if>
+        <if test="minLat != null and  minLat !=''">
+            and  <![CDATA[sarPoint[1] >= ${minLat}]]> 
+        </if>
+        </if>
+        group by zoneName,<if test="zoom =='小区'">communityId,</if>point
+    </select>
+    
+    <select id="findHousesByCommunityId" parameterType="java.lang.Integer" resultType="HouseVo">
+        select DISTINCT  h.id id,h.layout,prg.monthly_price::decimal price,bd.name brandName, (select pic_path from house2pic where house_id=h.id order by priority desc limit 1) picPath
+        from
+            house h
+            join house2community hc on h.branch_id=hc.branch_id
+            join community c on c.id=hc.community_id
+            join branch bh on bh.id=h.branch_id
+            join brand  bd on bd.id=bh.brand_id
+            join price_group prg on prg.id=h.price_group_id
+        left join house2pic hp on hp.house_id=h.id
+        where 
+           c.id=#{community}
+    </select>
+    
+    <select id="findHousesByHouseIds" parameterType="java.lang.String" resultType="HouseVo">
+      select  mv.house_id id,mv.layout,mv.monthly_price::decimal price,mv.brandName,mv.total_number totalNumber,
+      (select pic_path from house2pic where house_id=mv.house_id order by priority desc limit 1) picPath
+      from map_view mv 
+      where mv.house_id in (${houseIds})
+    </select>
+
+</mapper>

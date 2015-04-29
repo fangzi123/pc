@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <description>SpringMVC公共配置</description>
+
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/commonJS/**"/>
+            <mvc:exclude-mapping path="/bootstrap/**"/>
+            <mvc:exclude-mapping path="/mvcjs/**"/>
+            <mvc:exclude-mapping path="/FusionCharts/**"/>
+            <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+                <!-- <property name="paramName" value="language" /> -->
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- 静态资源 迁移到类WebConfig中实现。 -->
+
+    <!-- <mvc:resources mapping="/commonJS/**" location="/commonJS/" />
+    <mvc:resources mapping="/bootstrap/**" location="/bootstrap/" />
+    <mvc:resources mapping="/mvcjs/**" location="/WEB-INF/views/" />
+    <mvc:resources mapping="/FusionCharts/**" location="/FusionCharts/" /> -->
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.micro.rent" resource-pattern="**/web/**/*Controller.class"/>
+
+    <import resource="classpath:/spring-env.xml"/>
+
+    <!-- 视图解析器 -->
+    
+<!-- freemarker的配置 -->
+    <bean id="freemarkerConfig"
+        class="com.micro.rent.pc.util.ShiroTagFreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/ftls/" />
+        <property name="defaultEncoding" value="utf-8" />
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">10</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="datetime_format">dd.MM.yyyy HH:mm:ss</prop>
+                <prop key="date_format">dd.MM.yyyy HH:mm:ss</prop>
+                <prop key="number_format">#.##</prop>
+                <prop key="classic_compatible">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- FreeMarker视图解析 如返回student。。在这里配置后缀名ftl和视图解析器。。 -->
+    <bean id="freeMarkerViewResolver"
+        class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass"
+            value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+        <property name="suffix" value=".html" />
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="contentType" value="text/html;charset=utf-8" />
+        <property name="requestContextAttribute" value="rc" />
+        <property name="cache" value="true" />
+    </bean>
+    
+    <!-- 多视图解析 .json -->
+    <bean
+        class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1" />
+        <property name="favorParameter" value="false" />
+        <property name="favorPathExtension" value="true" />
+        <property name="ignoreAcceptHeader" value="true" />
+        <property name="defaultContentType" value="text/html" />
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json" />
+            </map>
+        </property>
+        <property name="viewResolvers">
+            <list>
+                <ref bean="freeMarkerViewResolver"/>
+                <bean
+                        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="prefix" value="/WEB-INF/views/"/>
+                    <property name="suffix" value=".jsp"/>
+                </bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+           <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+           </list>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean id="customDateConverter" class="com.micro.rent.common.web.controller.convert.CustomDateConverter">
+                    <property name="candidateDatePatterns">
+                        <list>
+                            <value>yyyy-MM-dd</value>
+                            <value>yyyy-MM-dd HH:mm:ss</value>
+                            <value>yyyyMMdd</value>
+                            <value>yyyy/MM/dd</value>
+                            <value>yyyy.MM.dd</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean class="com.micro.rent.common.web.controller.convert.EmptyStringConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 属性编辑器 -->
+    <!-- <bean id="customBindingInitializer" class="com.micro.rent.common.web.controller.binder.CustomBindingInitializer">
+        候选日期模式
+        <property name="candidateDatePatterns">
+            <list>
+                <value>yyyy-MM-dd</value>
+                <value>yyyy-MM-dd HH:mm:ss</value>
+                <value>yyyyMMdd</value>
+                <value>yyyy/MM/dd</value>
+                <value>yyyy.MM.dd</value>
+            </list>
+        </property>
+    </bean>
+     -->
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="com.micro.rent.common.web.CustomerStringHttpMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="200000000"/>
+    </bean>
+
+    <!-- 异常解析器 -->
+     <bean id="exceptionResolver"
+          class="com.micro.rent.common.web.resolver.CustomMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <!-- 可定义多个类型异常并分类
+                <prop key="com.micro.rent.common.exceptions.BizException">errors/bizExError</prop>
+                <prop key="com.micro.rent.common.exceptions.SysException">errors/sysExError</prop>-->
+                <prop key="java.lang.Exception">errors/commonError</prop>
+            </props>
+        </property>
+        <!-- <property name="defaultErrorView" value="errors/defaultExError" /> -->
+        <property name="defaultErrorView" value="errors/commonError"/>
+    </bean>
+
+    <!-- <bean id="localeResolver" class="com.micro.rent.common.web.resolver.CustomerAcceptHeaderLocaleResolver"></bean> -->
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
+</beans>

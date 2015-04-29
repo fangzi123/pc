@@ -1,0 +1,589 @@
+.header {
+    position: relative;
+}
+.box{
+    width: 100%;
+    height: auto;
+    background-color: #F4F4F4;
+}
+.h{
+    height: 72px;
+    width: 100%;
+    background-color: #373737;
+}
+.main{
+    width: 1180px;
+    height: auto;
+    background-color: #F4F4F4;
+    margin: 0 auto;
+}
+.main1{
+    width: 100%;
+    height: 44px;
+}
+.main1 ul li{
+    float: left;
+    padding: 6px 12px 0 0;
+    line-height:38px;
+    font-size: 13px;
+}
+.main1 ul li a{
+    color: #f39800;
+}
+.main2-left{
+    width: 782px;
+    height: auto;
+    display: table-cell;
+}
+.main2-right{
+    width: 375px;
+    height: auto;
+    display: table-cell;
+    vertical-align: top;
+}
+    .main2-right>div {
+        padding: 20px 15px 0 15px;
+        margin-left: 24px;
+        background: white;
+        width: 344px;
+    }
+.house-pic {
+    position: relative;
+}
+.house-pic,.house-pic-bg img {
+    width: 782px;
+    height: 600px;
+}
+.daohang{
+    height: 38px;
+    width: 100%;
+    padding-top: 10px;
+    background-color: #ffffff;
+}
+.biao ul li{
+    float: left;
+    width: 25%;
+    line-height: 30px;
+}
+.biao ul{
+    margin-left: 30px;
+}
+.zhongdeng, .xiaoqu{
+    padding:0 30px 0 30px;
+    line-height: 20px;
+    text-indent: 2em;
+}
+.daohang ul li {
+    float: left;
+    line-height: 38px;
+    font-size: 14px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+    .daohang ul li:hover {
+        border-bottom: solid 2px #f39800;;
+        color: #f39800;
+        cursor: pointer;
+    }
+    .daohang ul a:link {
+        color: inherit;
+    }
+    .daohang ul a:visited {
+        color: inherit;
+    }
+    .daohang ul a:hover{
+        color: #f39800;
+    }
+    .daohang ul a:active {
+        color: inherit;
+    }
+.fangyuan{
+    width: 100%;
+    height: 53px;
+    margin-left: 25px;
+}
+.fangyuan h1{
+    line-height: 30px;
+    padding-top: 12px;
+    font-size: 18px;
+    border-bottom: solid 1px #f39800;
+    width: 350px;
+    font-weight: 600;
+}
+.zuo,.you{
+    padding-left: 5px;
+}
+
+.biaoge>dl {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+.biaoge>dl img {
+    margin-left: 12px;
+}
+.biaoge>dl>dd{
+    height: 74px;
+}
+.biaoge>dl>dd:nth-child(even) {
+    background: #fffaf3;
+}
+.biaoge dl dl dt{
+    float: left;
+    width: 20%;
+    padding-top: 5px;
+
+}
+.biaoge dl dl dd{
+    float: left;
+    width: 20%;
+    line-height: 74px;
+}
+
+.beijing{
+    background-color: #FFFAF4;
+}
+.xinxi{
+    height: 89px;
+}
+.xinxi p{
+    float: left;
+    padding-left: 25px;
+    padding-right: 120px;
+    line-height: 28px;
+}
+.fangy{
+    width: 675px;
+    margin-left: 28px;
+}
+.fangy dl {
+    float: left;
+    width: 25%;
+    height: 40px;
+    line-height: 40px;
+}
+    .fangy dl img {
+        vertical-align: middle;
+    }
+
+.fangy dl dt{
+    float: left;
+    margin-right: 24px;
+    margin-top: 1px;
+    overflow: hidden;
+    width: 26px;
+    height: 30px;
+    background: url(../../../../images/pc/facilities.png);
+}
+.yuanjing{
+    width: 100%;
+    height: 65px;
+}
+.yuanjing p{
+     font-size: 26px;
+     line-height: 50px;
+}
+.gao{
+    line-height: 40px;
+}
+.gao span{
+    color: #F59F26;
+}
+.ditu{
+    width: 100%;
+    height: 239px;
+}
+.fujin{
+    width: 100%;
+    height: 300px;
+    margin-top: 8px;
+}
+
+.brand{
+    width: 283px;
+    height: 210px;
+    margin-left: 16px;
+    float: left;
+}
+    .brand:first-child {
+        margin-left: 0;
+    }
+.anniu{
+    width: 80px;
+    height: 24px;
+    border: 1px solid #F19A00;
+    border-radius: 4px;
+}
+
+.cover span{
+    padding-left: 12px;
+}
+.cover strong{
+    padding-left: 27px;
+}
+.brand-pic img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.cover {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 183px;
+    height: 133px;
+    line-height: 2em;
+    padding:38px 50px;
+    background:rgba(0,0,0,0.2);
+    transition:all .4s ease-in 0s;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    
+}
+.xiangqing:hover{
+    background-color: #f39800;
+    color: #ffffff;
+}
+.cover p{
+    width: 149px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-left: 20px;
+    z-index: 999; 
+    
+}
+.cover b{
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.cover:hover{
+    background:rgba(0,0,0,0.6);
+    transition:all .4s ease-in 0s;
+}
+.brand-slogan {
+    font-size: 12px;
+    color: #f39800;
+    margin-top: 5px;
+}
+
+body{
+    background: #F4F4F4;
+}
+.house-pic-sm {
+    width: 100%;
+    top: 520px;
+    left: 0px;
+    position: absolute;
+    z-index: 99999;
+}
+    .house-pic-sm img {
+        margin: 2px 2px 2px 2px;
+        height: 64px;
+        width: 90px;
+    }
+    .house-pic-sm .slick-center.slick-active img {
+        outline: solid 2px #f39800;
+    }
+.fixed {
+    position: fixed;
+}
+
+/* 右侧栏 */
+.house2{
+    width: 100%;
+    height: 46px;
+    border-bottom: 1px solid #F39801;
+}
+.jiaotu{ position: relative;
+}
+.jiao{
+    position: absolute;
+    top: 500px;
+    right: 100px;
+}
+.house2 h1{
+    line-height: 23px;
+    font-size: 18px;
+}
+.house2 p{
+    color: #959595;
+    margin-top: 4px;
+}
+.house2 p span{
+    color: #F39801;
+}
+.house3 {
+    width: 100%;
+    margin-top: 12px;
+}
+.house4{
+    width: 100%;
+    margin-top: 5px;
+}
+.dizhi{
+    line-height: 26px;
+    color: #000000;
+    font-size: 14px;
+    padding: 0 8px 0 8px;
+}
+    .dizhi li:first-child {
+        line-height: 18px;
+    }
+.dizhi span{
+    color: #ED9E0D;
+}
+.shequ{
+    padding: 10px 0 30px 0;
+}
+.house5{
+    width: 344px;
+    height: 50px;
+    background-color: #ffffff;
+    margin: 0 auto;
+    margin-top: 10px;
+    border-top: 1px solid #EEEEEE;
+}
+.house5 p{
+     line-height: 50px;
+     color: #F29900;
+     font-size: 14px;
+     padding-left: 14px;
+     float: left;
+ }
+.house5 p span{
+    color: #F29900;
+    font-size: 25px;
+}
+.yuyue{
+    width:180px;
+    height: 31px;
+    float: right;
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+    .yuyue li {
+        float: left;
+        height: 100%;
+        line-height: 31px;
+        text-align: center;
+        border: 1px solid #f39800;
+    }
+    .yuyue li:first-child {
+        width: 44px;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        background: url("../../../../images/pc/btn-favourite.png");
+        background-position: -1px -1px; 
+    }
+    .yuyue li:first-child.yuyue-active {
+        background-position: -1px 32px;
+    }
+    .yuyue li:first-child:hover {
+        background-position: -1px 66px;
+    }
+    .yuyue li:last-child {
+        width: 132px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-left-width: 0px;
+        color: #f39800;
+    }
+    .yuyue li:last-child:hover {
+        background: rgba(243,152,0,1);
+        color: white;
+    }
+    .yuyue li img {
+        position: relative;
+        top: 8px;
+    }
+
+    .house-info {
+        margin-top: 20px;
+        background: white;
+        font-size: 14px;
+    }
+
+        /* 分栏 */
+        .huxing{
+            height: 40px;
+            margin-left: 25px;
+            margin-right: 25px;
+            margin-top: 5px;
+            background: rgba(243,152,0,0.2);
+            font-weight: bold;
+            color: #f39800;
+        }
+            .huxing li{
+                float: left;
+                line-height: 40px;
+                width: 20%;
+            }
+            .huxing li:last-child {
+                position: relative;
+            }
+            .huxing div {
+                position: absolute;
+                width: 22px;
+                height: 20px;
+            }
+            .huxing span {
+                color: black;
+                margin-left: -3px;
+            }
+                .huxing span:first-child {
+                    color: #f39800;
+                }
+            .huxing .arrow-left {
+                top: 10px;
+                left: 30px;
+                background: url(../../../../images/pc/arrows-for-page.png);
+            }
+                .huxing .arrow-left:hover {
+                    background-position: 0px 20px;
+                }
+            .huxing .arrow-right {
+                top: 10px;
+                left: 54px;
+                background: url(../../../../images/pc/arrows-for-page.png);
+                background-position: 23px 0px;
+            }
+                .huxing .arrow-right:hover {
+                    background-position: 23px 20px;
+                }
+        .div-pagination {
+            margin: 15px;
+        }
+        .div-pagination>div {
+            float: right;
+        }
+        .div-pagination li:first-child, .div-pagination li:last-child {
+            display: none;
+        }
+        .div-pagination li span, .light-theme a{
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            line-height: 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #f39800;
+            border: none;
+            background: #fffaf3;
+        }
+    .biaoge>ul {
+
+    }
+    /* 已定完/详情 按钮 */
+    .biaoge dd a {
+        display: inline-block;
+        width: 80px;
+        height: 22px;
+        border: solid 1px #dcdcdc;
+        border-radius: 4px;
+        color: #dcdcdc;
+        line-height: 21px;
+        text-align: center;
+    }
+    .biaoge .btn-detail {
+        border: solid 1px #f39800;
+        color: #f39800;
+    }
+    .biaoge .btn-detail:hover {
+        background: #f39800;
+        color: white;
+    }
+    
+.frm-txt {
+    text-indent: 1em;
+}
+.xiangqing{
+    width: 80px;
+    height: 24px;
+    display: block;
+    line-height: 24px;
+    text-align: center;
+    border:1px solid #F19A00;
+    border-radius: 4px;
+    color: #f39800;
+    cursor: pointer;
+    margin-left: 45px;
+    margin-top:10px;
+}
+.brand-pic {
+    position: relative;
+    width: 283px;
+    height: 210px;
+}
+.brand-word {
+    height: 34px;
+    width: 243px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.brand-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #535353;
+}
+
+/* 生活设施 */
+.bedclothes {
+    background-position: 0 0 !important;
+}
+.sofa {
+    background-position: -62px 4px !important;
+}
+.washer {
+    background-position: -120px 6px !important;
+}
+.hot-water {
+    background-position: -180px 0 !important;
+}
+.toiletries {
+    background-position: 0 -30px !important;
+}
+.tv {
+    background-position: -62px -32px !important;
+}
+.microwave {
+    background-position: -120px -31px !important;
+}
+.elevator {
+    background-position: -180px -30px !important;
+}
+.bed {
+    background-position: 0 -64px !important;
+}
+.air-conditions {
+    background-position: -62px -69px !important;
+}
+.wifi {
+    background-position: -120px -67px !important;
+}
+.public-space {
+    background-position: -180px -60px !important;
+}
+.closet {
+    background-position: 0 -90px !important;
+}
+.fridge {
+    background-position: -62px -103px !important;
+}
+.heater {
+    background-position: -120px -90px !important;
+}
+.others {
+    background-position: -180px -104px !important;
+}
+.desk {
+    background-position: 0 -120px !important;
+}
+.cooker {
+    background-position: -62px -120px !important;
+}

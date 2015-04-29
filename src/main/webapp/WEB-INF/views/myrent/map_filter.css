@@ -1,0 +1,52 @@
+/* �ײ���ť��ʽ */
+#div_footer, #div_footer > div {
+    width: 100%;
+}
+
+#div_footer button {
+    background-color: #F39600;
+    margin-bottom: 0.4em;
+    letter-spacing: 0.5em;
+}
+
+#div_content > .row {
+    margin-top: 0.8em;
+}
+
+/* ��������ʽ */
+table {
+    width: 100%;
+    background-color: #FFFFFF;
+}
+
+td {
+    width: 20%;
+    text-align: center;
+    height: 44px;
+    border-style: ridge;
+    border-width: 1px;
+    border-color: #ccc;
+}
+
+td.on {
+    background: #F39600;
+    color: #FFFFFF;
+}
+
+td.off {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+.div-border {
+    height: 44px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #F39600;
+    color: #F39600;
+}
+
+/* ������ɫ  */
+.container-fluid {
+    background-color: #F6F6F6;
+}

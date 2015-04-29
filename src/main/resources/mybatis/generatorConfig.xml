@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!--
+    <classPathEntry location="E:/maven_repository/repository/com/oracle/ojdbc14/10.2.0.4.0/ojdbc14-10.2.0.4.0.jar"/>-->
+    <!-- mysql -->
+    <classPathEntry
+            location="E:/maven_repository/repository/mysql/mysql-connector-java/5.1.13/mysql-connector-java-5.1.13.jar"/>
+
+    <context id="context1">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <!-- 取消生成的注释信息 -->
+        </commentGenerator>
+        <!-- oracle.jdbc.driver.OracleDriver  jdbc:oracle:thin:@112.124.69.93:1521:xe -->
+        <jdbcConnection
+                driverClass="com.mysql.jdbc.Driver"
+                connectionURL="jdbc:mysql://rdsajnqqjevbuma.mysql.rds.aliyuncs.com:3306/re37fgv5x7h38n8s"
+                userId="re37fgv5x7h38n8s" password="rental"/>
+        <!-- 测试用 -->
+        <!--
+        <jdbcConnection
+        driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://123.57.12.88:3306/rental_weixin"
+        userId="rental" password="rental" />
+        -->
+        <javaModelGenerator targetPackage="com.micro.rent.dbaccess.entity.myrent" targetProject="rent/src/main/java"/>
+        <sqlMapGenerator targetPackage="mybatis.mappers.mysql.myrent" targetProject="rent/src/main/resources"/>
+
+        <table schema="" tableName="T_house"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <!-- <columnOverride column="???" property="???" /> -->
+        </table>
+    </context>
+</generatorConfiguration>

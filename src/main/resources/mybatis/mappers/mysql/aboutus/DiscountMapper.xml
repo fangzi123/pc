@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.aboutus.DiscountDao">
+
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.aboutus.Discount">
+        <id column="T_Discount_ID" property="tDiscountId" jdbcType="VARCHAR"/>
+        <result column="Start_date" property="startDate" jdbcType="VARCHAR"/>
+        <result column="End_Date" property="endDate" jdbcType="VARCHAR"/>
+        <result column="Status" property="status" jdbcType="VARCHAR"/>
+        <result column="Discount_Desc" property="corpDesc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="baseCoumn">
+        T_Discount_ID,Start_date,End_Date,Status,Discount_Desc
+    </sql>
+
+    <select id="selectDiscountInfo" resultMap="BaseResultMap">
+        select
+        <include refid="baseCoumn"/>
+        from T_Discount
+    </select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.myrent.TprojectPicDao">
+
+    <resultMap id="picMap" type="com.micro.rent.dbaccess.entity.myrent.TprojectPic">
+        <result column="Picture" property="picture" jdbcType="VARCHAR"/>
+        <result column="House_ID" property="houseId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="base_col">
+        T_PROJECT_PIC_ID,PROJECT_ID,PICTURE
+    </sql>
+    <insert id="batchSave" parameterType="com.micro.rent.dbaccess.entity.myrent.TprojectPic">
+        insert into T_PROJECT_PIC
+        (<include refid="base_col"/>)
+        values(#{tProjectPicId},#{projectId},#{picture})
+    </insert>
+
+    <select id="selectProjectPicByProjectId" resultMap="picMap" parameterType="string">
+        select project_id,PICTURE
+        from t_project_pic
+        where project_id=#{projectId}
+    </select>
+    <select id="findOneProPicByComName" resultType="String" parameterType="string">
+        select pp.PICTURE
+        from t_project p,t_project_pic pp
+        where p.project_id=pp.project_id
+        and p.community_name=#{communityName}
+        order by pp.picture limit 1
+    </select>
+
+</mapper>

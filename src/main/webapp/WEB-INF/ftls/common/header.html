@@ -1,0 +1,169 @@
+<input type="hidden" name="ctxPath" value="${rc.contextPath}" />
+<div class="header">
+    <div class="header1">
+        <img src="${rc.contextPath}/images/pc/logo1.png" alt="" class="logo"/>
+
+        <div id="model-sel" class="dz">
+            <span>北京</span>
+            <img class="arrow1" src="${rc.contextPath}/images/pc/arrow-down.png">
+            <div class="dz-citys">
+                <img class="arrow2"src="${rc.contextPath}/images/pc/arrow-up.png">
+                <div>
+                    <a href="#">北京</a>
+                    <a href="#">上海</a>
+                </div>
+            </div>
+        </div>
+
+        <ul>
+            <li>
+                <a href="${rc.contextPath}/">首页</a>
+                <a href="${rc.contextPath}/match/list">条件找房</a>
+                <a href="${rc.contextPath}/map/display">地图找房</a>
+                <a href="${rc.contextPath}/alliance/index">公寓加盟</a>
+            </li>
+        </ul>
+       
+<!--         <p class="dl" style="<@shiro.authenticated>display:none</@shiro.authenticated>" id="loginout"> -->
+        
+        
+        
+        <div id="wnnn" class="wnnn" style="<@shiro.authenticated>display:none</@shiro.authenticated>">
+            <span class="woniu" id="woniu"><img src="${rc.contextPath}/images/pc/xiang.png" alt="" class="touxia"/>我的窝牛</span>
+            <img class="arrow11" src="${rc.contextPath}/images/pc/arrow-down.png">
+            <div class="dz-denglu" id="dz-denglu" >
+                <img class="arrow22"src="${rc.contextPath}/images/pc/arrow-up.png">
+                <div>
+             <p href="#" id="logo">登录</p>
+             <p href="#" id="register">注册</p>
+             <a href="${rc.contextPath}/user/favorite" id="scang" target="_blank">我的收藏</a>
+             <a href="${rc.contextPath}/user/preOrder" id="myue" target="_blank">我的预约</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+<!--             <a href="#" id="mywn">&nbsp;&nbsp;&nbsp;&nbsp;我的窝牛&nbsp;&nbsp;&nbsp;&nbsp;</a> -->
+        </p>
+        <@shiro.authenticated>
+       <div id="logon" class="wnnnn">
+            <span class="wniu" id="wniu"><img src="${rc.contextPath}/images/pc/xiang.png" alt="" class="touxia"/><strong id="yonghu"><@shiro.principal property="userName" /></strong></span>
+            <img class="arrow11" src="${rc.contextPath}/images/pc/arrow-down.png">
+            <div class="dz-dengl" id="dz-dengl" >
+                <img class="arrow22"src="${rc.contextPath}/images/pc/arrow-up.png">
+                <div>
+<!--              <p id="yonghu"></p> -->
+             <a href="${rc.contextPath}/user/favorite" target="_blank" id="scang" >我的收藏</a>
+             <a href="${rc.contextPath}/user/preOrder" target="_blank" id="myue">我的预约</a>
+             <a href="${rc.contextPath}/user/activity" target="_blank" id="wd">我的活动</a>
+             <a href="${rc.contextPath}/user/mydata" target="_blank" id="gr">个人资料</a>
+             <a href="#" class="dengchu" id="logout">退出</a>
+                    
+                </div>
+            </div>
+        </div>
+         </div>
+         </@shiro.authenticated>
+    </div><!--header1-->
+</div><!--header-->
+
+<div id="pop-win-neirong" class="tankuang">
+      <div class="chenggong">
+          <form action="${rc.contextPath}/login" method="post" id="login-form">
+            <div class="control-group">
+                <input type="text" placeholder="手机号" class="shouji" name="username"
+                 required
+                 data-validation-required-message="请输入手机号"
+                 data-validation-regex-regex="1[0-9]{10}"
+                 data-validation-regex-message="请输入正确的手机号"
+                  />
+                  <p class="help-block"></p>
+            </div>
+            <div class="control-group">
+                <input type="password" placeholder="密码" class="shouji" name="password"
+                 required
+                 data-validation-required-message="请输入密码"
+                 minlength="6"
+                 data-validation-minlength-message="请输入6到12位的密码" 
+                 maxlength="12"
+                 data-validation-maxlength-message="请输入6到12位的密码"/>
+               <p class="help-block" id="login-check"></p>
+            </div>
+              
+<!--               <div class="clear"></div> -->
+<!--               <p class="wangji">忘记密码?</p> -->
+<!--                <p class="wjj">发送动态密码</p> -->
+              <div class="clear"></div>
+              <input type="button" value="登录" class="denglu" id="login"/>
+              <input name="rememberMe" type="checkbox" value="true" class="zddl"> 自动登录
+              <input type="button" value="发送动态密码"  class="anniu" id="dynamicpassword" status="login"/>
+              <div class="zhanghao">
+                  <p class="hai">还没有账号？<a class="zhuce" id="zcc">注册</a>
+              </div>
+          </form>
+          </div>
+</div>
+ <div id="pop-win-register" class="tankuang">
+          <div class="chenggong">
+<!--               <p class="ga"> <img src="${rc.contextPath}/images/pc/xiajiao.jpg" class="xjiao" alt=""/><img src="${rc.contextPath}/images/pc/tanhao.jpg" class="tanhao" alt=""/>改手机号已经注册 您可以直接登录</p> -->
+              <form action="${rc.contextPath}/register" method="post" id="register-form">
+                <div class="control-group">
+                    <input type="text" placeholder="手机号" class="shouji" name="username"
+                        required
+                        data-validation-required-message="请输入手机号"
+                        data-validation-regex-regex="1[0-9]{10}"
+                        data-validation-regex-message="请输入正确的手机号"/>
+                    <p class="help-block" id="register-check"></p>
+                </div>
+                <div class="control-group">
+                    <input type="text" placeholder="验证码" class="mima" name="verifyCode"
+                        required
+                        data-validation-required-message="请输入验证码"/>
+                    <input type="button" value="发送验证码"  class="anniu" id="anniu"  status="register"/>
+                    <p class="help-block" style="display:inline-block;" id="register-code"></p>
+                </div>
+                
+                <div class="clear"></div>
+                <div class="control-group"><div class="controls">
+                      <input type="password" placeholder="密码" class="shouji" name="password"
+                        required
+                        data-validation-required-message="请输入密码"
+                        minlength="6"
+                        data-validation-minlength-message="请输入6到12位的密码" 
+                        maxlength="12"
+                        data-validation-maxlength-message="请输入6到12位的密码"
+                        />
+                        <p class="help-block"></p>
+                </div></div>
+                <div class="control-group"><div class="controls">
+                      <input type="password" placeholder="确认密码" class="shouji" name="password2"
+                        id="passConfirm"
+                        data-validation-match-match="password"
+                        data-validation-match-message="两次输入密码不一致" />
+                        <p id="passConfirmMsg" class="help-block hidden"></p>
+                </div></div>
+                  <p class="ji">注册即代表我同意服务条款、隐私政策、房客退款政策及公寓公司保障计划条款</p>
+                  <input type="button" value="注册" class="denglu" id="register-btn"/>
+                  <div class="zhanghao">
+                      <p class="hai">已经是会员？&nbsp;&nbsp;&nbsp;<a class="zhuce" id="dll">登录</a>
+                  </div>
+              </form>
+              </div>
+          </div>
+     <div id="pop-win-registerOk" class="tankuang" style="display:hidden">
+        
+          <div class="zhuce">
+             <p class="gongxi">恭喜你，注册成功</p>
+              <p class="guanzhu">关注 窝牛租房 公众号</p>
+              <img src="${rc.contextPath}/images/pc/erwei_40.png" alt="" class="erwei"/>
+              <p class="yongyou">您将拥有：</p>
+              <p class="quantian">1、全天在线客服     <span>随时解答您的疑问</span></p>
+              <p class="quantian">2、随身移动工作台 <span>重要信息不遗漏</span></p>
+              <p class="quantian">3、账号保护利器        <span>支持微信扫码登录</span></p>
+              <p class="saomiao">用微信扫描二维码</p>
+              <div class="fb">
+             <a class="fang">不方便扫码？跳过→</a>
+              </div>
+          </div>
+     </div>
+<div class="mack" id="mack-div" style="display:hidden"></div>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang='zh-CN'>
+<head>
+<meta charset='UTF-8'>
+<title>窝牛租房</title>
+<meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=11" />
+<link rel='stylesheet' href='${rc.contextPath}/resources/pc/css/common/common.css' />
+<link rel='stylesheet' href='${rc.contextPath}/resources/pc/css/brand/brandDetail.css' />
+</head>
+<body>
+	<div class='box'>
+		<#include "/common/header.html">
+		<div class='toubu'>
+			<div class='toubu1'>
+				<div class='bao'>
+					<!-- TODO: 整个页面的内容区都需要填入 -->
+					<a class='yuanjing'>${brand.name!''}</a>
+					<div class='xian'></div>
+					<p>${brand.description!''}</p>
+				</div>
+				<!--bao-->
+			</div>
+			<!--toubu1-->
+		</div>
+		<!--toubu-->
+		<div class='main'>
+			<div id='map' class='main-left'></div>
+			<!--main1-->
+			<div id="div-projects" class='main-right'></div>
+		</div>
+		<!--main-->
+		<#include "/common/footer.html">
+	</div>
+	<!--box-->
+	<!-- TODO: 公寓分店详情 -->
+	<input type='hidden' id='projects' name='' value='${branchList}' />
+	<!-- TODO: 公寓品牌名字 -->
+	<input type="hidden" id="brandName" name="" value="${brand.name!''}">
+	<script src='http://api.map.baidu.com/api?v=2.0&ak=108b50eb45abfdb30d056ec907130e22'></script>
+	<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+	<script src="${rc.contextPath}/resources/pc/js/brand/brandDetail.js" ></script>
+</body>
+</html>

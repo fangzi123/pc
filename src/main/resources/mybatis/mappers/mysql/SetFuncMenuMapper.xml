@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.micro.rent.dbaccess.dao.SetFuncMenuDao">
+    <resultMap id="BaseResultMap" type="com.micro.rent.dbaccess.entity.SetFuncMenu">
+        <id column="MENU_ID" property="menuId" jdbcType="VARCHAR"/>
+        <result column="PMENU_ID" property="pmenuId" jdbcType="VARCHAR"/>
+        <result column="MENU_CODE" property="menuCode" jdbcType="VARCHAR"/>
+        <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR"/>
+        <result column="MENU_NAME_BRIEF" property="menuNameBrief" jdbcType="VARCHAR"/>
+        <result column="IS_LEAF" property="isLeaf" jdbcType="CHAR"/>
+        <result column="LV" property="lv" jdbcType="DECIMAL"/>
+        <result column="URL" property="url" jdbcType="VARCHAR"/>
+        <result column="DISPLAY_ORDER" property="displayOrder" jdbcType="DECIMAL"/>
+        <result column="STATUS" property="status" jdbcType="CHAR"/>
+        <result column="LAST_UPDATOR" property="lastUpdator" jdbcType="VARCHAR"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        MENU_ID, PMENU_ID, MENU_CODE, MENU_NAME, MENU_NAME_BRIEF, IS_LEAF, LV, URL, DISPLAY_ORDER,
+        STATUS, LAST_UPDATOR, LAST_UPDATE_TIME
+    </sql>
+
+
+    <select id="querySelectedResource" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+        SELECT
+        SR.MENU_ID, SR.MENU_CODE, SR.MENU_NAME, SR.IS_LEAF, SR.LV, SR.URL, SR.STATUS, SR.PMENU_ID, SR.STATUS
+        FROM
+        SET_FUNC_MENU SR
+        INNER JOIN
+        SET_FROLE_FMENU SRR
+        ON
+        SR.MENU_ID = SRR.FUNC_MENU_ID
+        WHERE
+        SRR.FUNC_ROLE_ID = #{funcRoleId}
+        AND SR.IS_LEAF = 1
+    </select>
+
+
+    <select id="queryCandidateResource" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+        <![CDATA[
+  		SELECT 
+  			MENU_ID, PMENU_ID, MENU_CODE, MENU_NAME, MENU_NAME_BRIEF, IS_LEAF, LV, URL, DISPLAY_ORDER, STATUS
+  		FROM 
+  			SET_FUNC_MENU 
+  			WHERE 
+  			MENU_ID NOT IN 
+  			(
+			  	SELECT 
+			        SR.MENU_ID
+				FROM 
+			        SET_FUNC_MENU SR 
+			        INNER JOIN 
+			        SET_FROLE_FMENU SRR
+			        ON 
+			        SR.MENU_ID = SRR.FUNC_MENU_ID 
+			        WHERE 
+			        SRR.FUNC_ROLE_ID = #{funcRoleId}
+			        AND SR.IS_LEAF = 1
+  			)
+    ]]>
+    </select>
+
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SET_FUNC_MENU
+    </select>
+
+    <!-- 查询分页记录 -->
+    <select id="queryPaged" parameterType="com.micro.rent.common.comm.nmybatis.Page" resultMap="BaseResultMap">
+
+        SELECT * FROM SET_FUNC_MENU
+        WHERE STATUS = 1
+        <if test="params.menuName != null">
+            AND MENU_NAME LIKE concat('%',#{params.menuName},'%')
+        </if>
+        <if test="params.lv != null">
+            AND LV LIKE concat('%',#{params.lv},'%')
+        </if>
+        ORDER BY MENU_ID DESC
+    </select>
+
+    <!-- 查询记录总数 -->
+    <select id="queryTotalCount" resultType="int" parameterType="map">
+        <![CDATA[
+			SELECT COUNT(1) FROM SET_FUNC_MENU 
+					WHERE STATUS = 1 ]]>
+        <if test="menuName != null">
+            AND MENU_NAME LIKE concat('%',#{menuName},'%')
+        </if>
+        <if test="lv != null">
+            AND LV LIKE concat('%',#{lv},'%')
+        </if>
+    </select>
+
+    <!-- 得到Sequences -->
+    <select id="getSequences" resultType="string">
+        select SEQ_SET_FUNC_MENU.nextVal from dual
+    </select>
+
+    <delete id="deleteByMenuCode" parameterType="map">
+        <![CDATA[
+    delete from SET_FUNC_MENU where ]]>
+        <if test="menuCode != null">
+            MENU_CODE LIKE concat('%',#{menuCode,jdbcType=VARCHAR},'%')
+        </if>
+    </delete>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal">
+        select
+        <include refid="Base_Column_List"/>
+        from SET_FUNC_MENU
+        where MENU_ID = #{menuId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+        delete from SET_FUNC_MENU
+        where MENU_ID = #{menuId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.micro.rent.dbaccess.entity.SetFuncMenu">
+        insert into SET_FUNC_MENU (MENU_ID, PMENU_ID, MENU_CODE,
+        MENU_NAME, MENU_NAME_BRIEF, IS_LEAF,
+        LV, URL, DISPLAY_ORDER,
+        STATUS, LAST_UPDATOR, LAST_UPDATE_TIME
+        )
+        values (#{menuId,jdbcType=VARCHAR}, #{pmenuId,jdbcType=VARCHAR}, #{menuCode,jdbcType=VARCHAR},
+        #{menuName,jdbcType=VARCHAR}, #{menuNameBrief,jdbcType=VARCHAR}, #{isLeaf,jdbcType=CHAR},
+        #{lv,jdbcType=DECIMAL}, #{url,jdbcType=VARCHAR}, #{displayOrder,jdbcType=DECIMAL},
+        #{status,jdbcType=CHAR}, #{lastUpdator,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.micro.rent.dbaccess.entity.SetFuncMenu">
+        update SET_FUNC_MENU
+        <set>
+            <if test="pmenuId != null">
+                PMENU_ID = #{pmenuId,jdbcType=VARCHAR},
+            </if>
+            <if test="menuCode != null">
+                MENU_CODE = #{menuCode,jdbcType=VARCHAR},
+            </if>
+            <if test="menuName != null">
+                MENU_NAME = #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="menuNameBrief != null">
+                MENU_NAME_BRIEF = #{menuNameBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="isLeaf != null">
+                IS_LEAF = #{isLeaf,jdbcType=CHAR},
+            </if>
+            <if test="lv != null">
+                LV = #{lv,jdbcType=DECIMAL},
+            </if>
+            <if test="url != null">
+                URL = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="displayOrder != null">
+                DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=CHAR},
+            </if>
+            <if test="lastUpdator != null">
+                LAST_UPDATOR = #{lastUpdator,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where MENU_ID = #{menuId,jdbcType=VARCHAR}
+    </update>
+</mapper>
